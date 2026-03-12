@@ -1,0 +1,37 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "shillem-plugins",
+  "owner": {
+    "name": "Shillem Volpato",
+    "email": "volpato.sh@gmail.com"
+  },
+  "metadata": {
+    "description": "Directory of Claude Code plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "scala-lsp",
+      "description": "Scala language server for enhanced code intelligence",
+      "version": "1.0.0",
+      "author": {
+        "name": "shillem",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/scala-lsp",
+      "category": "development",
+      "strict": false,
+      "lspServers": {
+        "scala": {
+          "command": "metals",
+          "extensionToLanguage": {
+            ".sbt": "sbt",
+            ".sc": "scala",
+            ".scala": "scala"
+          },
+          "transport": "stdio"
+        }
+      }
+    }
+  ]
+}
