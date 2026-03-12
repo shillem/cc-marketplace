@@ -6,6 +6,7 @@ A directory of [Claude Code](https://claude.ai/code) plugins.
 
 | Plugin | Description |
 |--------|-------------|
+| [apex-lsp](plugins/apex-lsp/) | Salesforce Apex language server via `apex-jorje-lsp.jar` — go-to-definition, find references, error checking for `.cls`, `.trigger`, and `.apex` files |
 | [scala-lsp](plugins/scala-lsp/) | Scala language server via Metals — go-to-definition, find references, error checking for `.scala`, `.sc`, and `.sbt` files |
 
 ## Usage

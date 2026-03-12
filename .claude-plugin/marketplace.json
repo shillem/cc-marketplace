@@ -11,11 +11,42 @@
   },
   "plugins": [
     {
+      "name": "apex-lsp",
+      "description": "Salesforce Apex language server for enhanced code intelligence",
+      "version": "1.0.0",
+      "author": {
+        "name": "Shillem Volpato",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/apex-lsp",
+      "category": "development",
+      "strict": false,
+      "lspServers": {
+        "apex": {
+          "command": "java",
+          "args": [
+            "-cp",
+            "${SF_LSP_APEX}",
+            "-Ddebug.internal.errors=true",
+            "-Ddebug.semantic.errors=false",
+            "-Ddebug.completion.statistics=false",
+            "-Dlwc.typegeneration.disabled=true",
+            "apex.jorje.lsp.ApexLanguageServerLauncher"
+          ],
+          "extensionToLanguage": {
+            ".cls": "apex",
+            ".trigger": "apex",
+            ".apex": "apex"
+          }
+        }
+      }
+    },
+    {
       "name": "scala-lsp",
       "description": "Scala language server for enhanced code intelligence",
       "version": "1.0.0",
       "author": {
-        "name": "shillem",
+        "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
       },
       "source": "./plugins/scala-lsp",
@@ -28,8 +59,7 @@
             ".sbt": "sbt",
             ".sc": "scala",
             ".scala": "scala"
-          },
-          "transport": "stdio"
+          }
         }
       }
     }
