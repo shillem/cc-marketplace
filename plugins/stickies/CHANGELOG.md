@@ -1,0 +1,10 @@
+# Changelog
+
+## 1.0.0 (2026-03-23)
+
+### Added
+- Initial release of the stickies plugin
+- Create, list, read, and delete stickies via `/stickies` slash command
+- Stickies stored as markdown files in `.ai/stickies/` with date-prefixed filenames
+- Natural language trigger on mentions of "sticky" or "stickies"
+- Lightweight Haiku model for fast responses

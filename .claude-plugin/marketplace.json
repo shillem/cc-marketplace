@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Directory of Claude Code plugins",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -65,7 +65,15 @@
     },
     {
       "name": "stickies",
-      "source": "./plugins/stickies"
+      "description": "Manage local project stickies as markdown files",
+      "version": "1.0.0",
+      "author": {
+        "name": "Shillem Volpato",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/stickies",
+      "category": "productivity",
+      "strict": false
     }
   ]
 }
