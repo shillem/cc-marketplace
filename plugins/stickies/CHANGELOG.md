@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 (2026-03-23)
+
+### Improved
+- Explicit instruction to create `.ai/stickies/` folder with `mkdir -p` before writing stickies
+- Updated allowed-tools to use `mkdir -p` and `ls -1` flags
+
 ## 1.0.0 (2026-03-23)
 
 ### Added
