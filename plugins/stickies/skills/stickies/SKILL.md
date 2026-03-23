@@ -2,13 +2,15 @@
 name: stickies
 description: Manage local project stickies as markdown files — new, read, list, or delete. Trigger on any mention of "sticky" or "stickies".
 argument-hint: "[new|list|read|delete] [text]"
-allowed-tools: Bash(mkdir .ai/stickies), Bash(ls *.ai/stickies/**), Bash(rm .ai/stickies/**), Glob, Read(.ai/stickies/**), Write(.ai/stickies/**)
+allowed-tools: Bash(mkdir -p .ai/stickies), Bash(ls -1 .ai/stickies/**), Bash(rm .ai/stickies/**), Glob, Read(.ai/stickies/**), Write(.ai/stickies/**)
 model: haiku
 ---
 
 # Stickies
 
-Manage markdown stickies stored locally in the project under `.ai/stickies/`.
+Manage markdown stickies stored in `.ai/stickies/`.
+
+**CRITICAL**: if the folder doesn't exist, create it by executing `mkdir -p .ai/stickies`.
 
 ## Stickie format
 
@@ -50,11 +52,13 @@ Open a stickie so the user can review or work with its content.
 2. If multiple stickies match, list the matches and ask which one
 3. Read the file and display its content
 
+**Important**: if there are no matched stickies, say so.
+
 ### List
 
 Show all stickies as a table sorted by date (newest first).
 
-1. List the `.ai/stickies/` directory using Bash (`ls .ai/stickies/*.md`)
+1. List the `.ai/stickies/` directory by executing `ls -1 .ai/stickies/*.md`
 2. Parse each filename to extract the date and title (convert snake-case back to sentence case, e.g., `fix-login-redirect` → `Fix login redirect`)
 3. Present as a markdown table:
 
@@ -65,7 +69,7 @@ Show all stickies as a table sorted by date (newest first).
 | 2026-03-20 | API rate limits    |
 ```
 
-If there are no stickies, say so.
+**Important**: if there are no stickies, say so.
 
 ### Delete
 
@@ -74,3 +78,5 @@ Remove a stickie the user no longer needs.
 1. Match the stickie by title (same as Read)
 2. If multiple stickies match, list the matches and ask which one
 3. Delete the file, and do not ask for confirmation
+
+**Important**: if there are no matched stickies, say so.
