@@ -62,6 +62,10 @@
           }
         }
       }
+    },
+    {
+      "name": "stickies",
+      "source": "./plugins/stickies"
     }
   ]
 }
