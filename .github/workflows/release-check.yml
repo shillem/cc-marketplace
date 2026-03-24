@@ -1,0 +1,25 @@
+name: Release Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check version bump
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          CURRENT_VERSION=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
+          MAIN_VERSION=$(gh api "repos/${{ github.repository }}/contents/.claude-plugin/marketplace.json?ref=main" --header 'Accept: application/vnd.github.raw+json' --jq '.version')
+
+          if [ "$CURRENT_VERSION" = "$MAIN_VERSION" ]; then
+            echo "::error::Version in marketplace.json ($CURRENT_VERSION) has not been bumped"
+            exit 1
+          fi
+
+          echo "Version bumped from $MAIN_VERSION to $CURRENT_VERSION"
