@@ -1,0 +1,47 @@
+## Arguments
+
+- `$REST` may contain: `[--fast] <change-name-or-description>`
+- `--fast`: Generate all artifacts in sequence without pausing between each
+
+## Flow
+
+1. **Get change description:**
+   If no description is provided in arguments, ask the user what they want to plan.
+
+   **Important**: Do NOT proceed without understanding what the user wants to build.
+
+2. **Derive kebab-case change name** from the description (e.g., "Add OAuth support" -> `add-oauth-support`).
+
+3. **Create the change directory:**
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/new.mjs" "<change-name>"`
+   - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
+   - If error says not initialized, suggest `/esdd init`.
+
+4. **Generate artifacts:**
+   Use the **TodoWrite** tool to track progress through the artifacts.
+
+   Loop through the `plan.workflow` array:
+
+   a. **For each artifact with `pending` status**:
+   - Get instructions: `node "${CLAUDE_SKILL_DIR}/scripts/instructions.mjs" "<change-name>" --plan --artifact <artifact>`
+   - The JSON output includes:
+     - `instruction`: Specific guidance for the artifact
+     - `outputPath`: Where to write the artifact
+     - `templatePath`: Where to source the template for the artifact
+     - `dependencies`: Additional context for the artifact
+   - Read all dependencies for context
+   - Create the artifact using the `instruction` guidance and template provided
+   - If context is critically unclear, use **AskUserQuestion** tool — but prefer making reasonable decisions to keep momentum
+   - After creating the artifact, run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<change-name>" --plan`
+   - If the artifact has status `invalid`, surface the errors and offer to fix them before moving on
+
+   b. **Continue with the next artifact, if any**
+   - If `--fast` flag is absent, stop and ask if the user is ready to work on the next artifact
+   - Continue with the next artifact and stop when all artifacts are in `ready` status
+
+5. **Show final status.**
+
+   After completing all artifacts, summarize:
+   - Change name and location
+   - List of artifacts created with brief descriptions
+   - Suggest `/esdd apply` to implement

@@ -1,0 +1,50 @@
+## Flow
+
+1. **Get project info and active changes:**
+
+   ```bash
+   node "${CLAUDE_SKILL_DIR}/scripts/view.mjs"
+   ```
+
+2. **Display setup:**
+
+   ```
+   **Setup**
+
+   **Path**: <path>
+   **Existing domains**: <domains>
+   **Available workflows**: <workflows>
+
+   **Active Workflow**
+
+   <workflow>
+   ```
+
+3. **Display active changes:**
+
+   ```
+   **Active Changes**
+   ```
+
+   - **If none exist:** Report that there are no active changes.
+
+   - **Otherwise, display as a table.** Example:
+
+     ```
+     | Change | Plan | Last Modified | Apply | Last Modified |
+     |--------|------|---------------|-------|----------------|
+     | add-oauth | 2/4 | 2h ago | 0/3 | — |
+     | fix-billing | 4/4 | 1d ago | 2/2 | 3h ago |
+     ```
+
+     - **Plan** = count of `activeChanges.plan.artifacts` with status `ready` / count of `activeChanges.plan.artifacts`
+     - **Apply** = count of `activeChanges.apply.artifacts` with status `done` / count of `activeChanges.apply.artifacts`
+     - **Plan Modified** / **Apply Modified** = `lastModified` value; show `—` if `null`
+
+4. **Display number of archived changes:**
+
+   ```
+   **Number of archived changes**: <archivedChangesCount>
+   ```
+
+That's it — no suggestions, no next steps. Just the facts.

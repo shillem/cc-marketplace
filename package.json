@@ -1,0 +1,11 @@
+{
+  "name": "marketplace",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "prettier:verify": "prettier --list-different \"{,src/**/}*.{cjs,css,html,js,json,md,mjs,scss,ts,xml,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
