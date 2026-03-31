@@ -39,7 +39,7 @@
    - Read all dependencies for context
    - Create the artifact using the `instruction` guidance and template provided
    - If context is critically unclear, use **AskUserQuestion** tool — but prefer making reasonable decisions to keep momentum
-   - **If `discussion` is true AND `--fast` is absent**, run a discussion phase after generating:
+   - **If `discussion` is `true` AND `--fast` is absent**, run a discussion phase after generating:
      1. **Surface**: present the key decisions, assumptions, and patterns you followed while creating the artifact
      2. **Question**: use the **AskUserQuestion** tool to ask about anything you're uncertain about — wrong patterns, missing context, scope concerns, open questions
      3. **Revise**: if the user provides corrections, update the artifact accordingly

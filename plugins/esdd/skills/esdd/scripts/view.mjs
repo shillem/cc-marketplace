@@ -2,7 +2,7 @@
 
 import { relative, resolve } from "path";
 import { esddPath, listDirs, output, outputError } from "./lib/fs-utils.mjs";
-import { loadConfig } from "./lib/config.mjs";
+import { checkConstitution, loadConfig } from "./lib/config.mjs";
 import { computeChange } from "./lib/status.mjs";
 
 function buildEntry(name) {
@@ -61,6 +61,7 @@ output({
   workflows: workflows.map(w => w.name).join(", "),
   workflow: `${schema.workflow} = ${outputPhases(schema.phases)}`,
   domains: domains.map(d => d.name).join(", "),
+  constitution: checkConstitution(),
   activeChanges: listDirs(changesDir).map(buildEntry),
   archivedChangesCount: listDirs(archiveDir).length
 });

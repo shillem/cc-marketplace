@@ -2,19 +2,24 @@
 
 import { relative, resolve } from "path";
 import { esddPath, exists, ensureDir, writeYaml, output, outputError } from "./lib/fs-utils.mjs";
-import { getConfigPath, loadConfig } from "./lib/config.mjs";
+import { checkConstitution, getConfigPath, loadConfig } from "./lib/config.mjs";
 
 const args = process.argv.slice(2);
 
 if (args.includes("--status")) {
-  output(exists(getConfigPath()) ? "initialized" : "uninitialized");
+  const initialized = exists(getConfigPath());
+
+  output({
+    initialized,
+    ...(initialized && { constitution: checkConstitution() })
+  });
 
   process.exit(0);
 }
 
-if (args.includes("--list-workflows")) {
+if (args.includes("--survey")) {
   const config = loadConfig();
-  output({ workflows: config.workflows });
+  output({ workflows: config.workflows, constitution: checkConstitution() });
   process.exit(0);
 }
 
@@ -92,6 +97,6 @@ if (args.includes("--create")) {
 }
 
 outputError(
-  'Usage: init.mjs --status | --list-workflows | --create --workflow <name> [--domain "name:description"]...'
+  'Usage: init.mjs --status | --survey | --create --workflow <name> [--domain "name:description"]...'
 );
 process.exit(1);
