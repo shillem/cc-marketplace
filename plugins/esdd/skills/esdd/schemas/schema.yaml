@@ -141,13 +141,13 @@ artifacts:
 
 workflows:
   spec-anchored:
-    description: Full pipeline with proposal, specs, design, and tasks. Specs accumulate over time as changes are archived into domain specs. Best for projects where you want to build up living documentation.
+    description: Pipeline with proposal, specs, design, and tasks. Specs accumulate over time as changes are archived into domain specs. Best for projects where you want to build up living documentation.
     plan: [proposal, specs, design, tasks]
     apply: [tasks]
     archive: [specs]
   spec-first:
-    description: Lightweight pipeline with specs and tasks only. Specs organize the change but aren't archived. Best for projects where you want structured planning without long-term spec maintenance.
-    plan: [specs, tasks]
+    description: Pipeline with proposal, specs, design, and tasks. Specs organize the change but aren't archived. Best for projects where you want structured planning without long-term spec maintenance.
+    plan: [proposal, specs, design, tasks]
     apply: [tasks]
 
 workflow: spec-anchored
