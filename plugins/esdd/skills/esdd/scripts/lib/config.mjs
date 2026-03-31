@@ -41,7 +41,18 @@ export function updateConfig(properties) {
   const config = readYaml(getConfigPath());
 
   if (properties.domains) {
-    config.domains = (config.domains || []).concat(properties.domains);
+    const existing = config.domains || [];
+    const byName = new Map(existing.map(d => [d.name, d]));
+
+    for (const d of properties.domains) {
+      if (byName.has(d.name)) {
+        byName.get(d.name).description = d.description;
+      } else {
+        existing.push(d);
+      }
+    }
+
+    config.domains = existing;
   }
 
   if (properties.workflow) {

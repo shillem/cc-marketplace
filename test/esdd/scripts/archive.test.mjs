@@ -1,6 +1,7 @@
 import { describe, test, expect } from "bun:test";
-import { existsSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { resolve } from "path";
+import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
 import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
 
 describe("archive.mjs", () => {
@@ -51,26 +52,58 @@ describe("archive.mjs", () => {
     expect(archiveDirs[0]).toMatch(/^\d{4}-\d{2}-\d{2}-add-auth$/);
   });
 
-  test("detects new domains from spec delta files", async () => {
+  test("detects new domains with descriptions from frontmatter", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(
+      esddPath,
+      "changes/add-auth/specs/auth/spec.md",
+      "---\ndescription: Authentication and authorization\n---\n# Auth spec"
+    );
+    writeFixture(
+      esddPath,
+      "changes/add-auth/specs/billing/spec.md",
+      "---\ndescription: Billing and payments\n---\n# Billing spec"
+    );
+
+    const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
+
+    expect(json.domains).toContain("auth");
+    expect(json.domains).toContain("billing");
+
+    const config = yaml.load(readFileSync(resolve(esddPath, "config.yaml"), "utf8"));
+    const auth = config.domains.find(d => d.name === "auth");
+    const billing = config.domains.find(d => d.name === "billing");
+    expect(auth.description).toBe("Authentication and authorization");
+    expect(billing.description).toBe("Billing and payments");
+  });
+
+  test("no domains without frontmatter", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Auth spec");
-    writeFixture(esddPath, "changes/add-auth/specs/billing/spec.md", "# Billing spec");
 
     const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
 
-    expect(json.domainsAdded).toContain("auth");
-    expect(json.domainsAdded).toContain("billing");
+    expect(json.domains).toBeUndefined();
   });
 
-  test("does not add already-known domains", async () => {
+  test("updates description for existing domain from frontmatter", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Auth spec");
+    writeFixture(
+      esddPath,
+      "changes/add-auth/specs/auth/spec.md",
+      "---\ndescription: Authentication and authorization\n---\n# Auth spec"
+    );
 
     const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
 
-    expect(json.domainsAdded).toEqual([]);
+    expect(json.domains).toContain("auth");
+
+    const config = yaml.load(readFileSync(resolve(esddPath, "config.yaml"), "utf8"));
+    const auth = config.domains.find(d => d.name === "auth");
+    expect(auth.description).toBe("Authentication and authorization");
   });
 
   test("fails if not initialized", async () => {

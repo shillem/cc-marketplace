@@ -1,3 +1,7 @@
+---
+description: <!-- one line domain description -->
+---
+
 ## ADDED Requirements
 
 ### Requirement: <!-- requirement name -->

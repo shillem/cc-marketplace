@@ -8,9 +8,11 @@ import {
   exists,
   isMultiFileOutput,
   listDirs,
+  multiFileOutputFilename,
   multiFileOutputPrefix,
   output,
   outputError,
+  readFrontmatter,
   validateChangeName
 } from "./lib/fs-utils.mjs";
 import { loadConfig, updateConfig } from "./lib/config.mjs";
@@ -34,12 +36,13 @@ if (!exists(srcPath)) {
   process.exit(1);
 }
 
+const cwd = process.cwd();
 const today = new Date().toISOString().slice(0, 10);
 const archiveName = `${today}-${name}`;
 const archivePath = resolve(esddPath(), "archive", archiveName);
 
 if (exists(archivePath)) {
-  outputError(`Archive target already exists: ${relative(process.cwd(), archivePath)}`);
+  outputError(`Archive target already exists: ${relative(cwd, archivePath)}`);
   process.exit(1);
 }
 
@@ -49,7 +52,7 @@ if (result.error) {
   process.exit(1);
 }
 
-const domainsAdded = [];
+const domains = [];
 
 const { schema } = result;
 const archive = schema.phases.archive || [];
@@ -57,31 +60,37 @@ const existingDomains = new Set(result.domains.map(d => d.name));
 
 for (const id of archive) {
   const art = schema.artifacts[id];
+
   if (!isMultiFileOutput(art.output)) continue;
 
   const deltaDir = resolve(srcPath, multiFileOutputPrefix(art.output));
+
   if (!exists(deltaDir)) continue;
 
+  const filename = multiFileOutputFilename(art.output);
+
   for (const dir of listDirs(deltaDir)) {
-    if (!existingDomains.has(dir)) {
-      domainsAdded.push(dir);
-      existingDomains.add(dir);
+    const fm = readFrontmatter(resolve(deltaDir, dir, filename));
+
+    if (fm?.description) {
+      domains.push({ name: dir, description: fm.description });
     }
   }
 }
 
-if (domainsAdded.length > 0) {
-  updateConfig({ domains: domainsAdded.map(name => ({ name, description: "" })) });
-}
-
 renameSync(srcPath, archivePath);
 
-const cwd = process.cwd();
-
-output({
+const response = {
   archived: {
     from: relative(cwd, srcPath),
     to: relative(cwd, archivePath)
-  },
-  domainsAdded
-});
+  }
+};
+
+if (domains.length > 0) {
+  updateConfig({ domains });
+
+  response.domains = domains.map(d => d.name);
+}
+
+output(response);

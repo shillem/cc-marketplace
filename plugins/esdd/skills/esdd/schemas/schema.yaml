@@ -77,10 +77,15 @@ artifacts:
 
         - **ADDED Requirements**: Append under an `## Requirements` section in the domain spec.
         - **MODIFIED Requirements**: Find the matching requirement in the domain spec by header text (whitespace-insensitive) and replace it entirely. If not found, treat as ADDED.
-        - **REMOVED Requirements**: Find and remove the matching requirement from the domain spec. If not found, skip silently.
         - **RENAMED Requirements**: Find by the FROM: name and update the header to the TO: name.
+        - **REMOVED Requirements**: Find and remove the matching requirement from the domain spec. If not found, skip silently.
 
         If the domain spec file doesn't exist yet, create the domain directory and spec file with the ADDED requirements.
+
+        Every delta spec file MUST include a YAML frontmatter `description` field:
+
+        - For new domains, write the initial description of the domain's responsibility.
+        - For modified domains, update the description if the domain's scope has changed.
 
   design:
     description: Technical design document with implementation details

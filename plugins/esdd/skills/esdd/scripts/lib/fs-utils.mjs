@@ -101,6 +101,19 @@ export function outputError(message) {
   output({ error: message });
 }
 
+export function readFrontmatter(filePath) {
+  try {
+    const content = readFileSync(filePath, "utf8");
+    const match = content.match(/^---\n([\s\S]*?)\n---/);
+
+    if (!match) return null;
+
+    return yaml.load(match[1]) || null;
+  } catch {
+    return null;
+  }
+}
+
 export function readText(filePath) {
   return readFileSync(filePath, "utf8");
 }
