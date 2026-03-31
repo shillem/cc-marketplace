@@ -121,13 +121,12 @@ artifacts:
         IMPORTANT: Follow the template exactly. The apply phase parses checkbox format to track progress. Tasks not using `- [ ]` won't be tracked.
 
         Guidelines:
+        - Structure task groups as vertical slices, not horizontal layers. Each group should cut through the stack end-to-end and produce a testable checkpoint. Avoid grouping by technical layer (all DB, then all services, then all API). Instead, group by thin slices that build on each other.
         - Group related tasks under ## numbered headings
         - Each task MUST be a checkbox: `- [ ] X.Y Task description`
-        - Tasks should be small enough to complete in one session
-        - Order tasks by dependency (what must be done first?)
+        - Task groups should be small enough to complete in one session
 
         Reference specs for what needs to be built, design for how to build it.
-        Each task should be verifiable — you know when it's done.
 
         When listing tasks, consider whether the project's tests should be run as a verification step and include it if appropriate.
     apply:
