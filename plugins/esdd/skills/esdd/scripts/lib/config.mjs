@@ -115,6 +115,7 @@ function mergeConfigs(schema, config) {
       errors.push(`Artifact '${id}' has no plan.instruction`);
     }
 
+    const discussion = allArtifacts[id]?.plan?.discussion === true;
     const applyInstruction = resolvePhaseInstruction("apply", id, allArtifacts, config);
     const archiveInstruction = resolvePhaseInstruction("archive", id, allArtifacts, config);
 
@@ -125,6 +126,7 @@ function mergeConfigs(schema, config) {
 
     artifacts[id] = {
       description,
+      discussion,
       output,
       instruction,
       applyInstruction,

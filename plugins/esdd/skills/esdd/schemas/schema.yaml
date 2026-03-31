@@ -3,6 +3,7 @@ artifacts:
     description: Initial proposal document outlining the change
     output: proposal.md
     plan:
+      discussion: true
       instruction: |
         Create the proposal document that establishes WHY this change is needed.
 
@@ -91,6 +92,7 @@ artifacts:
     description: Technical design document with implementation details
     output: design.md
     plan:
+      discussion: true
       instruction: |
         Create the design document that explains HOW to implement the change.
         If the change is straightforward, keep design content minimal.

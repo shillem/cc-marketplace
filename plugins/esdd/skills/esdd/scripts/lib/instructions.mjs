@@ -112,6 +112,7 @@ export function buildPlanInstructions(config, changeName, artifactId) {
   const art = artifacts[artifactId];
 
   return {
+    discussion: art.discussion,
     templatePath: art.templatePath,
     instruction: replaceDomains(
       art.instruction,

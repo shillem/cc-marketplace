@@ -47,10 +47,33 @@ describe("instructions.mjs", () => {
     );
 
     expect(exitCode).toBe(0);
+    expect(json.discussion).toBe(true);
     expect(json.instruction).toContain("proposal document");
     expect(json.outputPath).toContain("proposal.md");
     expect(json.templatePath).toBeDefined();
     expect(json.dependencies).toEqual([]);
+  });
+
+  test("plan instruction for design includes discussion flag", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "design"], {
+      esddPath
+    });
+
+    expect(json.discussion).toBe(true);
+  });
+
+  test("plan instruction for non-discussion artifact returns discussion false", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "tasks"], {
+      esddPath
+    });
+
+    expect(json.discussion).toBe(false);
   });
 
   test("plan instruction for specs includes proposal as dependency when it exists", async () => {
