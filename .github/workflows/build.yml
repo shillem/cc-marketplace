@@ -16,6 +16,4 @@ jobs:
 
       - run: bun run prettier:verify
 
-      - run: bun run compile
-
       - run: bun test

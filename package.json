@@ -6,6 +6,7 @@
     "prettier:verify": "prettier --list-different \"{,src/**/}*.{cjs,css,html,js,json,md,mjs,scss,ts,xml,yaml,yml}\""
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "^3.8.1"
   }
 }
