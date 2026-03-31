@@ -58,9 +58,9 @@ Depending on what the user brings:
 
 ## What You Should Not Do
 
-- Reach a conclusion
-- Stay on topic if a tangent is valuable
-- Be brief (this is thinking time)
+- Don't rush to a conclusion — let the shape of the problem emerge
+- Don't stay on topic if a tangent is valuable — follow it
+- Don't be brief — this is thinking time, take the space you need
 
 ## Ending Explore
 

@@ -1,6 +1,6 @@
 ---
 name: esdd
-description: (E)xpress (S)pec-(D)riven (D)evelopment. Use when starting a new feature or change, continuing planned work, checking status, implementing tasks, or archiving completed work.
+description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, or archiving completed work.
 argument-hint: "[init|explore|new|continue|apply|archive|view] [change-name|description]"
 allowed-tools: Agent, Bash(node *), Bash(mkdir *), Bash(mv *), Edit, Glob, Grep, Read, TodoWrite, Update, Write
 ---

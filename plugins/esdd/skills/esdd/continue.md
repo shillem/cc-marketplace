@@ -30,7 +30,7 @@
 
    a. **For each artifact with `pending` status**:
    - Get instructions: `node "${CLAUDE_SKILL_DIR}/scripts/instructions.mjs" "<change-name>" --plan --artifact <artifact>`
-   - The JSON output include:
+   - The JSON output includes:
      - `instruction`: Specific guidance for the artifact
      - `outputPath`: Where to write the artifact
      - `templatePath`: Where to source the template for the artifact

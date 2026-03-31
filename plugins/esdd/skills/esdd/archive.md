@@ -21,7 +21,7 @@
 
 4. **Verify the change:**
 
-   Use the **Explore** agent with this prompt (replace `<change-path>` with the change's `path`):
+   Use the Explore **Agent** tool with this prompt (replace `<change-path>` with the change's `path`):
 
    > - Read all artifact files from `<change-path>` for full context
    > - Verify **Coherence:**

@@ -30,7 +30,7 @@
     b. **For each pending group**, use **Agent** tool with this prompt:
 
     > - Get instructions: `node "${CLAUDE_SKILL_DIR}/scripts/instructions.mjs" "<name>" --apply --artifact <artifact> --group <group-id>`
-    > - The JSON output include:
+    > - The JSON output includes:
     >   - `instruction`: Specific guidance for the artifact
     >   - `outputPath`: Where to find and update the artifact
     >   - `dependencies`: Additional context for the artifact
