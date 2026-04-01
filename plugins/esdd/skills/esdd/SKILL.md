@@ -5,6 +5,8 @@ argument-hint: "[init|explore|new|continue|apply|archive|view] [change-name|desc
 allowed-tools: Agent, Bash(node *), Bash(mkdir *), Bash(mv *), Edit, Glob, Grep, Read, TodoWrite, Update, Write
 ---
 
+# ESDD
+
 Parse `$ARGUMENTS`:
 
 1. Split arguments: first word is `$ACTION`, remainder is `$REST`

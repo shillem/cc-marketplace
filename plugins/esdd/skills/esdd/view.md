@@ -1,3 +1,5 @@
+# ESDD View
+
 ## Flow
 
 1. **Get project info and active changes:**
@@ -12,8 +14,8 @@
    **Setup**
 
    **Path**: <path>
-   **Existing domains**: <domains>
-   **Available workflows**: <workflows>
+   **Existing Domains**: <domains>
+   **Available Workflows**: <workflows>
 
    **Default Workflow**
    <defaultWorkflow>
@@ -24,7 +26,7 @@
    Tech Stack: <yes/no>
    ```
 
-   If either is `no`, note that adding the missing section to `CLAUDE.md` improves agent context during apply.
+   If any `constitution` properties are `false`, note that adding the missing section to `CLAUDE.md` improves agent context during apply.
 
 3. **Display active changes:**
 
