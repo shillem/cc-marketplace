@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { output, outputError } from "./lib/fs-utils.mjs";
-import { loadConfig } from "./lib/config.mjs";
+import { Config } from "./lib/config.mjs";
 import {
   buildApplyInstructions,
   buildArchiveInstructions,
@@ -52,7 +52,7 @@ if (phase === "archive" && !artifactId) {
   process.exit(1);
 }
 
-const config = loadConfig();
+const config = new Config();
 if (config.error) {
   outputError(config.error);
   process.exit(1);

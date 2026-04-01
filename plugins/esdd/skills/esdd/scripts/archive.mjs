@@ -15,30 +15,30 @@ import {
   readFrontmatter,
   validateChangeName
 } from "./lib/fs-utils.mjs";
-import { loadConfig, updateConfig } from "./lib/config.mjs";
+import { Config } from "./lib/config.mjs";
 
-const name = process.argv[2];
+const changeName = process.argv[2];
 
-if (!name) {
+if (!changeName) {
   outputError("Usage: archive.mjs <name>");
   process.exit(1);
 }
 
-if (!validateChangeName(name)) {
+if (!validateChangeName(changeName)) {
   outputError("Invalid change name (use alphanumeric, hyphens, underscores)");
   process.exit(1);
 }
 
-const srcPath = changePath(name);
+const srcPath = changePath(changeName);
 
 if (!exists(srcPath)) {
-  outputError(`Change '${name}' not found`);
+  outputError(`Change '${changeName}' not found`);
   process.exit(1);
 }
 
 const cwd = process.cwd();
 const today = new Date().toISOString().slice(0, 10);
-const archiveName = `${today}-${name}`;
+const archiveName = `${today}-${changeName}`;
 const archivePath = resolve(esddPath(), "archive", archiveName);
 
 if (exists(archivePath)) {
@@ -46,17 +46,16 @@ if (exists(archivePath)) {
   process.exit(1);
 }
 
-const result = loadConfig();
-if (result.error) {
-  outputError(result.error);
+const config = new Config();
+if (config.error) {
+  outputError(config.error);
   process.exit(1);
 }
 
 const domains = [];
 
-const { schema } = result;
+const schema = config.schema({ changeName });
 const archive = schema.phases.archive || [];
-const existingDomains = new Set(result.domains.map(d => d.name));
 
 for (const id of archive) {
   const art = schema.artifacts[id];
@@ -88,7 +87,7 @@ const response = {
 };
 
 if (domains.length > 0) {
-  updateConfig({ domains });
+  config.updateConfig({ domains });
 
   response.domains = domains.map(d => d.name);
 }

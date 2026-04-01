@@ -1,7 +1,8 @@
 ## Arguments
 
-- `$REST` may contain: `[--fast] <change-name-or-description>`
+- `$REST` may contain: `[--fast] [--workflow <workflow>] <change-name-or-description>`
 - `--fast`: Generate all artifacts in sequence without pausing between each
+- `--workflow <workflow>`: Use a specific workflow for this change
 
 ## Flow
 
@@ -13,7 +14,7 @@
 2. **Derive kebab-case change name** from the description (e.g., "Add OAuth support" -> `add-oauth-support`).
 
 3. **Create the change directory:**
-   Run `node "${CLAUDE_SKILL_DIR}/scripts/new.mjs" "<change-name>"`
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/new.mjs" "<change-name>"` (add `--workflow "<workflow>"` if specified)
    - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
    - If error says not initialized, suggest `/esdd init`.
 

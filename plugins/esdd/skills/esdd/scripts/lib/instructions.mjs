@@ -14,7 +14,7 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
   const {
     artifacts,
     phases: { archive }
-  } = config.schema;
+  } = config.schema({ changeName });
 
   if (!archive || !archive.includes(artifactId)) {
     return { error: `Artifact '${artifactId}' is not in the archive phase` };
@@ -64,7 +64,7 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
 }
 
 export function buildApplyInstructions(config, changeName, artifactId, groupId) {
-  const { phases, artifacts } = config.schema;
+  const { phases, artifacts } = config.schema({ changeName });
 
   if (!phases.apply || !phases.apply.includes(artifactId)) {
     return { error: `Artifact '${artifactId}' is not in the apply phase` };
@@ -101,8 +101,10 @@ export function buildApplyInstructions(config, changeName, artifactId, groupId) 
 }
 
 export function buildPlanInstructions(config, changeName, artifactId) {
-  const { phases, artifacts } = config.schema;
-  const plan = phases.plan;
+  const {
+    phases: { plan },
+    artifacts
+  } = config.schema({ changeName });
   const artifactIndex = plan.indexOf(artifactId);
 
   if (artifactIndex === -1) {

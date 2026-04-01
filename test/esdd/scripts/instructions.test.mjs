@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
+import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
 describe("instructions.mjs", () => {
   test("fails without change name or phase", async () => {
@@ -277,5 +277,55 @@ describe("instructions.mjs", () => {
     );
 
     expect(json.error).toContain("not in the archive phase");
+  });
+
+  test("uses per-change workflow for plan instructions", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/.keep", "");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json, exitCode } = await run(
+      "instructions.mjs",
+      ["quick-fix", "--plan", "--artifact", "brief"],
+      { esddPath }
+    );
+
+    expect(exitCode).toBe(0);
+    expect(json.instruction).toContain("brief document");
+    expect(json.outputPath).toContain("brief.md");
+    expect(json.templatePath).toBeDefined();
+  });
+
+  test("per-change workflow correctly resolves dependencies", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json } = await run("instructions.mjs", ["quick-fix", "--plan", "--artifact", "tasks"], {
+      esddPath
+    });
+
+    expect(json.dependencies).toHaveLength(1);
+    expect(json.dependencies[0]).toContain("brief.md");
+  });
+
+  test("spec-anchored-quick uses brief as dependency for specs", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/med-change/brief.md", "# Brief");
+    writeYamlFixture(esddPath, "changes/med-change/change.yaml", {
+      workflow: "spec-anchored-quick"
+    });
+
+    const { json } = await run(
+      "instructions.mjs",
+      ["med-change", "--plan", "--artifact", "specs"],
+      { esddPath }
+    );
+
+    expect(json.dependencies).toHaveLength(1);
+    expect(json.dependencies[0]).toContain("brief.md");
   });
 });

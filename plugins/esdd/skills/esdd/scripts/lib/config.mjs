@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import {
+  changePath,
   exists,
   esddPath,
   multiFileOutputFilename,
@@ -12,6 +13,104 @@ import {
 const CONSTITUTION_FILES = ["CLAUDE.md", "CLAUDE.local.md"];
 const PROJECT_MAP_RE = /^##\s+project\s+map/im;
 const TECH_STACK_RE = /^##\s+tech\s+stack/im;
+
+export class Config {
+  #baseSchema;
+  #userConfig;
+  #changeCache = {};
+  #workflowCache = {};
+
+  constructor() {
+    try {
+      this.#userConfig = readYaml(getConfigPath());
+    } catch {
+      this.error = "ESDD not initialized. Run /esdd init first.";
+    }
+
+    this.#baseSchema = readYaml(resolve(schemasDir(), "schema.yaml"));
+  }
+
+  get domains() {
+    return this.#userConfig?.domains || [];
+  }
+
+  get workflows() {
+    return mergeWorkflows(this.#baseSchema.workflows, this.#userConfig?.workflows || {});
+  }
+
+  schema({ changeName, workflowName } = {}) {
+    if (!this.#userConfig) return undefined;
+
+    if (workflowName) {
+      return this.#resolveWorkflow(workflowName);
+    }
+
+    if (!changeName) {
+      return this.#resolveWorkflow();
+    }
+
+    if (this.#changeCache[changeName]) {
+      return this.#changeCache[changeName];
+    }
+
+    let workflow;
+
+    try {
+      workflow = readYaml(resolve(changePath(changeName), "change.yaml"))?.workflow;
+    } catch {
+      // no per-change config
+    }
+
+    return (this.#changeCache[changeName] = this.#resolveWorkflow(workflow));
+  }
+
+  updateConfig(properties) {
+    const configPath = getConfigPath();
+    const config = readYaml(configPath);
+
+    if (properties.domains) {
+      const existing = config.domains || [];
+      const byName = new Map(existing.map(d => [d.name, d]));
+
+      for (const d of properties.domains) {
+        if (byName.has(d.name)) {
+          byName.get(d.name).description = d.description;
+        } else {
+          existing.push(d);
+        }
+      }
+
+      config.domains = existing;
+    }
+
+    if (properties.workflow) {
+      config.workflow = properties.workflow;
+    }
+
+    writeYaml(configPath, config);
+  }
+
+  writeChangeConfig(changeName, data) {
+    writeYaml(resolve(changePath(changeName), "change.yaml"), data);
+  }
+
+  #resolveWorkflow(workflowName) {
+    const defaultSchema = (this.#workflowCache[""] ??= mergeConfigs(
+      this.#baseSchema,
+      this.#userConfig
+    ));
+
+    if (!workflowName || workflowName === defaultSchema?.workflow) {
+      return defaultSchema;
+    }
+
+    return (this.#workflowCache[workflowName] ??= mergeConfigs(
+      this.#baseSchema,
+      this.#userConfig,
+      workflowName
+    ));
+  }
+}
 
 export function checkConstitution() {
   const cwd = process.cwd();
@@ -39,58 +138,8 @@ export function getConfigPath() {
   return resolve(esddPath(), "config.yaml");
 }
 
-export function loadConfig() {
-  const result = {};
-
-  let config;
-
-  try {
-    config = readYaml(getConfigPath());
-
-    result.domains = config.domains || [];
-  } catch {
-    result.error = "ESDD not initialized. Run /esdd init first.";
-  }
-
-  const schema = readYaml(resolve(schemasDir(), "schema.yaml"));
-
-  result.workflows = mergeWorkflows(schema.workflows, config?.workflows || {});
-
-  if (config) {
-    result.schema = mergeConfigs(schema, config);
-  }
-
-  return result;
-}
-
-export function updateConfig(properties) {
-  const configPath = getConfigPath();
-  const config = readYaml(getConfigPath());
-
-  if (properties.domains) {
-    const existing = config.domains || [];
-    const byName = new Map(existing.map(d => [d.name, d]));
-
-    for (const d of properties.domains) {
-      if (byName.has(d.name)) {
-        byName.get(d.name).description = d.description;
-      } else {
-        existing.push(d);
-      }
-    }
-
-    config.domains = existing;
-  }
-
-  if (properties.workflow) {
-    config.workflow = properties.workflow;
-  }
-
-  writeYaml(configPath, config);
-}
-
-function mergeConfigs(schema, config) {
-  const wn = config?.workflow || Object.keys(schema.workflows || {})[0];
+function mergeConfigs(schema, config, workflowOverride) {
+  const wn = workflowOverride || config?.workflow || Object.keys(schema.workflows || {})[0];
 
   if (!wn) {
     return { errors: ["No workflow defined"] };

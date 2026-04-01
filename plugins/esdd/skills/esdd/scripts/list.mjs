@@ -2,21 +2,22 @@
 
 import { resolve } from "path";
 import { esddPath, listDirs, output, outputError } from "./lib/fs-utils.mjs";
-import { loadConfig } from "./lib/config.mjs";
+import { Config } from "./lib/config.mjs";
 import { computeChange, phasesFromArgs } from "./lib/status.mjs";
 
 const args = process.argv.slice(2);
 
-const result = loadConfig();
-if (result.error) {
-  outputError(result.error);
+const config = new Config();
+if (config.error) {
+  outputError(config.error);
   process.exit(1);
 }
 
-const { schema } = result;
-
-function buildEntry(name) {
-  const entry = computeChange(name, schema, phasesFromArgs(args), { trackLastModified: true });
+function buildEntry(changeName) {
+  const schema = config.schema({ changeName });
+  const entry = computeChange(changeName, schema, phasesFromArgs(args), {
+    trackLastModified: true
+  });
 
   if (entry.error || !entry.plan) return entry;
 

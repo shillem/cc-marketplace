@@ -2,7 +2,7 @@ import { describe, test, expect } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { resolve } from "path";
 import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
-import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
+import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
 describe("archive.mjs", () => {
   test("fails without a change name", async () => {
@@ -104,6 +104,37 @@ describe("archive.mjs", () => {
     const config = yaml.load(readFileSync(resolve(esddPath, "config.yaml"), "utf8"));
     const auth = config.domains.find(d => d.name === "auth");
     expect(auth.description).toBe("Authentication and authorization");
+  });
+
+  test("archives change with per-change workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json, exitCode } = await run("archive.mjs", ["quick-fix"], { esddPath });
+
+    expect(exitCode).toBe(0);
+    expect(json.archived).toBeDefined();
+    expect(json.domains).toBeUndefined();
+  });
+
+  test("archives spec-anchored-quick change with domain extraction", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(
+      esddPath,
+      "changes/med-change/specs/auth/spec.md",
+      "---\ndescription: Auth module\n---\n# Auth delta"
+    );
+    writeYamlFixture(esddPath, "changes/med-change/change.yaml", {
+      workflow: "spec-anchored-quick"
+    });
+
+    const { json, exitCode } = await run("archive.mjs", ["med-change"], { esddPath });
+
+    expect(exitCode).toBe(0);
+    expect(json.domains).toContain("auth");
   });
 
   test("fails if not initialized", async () => {

@@ -15,9 +15,8 @@
    **Existing domains**: <domains>
    **Available workflows**: <workflows>
 
-   **Active Workflow**
-
-   <workflow>
+   **Default Workflow**
+   <defaultWorkflow>
 
    **Constitution**
 
@@ -38,12 +37,13 @@
    - **Otherwise, display as a table.** Example:
 
      ```
-     | Change | Plan | Last Modified | Apply | Last Modified |
-     |--------|------|---------------|-------|----------------|
-     | add-oauth | 2/4 | 2h ago | 0/3 | — |
-     | fix-billing | 4/4 | 1d ago | 2/2 | 3h ago |
+     | Change | Workflow | Plan | Last Modified | Apply | Last Modified |
+     |--------|----------|------|---------------|-------|----------------|
+     | add-oauth | spec-anchored | 2/4 | 2h ago | 0/3 | — |
+     | fix-billing | spec-first-quick | 4/4 | 1d ago | 2/2 | 3h ago |
      ```
 
+     - **Workflow** = `activeChanges.workflow`
      - **Plan** = count of `activeChanges.plan.artifacts` with status `ready` / count of `activeChanges.plan.artifacts`
      - **Apply** = count of `activeChanges.apply.artifacts` with status `done` / count of `activeChanges.apply.artifacts`
      - **Plan Modified** / **Apply Modified** = `lastModified` value; show `—` if `null`

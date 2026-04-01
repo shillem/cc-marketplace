@@ -1,10 +1,10 @@
 ## Why
 
-<!-- Explain the motivation for this change. What problem does this solve? Why now? -->
+<!-- 1-2 sentences on the problem or opportunity -->
 
 ## What Changes
 
-<!-- Describe what will change. Be specific about new domains, modifications, or removals. -->
+<!-- Bullet list of concrete changes -->
 
 ## Domains
 
@@ -24,6 +24,6 @@
   - `<existing-name>`: <what requirement is changing>
 -->
 
-## Impact
+## Approach
 
-<!-- Affected code, APIs, dependencies, systems -->
+<!-- Key technical decisions and rationale -->

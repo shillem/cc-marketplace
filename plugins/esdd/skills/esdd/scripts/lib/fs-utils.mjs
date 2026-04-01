@@ -19,12 +19,12 @@ export function changePath(name) {
   return resolve(esddPath(), "changes", name);
 }
 
-export function ensureDir(dirPath) {
-  mkdirSync(dirPath, { recursive: true });
-}
-
 export function domainsPath() {
   return resolve(esddPath(), "domains");
+}
+
+export function ensureDir(dirPath) {
+  mkdirSync(dirPath, { recursive: true });
 }
 
 export function esddPath() {
@@ -128,11 +128,6 @@ export function schemasDir() {
 
 export function validateChangeName(name) {
   return /^[a-z0-9][a-z0-9_-]*$/i.test(name);
-}
-
-export function writeText(filePath, content) {
-  mkdirSync(dirname(filePath), { recursive: true });
-  writeFileSync(filePath, content);
 }
 
 export function writeYaml(filePath, data) {

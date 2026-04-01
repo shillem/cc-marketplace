@@ -1,4 +1,26 @@
 artifacts:
+  brief:
+    description: Combined proposal and design brief for smaller changes
+    output: brief.md
+    plan:
+      instruction: |
+        Create a brief document that captures WHY this change is needed and HOW you plan to approach it.
+
+        Sections:
+        - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
+        - **What Changes**: Bullet list of concrete changes. Mark breaking changes with **BREAKING**.
+        - **Domains**: Identify which domain specs will be created or modified:
+          - **New Domains**: Domains not yet defined. Use kebab-case names.
+          - **Modified Domains**: Existing domains whose REQUIREMENTS are changing.
+          - Remove either subsection if not applicable.
+        - **Approach**: Key technical decisions with rationale (why X over Y?)
+        - **Risks**: Known risks or trade-offs (omit section if none)
+
+        Existing domains:
+        {{DOMAINS}}
+
+        Keep it to half a page.
+
   proposal:
     description: Initial proposal document outlining the change
     output: proposal.md
@@ -145,9 +167,18 @@ workflows:
     plan: [proposal, specs, design, tasks]
     apply: [tasks]
     archive: [specs]
+  spec-anchored-quick:
+    description: Lighter version of spec-anchored with a brief instead of separate proposal and design. Good for smaller changes that still need spec tracking.
+    plan: [brief, specs, tasks]
+    apply: [tasks]
+    archive: [specs]
   spec-first:
     description: Pipeline with proposal, specs, design, and tasks. Specs organize the change but aren't archived. Best for projects where you want structured planning without long-term spec maintenance.
     plan: [proposal, specs, design, tasks]
+    apply: [tasks]
+  spec-first-quick:
+    description: Lighter version of spec-first with a brief instead of separate proposal and design. Specs organize the change but aren't archived.
+    plan: [brief, specs, tasks]
     apply: [tasks]
 
 workflow: spec-anchored

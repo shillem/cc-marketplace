@@ -1,6 +1,7 @@
 import { describe, test, expect } from "bun:test";
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
+import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
 import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
 
 describe("new.mjs", () => {
@@ -68,5 +69,77 @@ describe("new.mjs", () => {
     expect(artifacts.specs.status).toBe("blocked");
     expect(artifacts.design.status).toBe("blocked");
     expect(artifacts.tasks.status).toBe("blocked");
+  });
+
+  test("--workflow creates change with specified workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    const { json, exitCode } = await run(
+      "new.mjs",
+      ["quick-fix", "--workflow", "spec-first-quick"],
+      {
+        esddPath
+      }
+    );
+
+    expect(exitCode).toBe(0);
+    expect(json.name).toBe("quick-fix");
+    expect(json.plan.workflow).toEqual(["brief", "specs", "tasks"]);
+    expect(json.plan.artifacts.brief.status).toBe("pending");
+    expect(json.plan.artifacts.specs.status).toBe("blocked");
+    expect(json.plan.artifacts.tasks.status).toBe("blocked");
+  });
+
+  test("--workflow writes change.yaml with workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    await run("new.mjs", ["quick-fix", "--workflow", "spec-anchored-quick"], { esddPath });
+
+    const changeConfig = yaml.load(
+      readFileSync(resolve(esddPath, "changes/quick-fix/change.yaml"), "utf8")
+    );
+    expect(changeConfig.workflow).toBe("spec-anchored-quick");
+  });
+
+  test("default writes change.yaml with project workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    await run("new.mjs", ["my-change"], { esddPath });
+
+    const changeConfig = yaml.load(
+      readFileSync(resolve(esddPath, "changes/my-change/change.yaml"), "utf8")
+    );
+    expect(changeConfig.workflow).toBe("spec-anchored");
+  });
+
+  test("--workflow rejects unknown workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    const { json, exitCode } = await run("new.mjs", ["my-change", "--workflow", "nonexistent"], {
+      esddPath
+    });
+
+    expect(exitCode).toBe(1);
+    expect(json.error).toContain("Unknown workflow");
+    expect(json.error).toContain("nonexistent");
+  });
+
+  test("--workflow works with name before or after flag", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+
+    const { json, exitCode } = await run(
+      "new.mjs",
+      ["--workflow", "spec-first-quick", "my-change"],
+      { esddPath }
+    );
+
+    expect(exitCode).toBe(0);
+    expect(json.name).toBe("my-change");
+    expect(json.plan.workflow).toEqual(["brief", "specs", "tasks"]);
   });
 });

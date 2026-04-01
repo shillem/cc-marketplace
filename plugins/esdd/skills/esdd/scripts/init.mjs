@@ -2,7 +2,7 @@
 
 import { relative, resolve } from "path";
 import { esddPath, exists, ensureDir, writeYaml, output, outputError } from "./lib/fs-utils.mjs";
-import { checkConstitution, getConfigPath, loadConfig } from "./lib/config.mjs";
+import { checkConstitution, Config, getConfigPath } from "./lib/config.mjs";
 
 const args = process.argv.slice(2);
 
@@ -18,13 +18,13 @@ if (args.includes("--status")) {
 }
 
 if (args.includes("--survey")) {
-  const config = loadConfig();
+  const config = new Config();
   output({ workflows: config.workflows, constitution: checkConstitution() });
   process.exit(0);
 }
 
 if (args.includes("--create")) {
-  const config = loadConfig();
+  const config = new Config();
 
   if (!config.error) {
     outputError("ESDD is already initialized");

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
+import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
 describe("view.mjs", () => {
   test("returns project overview with no changes", async () => {
@@ -11,7 +11,7 @@ describe("view.mjs", () => {
     expect(exitCode).toBe(0);
     expect(json.path).toBeDefined();
     expect(json.workflows).toContain("spec-anchored");
-    expect(json.workflow).toContain("spec-anchored");
+    expect(json.defaultWorkflow).toContain("spec-anchored");
     expect(json.activeChanges).toEqual([]);
     expect(json.archivedChangesCount).toBe(0);
   });
@@ -51,6 +51,19 @@ describe("view.mjs", () => {
     const { json } = await run("view.mjs", [], { esddPath });
 
     expect(json.domains).toBe("auth, billing");
+  });
+
+  test("includes per-change workflow in active changes", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json } = await run("view.mjs", [], { esddPath });
+
+    const change = json.activeChanges.find(c => c.name === "quick-fix");
+    expect(change.workflow).toBe("spec-first-quick");
+    expect(change.plan.artifacts.brief).toBe("ready");
   });
 
   test("fails if not initialized", async () => {

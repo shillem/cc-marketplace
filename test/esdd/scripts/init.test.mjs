@@ -9,7 +9,7 @@ describe("init.mjs", () => {
     const { json, exitCode } = await run("init.mjs", ["--status"], { esddPath });
 
     expect(exitCode).toBe(0);
-    expect(json).toBe("uninitialized");
+    expect(json.initialized).toBe(false);
   });
 
   test("--status returns initialized when config exists", async () => {
@@ -19,12 +19,13 @@ describe("init.mjs", () => {
     const { json, exitCode } = await run("init.mjs", ["--status"], { esddPath });
 
     expect(exitCode).toBe(0);
-    expect(json).toBe("initialized");
+    expect(json.initialized).toBe(true);
+    expect(json.constitution).toBeDefined();
   });
 
-  test("--list-workflows returns available workflows", async () => {
+  test("--survey returns available workflows", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", ["--list-workflows"], { esddPath });
+    const { json, exitCode } = await run("init.mjs", ["--survey"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.workflows).toBeArray();

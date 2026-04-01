@@ -2,13 +2,16 @@
 
 import { relative, resolve } from "path";
 import { esddPath, listDirs, output, outputError } from "./lib/fs-utils.mjs";
-import { checkConstitution, loadConfig } from "./lib/config.mjs";
+import { checkConstitution, Config } from "./lib/config.mjs";
 import { computeChange } from "./lib/status.mjs";
 
-function buildEntry(name) {
-  const entry = computeChange(name, schema, [], { trackLastModified: true });
+function buildEntry(changeName) {
+  const changeSchema = config.schema({ changeName });
+  const entry = computeChange(changeName, changeSchema, [], { trackLastModified: true });
 
   if (entry.error || !entry.plan) return entry;
+
+  entry.workflow = changeSchema.workflow;
 
   const artifacts = {};
 
@@ -45,22 +48,21 @@ function relativeTime(iso) {
   return `${days}d ago`;
 }
 
-const result = loadConfig();
-if (result.error) {
-  outputError(result.error);
+const config = new Config();
+if (config.error) {
+  outputError(config.error);
   process.exit(1);
 }
 
-const { domains, schema, workflows } = result;
-
+const defaultSchema = config.schema();
 const changesDir = resolve(esddPath(), "changes");
 const archiveDir = resolve(esddPath(), "archive");
 
 output({
   path: relative(process.cwd(), esddPath()),
-  workflows: workflows.map(w => w.name).join(", "),
-  workflow: `${schema.workflow} = ${outputPhases(schema.phases)}`,
-  domains: domains.map(d => d.name).join(", "),
+  workflows: config.workflows.map(w => w.name).join(", "),
+  defaultWorkflow: `${defaultSchema.workflow} = ${outputPhases(defaultSchema.phases)}`,
+  domains: config.domains.map(d => d.name).join(", "),
   constitution: checkConstitution(),
   activeChanges: listDirs(changesDir).map(buildEntry),
   archivedChangesCount: listDirs(archiveDir).length

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
+import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
 describe("status.mjs", () => {
   test("fails without a change name", async () => {
@@ -99,5 +99,29 @@ describe("status.mjs", () => {
     const { json } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
 
     expect(json.plan.artifacts.tasks.status).toBe("ready");
+  });
+
+  test("uses per-change workflow from change.yaml", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/.keep", "");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json, exitCode } = await run("status.mjs", ["quick-fix"], { esddPath });
+
+    expect(exitCode).toBe(0);
+    expect(json.plan.workflow).toEqual(["brief", "specs", "tasks"]);
+    expect(json.plan.artifacts.brief).toBeDefined();
+    expect(json.plan.artifacts.proposal).toBeUndefined();
+  });
+
+  test("falls back to project default without change.yaml", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
+
+    const { json } = await run("status.mjs", ["add-auth"], { esddPath });
+
+    expect(json.plan.workflow).toEqual(["proposal", "specs", "design", "tasks"]);
   });
 });

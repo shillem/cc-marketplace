@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
+import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
 describe("list.mjs", () => {
   test("returns empty list when no changes exist", async () => {
@@ -62,6 +62,23 @@ describe("list.mjs", () => {
     const change = json.changes[0];
     expect(change.apply).toBeDefined();
     expect(change.plan).toBeUndefined();
+  });
+
+  test("handles changes with different workflows", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/big-feature/.keep", "");
+    writeYamlFixture(esddPath, "changes/big-feature/change.yaml", { workflow: "spec-anchored" });
+    writeFixture(esddPath, "changes/quick-fix/.keep", "");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+
+    const { json, exitCode } = await run("list.mjs", ["--plan"], { esddPath });
+
+    expect(exitCode).toBe(0);
+    const big = json.changes.find(c => c.name === "big-feature");
+    const quick = json.changes.find(c => c.name === "quick-fix");
+    expect(big.plan.workflow).toEqual(["proposal", "specs", "design", "tasks"]);
+    expect(quick.plan.workflow).toEqual(["brief", "specs", "tasks"]);
   });
 
   test("fails if not initialized", async () => {
