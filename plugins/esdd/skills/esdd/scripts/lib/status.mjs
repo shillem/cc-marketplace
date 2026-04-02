@@ -16,11 +16,11 @@ import { parseTasks } from "./tasks.mjs";
 export function computeChange(changeName, schema, phases, options) {
   const entry = { name: changeName };
 
-  if (phases.length === 0 || phases.includes("plan") || phases.includes("archive")) {
+  if (phases.length === 0 || phases.includes("plan")) {
     entry.plan = computePlanStatus(changeName, schema, options);
   }
 
-  if (phases.length === 0 || phases.includes("apply") || phases.includes("archive")) {
+  if (phases.length === 0 || phases.includes("apply")) {
     entry.apply = computeApplyStatus(changeName, schema, options);
   }
 
@@ -32,7 +32,6 @@ export function phasesFromArgs(args) {
 
   if (args.includes("--plan")) phases.push("plan");
   if (args.includes("--apply")) phases.push("apply");
-  if (args.includes("--archive")) phases.push("archive");
 
   return phases;
 }

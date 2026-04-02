@@ -1,7 +1,7 @@
 ---
 name: esdd
-description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, or archiving completed work.
-argument-hint: "[init|explore|new|continue|apply|archive|view] [change-name|description]"
+description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, verifying changes, or archiving completed work.
+argument-hint: "[init|explore|new|continue|apply|verify|archive|view] [change-name|description]"
 allowed-tools: Agent, Bash(node *), Bash(mkdir *), Bash(mv *), Edit, Glob, Grep, Read, TodoWrite, Update, Write
 ---
 
@@ -29,5 +29,6 @@ When dispatching to an action, read the corresponding file and follow its instru
 - **new**: [new.md](new.md)
 - **continue**: [continue.md](continue.md)
 - **apply**: [apply.md](apply.md)
+- **verify**: [verify.md](verify.md)
 - **archive**: [archive.md](archive.md)
 - **view**: [view.md](view.md)

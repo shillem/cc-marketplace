@@ -50,20 +50,6 @@ describe("status.mjs", () => {
     expect(json.plan).toBeUndefined();
   });
 
-  test("--archive returns both plan and status", async () => {
-    const esddPath = createTmpDir();
-    initFixture(esddPath);
-    writeFixture(esddPath, "changes/add-auth/.keep", "");
-
-    const { json, exitCode } = await run("status.mjs", ["add-auth", "--archive"], { esddPath });
-
-    console.log(JSON.stringify(json));
-
-    expect(exitCode).toBe(0);
-    expect(json.apply).toBeDefined();
-    expect(json.plan).toBeDefined();
-  });
-
   test("shows ready status for existing artifacts", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
