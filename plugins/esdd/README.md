@@ -148,18 +148,18 @@ See [Commands Reference](.docs/commands.md) for full details.
 
 ## Configuration
 
-**Environment variables**\
+**Environment variables**  
 `ESDD_PATH` — Override the default `.ai/esdd` directory location
 
-**Project context (recommended)**\
+**Project context (recommended)**  
 ESDD reads your `CLAUDE.md` for `## Project Map` and `## Tech Stack` sections.
 These act as project DNA — they give agents essential context about where things
 live and what technologies to use, preventing generic code that doesn't match
 your actual conventions.
 
-**Project files**\
-`.ai/esdd/config.yaml` — Project workflow and domain definitions\
-`.ai/esdd/domains/` — Accumulated domain specifications\
+**Project files**  
+`.ai/esdd/config.yaml` — Project workflow and domain definitions  
+`.ai/esdd/domains/` — Accumulated domain specifications  
 `<change>/change.yaml` — Per-change configuration (workflow, created automatically)
 
 See [Configuration](.docs/configuration.md) for full setup details.
