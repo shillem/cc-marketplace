@@ -2,7 +2,7 @@
 name: stickies
 description: Manage local project stickies as markdown files — create new, read, list, or delete. Use when the user mentions "sticky", "stickies", or wants to take a quick note or save a reminder.
 argument-hint: "[new|list|read|delete] [text]"
-allowed-tools: Bash(mkdir *), Bash(ls *), Bash(rm *), Glob, Read, Write
+allowed-tools: Bash(mkdir), Bash(ls), Bash(rm), Glob, Read, Write
 model: haiku
 ---
 
@@ -10,7 +10,7 @@ Parse `$ARGUMENTS`:
 
 1. Split arguments: first word is `$ACTION`, remainder is `$REST`
 2. If `$ACTION` matches one of the actions, follow the action's instructions
-3. If `$ACTION` is empty or does not match an action, then confirm with user before proceeding
+3. If `$ACTION` is empty or does not match an action — list the available actions and suggest running `/stickies list` to see current state
 
 ## Actions
 
