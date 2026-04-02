@@ -138,6 +138,10 @@ export function getConfigPath() {
   return resolve(esddPath(), "config.yaml");
 }
 
+function isPlainObject(val) {
+  return val !== null && typeof val === "object" && !Array.isArray(val);
+}
+
 function mergeConfigs(schema, config, workflowOverride) {
   const wn = workflowOverride || config?.workflow || Object.keys(schema.workflows || {})[0];
 
@@ -260,11 +264,27 @@ function resolveArtifacts(schema, config) {
   }
 
   for (const id of Object.keys(configArtifacts)) {
-    if (merged[id]) {
-      merged[id] = { ...merged[id], ...configArtifacts[id] };
-    } else {
+    if (!merged[id]) {
       merged[id] = configArtifacts[id];
+      continue;
     }
+
+    const base = merged[id];
+    const override = configArtifacts[id];
+    const result = { ...base };
+
+    for (const key of Object.keys(override)) {
+      const baseVal = base[key];
+      const overVal = override[key];
+
+      if (isPlainObject(baseVal) && isPlainObject(overVal)) {
+        result[key] = { ...baseVal, ...overVal };
+      } else {
+        result[key] = overVal;
+      }
+    }
+
+    merged[id] = result;
   }
 
   return merged;
