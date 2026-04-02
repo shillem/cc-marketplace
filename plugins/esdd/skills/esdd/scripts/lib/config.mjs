@@ -278,6 +278,11 @@ function resolvePhaseInstruction(phase, artifactId, allArtifacts, config) {
 }
 
 function resolveTemplatePath(artifactId, allArtifacts, config) {
+  const art = allArtifacts[artifactId];
+  const output = art?.output;
+  const templateName = output ? multiFileOutputFilename(output) : `${artifactId}.md`;
+
+  // 1. Explicit per-artifact template override from config.yaml
   const configTemplate = config?.artifacts?.[artifactId]?.template;
 
   if (configTemplate) {
@@ -287,9 +292,13 @@ function resolveTemplatePath(artifactId, allArtifacts, config) {
     }
   }
 
-  const art = allArtifacts[artifactId];
-  const output = art?.output;
-  const templateName = output ? multiFileOutputFilename(output) : `${artifactId}.md`;
+  // 2. Implicit user template (same name, in project templates dir)
+  const userPath = resolve(esddPath(), "templates", templateName);
+  if (exists(userPath)) {
+    return userPath;
+  }
+
+  // 3. Bundled plugin default
   const defaultPath = resolve(schemasDir(), "templates", templateName);
 
   if (exists(defaultPath)) {
