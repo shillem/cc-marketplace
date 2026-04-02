@@ -1,4 +1,4 @@
-# Plan Loop
+## Plan Loop
 
 **Expects from calling action:** `<change-name>` and optional `--fast` flag.
 
