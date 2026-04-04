@@ -3,8 +3,6 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import yaml from "../vendor/js-yaml.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 export function artifactPath(changeName, output) {
   const base = changePath(changeName);
 
@@ -13,6 +11,10 @@ export function artifactPath(changeName, output) {
   }
 
   return resolve(base, output);
+}
+
+export function assetsPath() {
+  return resolve(dirname(fileURLToPath(import.meta.url)), "../../assets");
 }
 
 export function changePath(name) {
@@ -120,10 +122,6 @@ export function readText(filePath) {
 
 export function readYaml(filePath) {
   return yaml.load(readFileSync(filePath, "utf8"));
-}
-
-export function schemasDir() {
-  return resolve(__dirname, "../../schemas");
 }
 
 export function validateChangeName(name) {

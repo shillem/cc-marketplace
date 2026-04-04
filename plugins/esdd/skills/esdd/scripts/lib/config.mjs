@@ -6,7 +6,7 @@ import {
   multiFileOutputFilename,
   readText,
   readYaml,
-  schemasDir,
+  assetsPath,
   writeYaml
 } from "./fs-utils.mjs";
 
@@ -27,7 +27,7 @@ export class Config {
       this.error = "ESDD not initialized. Run /esdd init first.";
     }
 
-    this.#baseSchema = readYaml(resolve(schemasDir(), "schema.yaml"));
+    this.#baseSchema = readYaml(resolve(assetsPath(), "schema.yaml"));
   }
 
   get domains() {
@@ -319,7 +319,7 @@ function resolveTemplatePath(artifactId, allArtifacts, config) {
   }
 
   // 3. Bundled plugin default
-  const defaultPath = resolve(schemasDir(), "templates", templateName);
+  const defaultPath = resolve(assetsPath(), "templates", templateName);
 
   if (exists(defaultPath)) {
     return defaultPath;
