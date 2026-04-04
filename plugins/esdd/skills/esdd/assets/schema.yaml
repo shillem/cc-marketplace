@@ -16,7 +16,7 @@ artifacts:
         - **Approach**: Key technical decisions with rationale (why X over Y?)
         - **Risks**: Known risks or trade-offs (omit section if none)
 
-        Existing domains:
+        Existing domains (for context):
         {{DOMAINS}}
 
         Keep it to half a page.
@@ -28,6 +28,9 @@ artifacts:
       instruction: |
         Create the proposal document that establishes WHY this change is needed.
 
+        Existing domains (for context):
+        {{DOMAINS}}
+
         Sections:
         - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
         - **What Changes**: Bullet list of changes. Be specific about new domains, modifications, or removals. Mark breaking changes with **BREAKING**
@@ -36,9 +39,6 @@ artifacts:
           - **Modified Domains**: Existing domains whose REQUIREMENTS are changing. Only include if spec-level behavior changes (not just implementation details).
           - Remove either subsection if not applicable
         - **Impact**: Affected code, APIs, dependencies, or systems
-
-        Existing domain specs:
-        {{DOMAINS}}
 
         Keep it concise (1-2 pages). Focus on the "why" not the "how".
 
@@ -50,31 +50,28 @@ artifacts:
     output: specs/{domain}.md
     plan:
       instruction: |
-        Create specification files that define WHAT the system should do.
+        Create specification files that define WHAT the system should do.  
+        One spec file per domain listed in the proposal's Domains section.
 
-        Existing domains:
+        Existing domains (for context):
         {{DOMAINS}}
 
-        Read the existing domain specs for each of the mentioned domains in the proposal's Domains section.
-
-        Create one spec file per domain listed in the proposal's Domains section:
-        - New Domains: use the exact kebab-case name from the proposal
-          - In the frontmatter description field, write the initial description of the domain's responsibility
-        - Modified Domains: use the existing domain name when creating the delta spec
-          - In the frontmatter description field, write the current domain's description, or update it if the domain's scope has changed
+        For each domain in the proposal's Domains section:
+        - **New Domains**: use the exact kebab-case name from the proposal. In the frontmatter description field, write the initial description of the domain's responsibility.
+        - **Modified Domains**: use the existing domain name when creating the delta domain spec. In the frontmatter description field, write the current domain's description, or update it if the domain's scope has changed. Include ONLY requirements that are actually changing — do not restate the full domain.
 
         Delta operations (use ## headers):
         - **ADDED Requirements**: New requirements for this domain
         - **MODIFIED Requirements**: Changed behavior — MUST include full updated content
-        - **RENAMED Requirements**: Name changes only — use FROM:/TO: format
+        - **RENAMED Requirements**: Name changes only — list pairs as `- FROM: \`old-name\` TO: \`new-name\`` (one pair per bullet)
         - **REMOVED Requirements**: Deprecated features — MUST include **Reason** and **Migration**
 
         Format requirements:
         - Each requirement: `### Requirement: <name>` followed by description
-        - Use SHALL/MUST for normative requirements (avoid should/may)
+          - Use SHALL/MUST for normative requirements (avoid should/may)
         - Each scenario: `#### Scenario: <name>` with WHEN/THEN format
-        - **CRITICAL**: Scenarios MUST use exactly 4 hashtags (`####`). Using 3 hashtags or bullets will fail silently.
-        - Every requirement MUST have at least one scenario
+          - Each scenario is a potential test case — make WHEN/THEN concrete and verifiable
+        - Every requirement MUST have at least one scenario. Split into multiple scenarios for distinct paths (happy path, error cases, edge conditions).
 
         MODIFIED requirements workflow:
         1. Locate the existing requirement in the domain spec file
@@ -82,21 +79,19 @@ artifacts:
         3. Paste under `## MODIFIED Requirements` and edit to reflect new behavior
         4. Ensure header text matches exactly (whitespace-insensitive)
 
-        Common pitfall: Using MODIFIED with partial content loses detail at archive time.
-        If adding new concerns without changing existing behavior, use ADDED instead.
-
-        Specs should be testable — each scenario is a potential test case.
+        Testability:
+        - Consider whether the domain has performance targets, security constraints, or compliance requirements. Express these as regular requirements with measurable WHEN/THEN scenarios (e.g., "WHEN 1000 concurrent requests THEN p95 latency < 200ms").
     archive:
       instruction: |
-        Merge delta specs into the accumulated domain spec files.
+        Merge delta domain specs into the accumulated domain spec files.
 
-        Delta specs:
-        {{DELTAS}}
-
-        Domain specs:
+        Existing domains (for context):
         {{DOMAINS}}
 
-        For each delta spec file, read the corresponding domain spec file (if it exists) and apply changes:
+        Delta domain specs:
+        {{DELTAS}}
+
+        For each delta domain spec file, read the corresponding domain spec file (if it exists) and apply changes:
 
         - **ADDED Requirements**: Append under a `## Requirements` section in the domain spec.
         - **MODIFIED Requirements**: Find the matching requirement in the domain spec by header text (whitespace-insensitive) and replace it entirely. If not found, treat as ADDED.
