@@ -7,9 +7,9 @@ import {
   esddPath,
   exists,
   isMultiFileOutput,
-  listDirs,
-  multiFileOutputFilename,
+  listFiles,
   multiFileOutputPrefix,
+  multiFileOutputSuffix,
   output,
   outputError,
   readFrontmatter,
@@ -66,13 +66,13 @@ for (const id of archive) {
 
   if (!exists(deltaDir)) continue;
 
-  const filename = multiFileOutputFilename(art.output);
+  const suffix = multiFileOutputSuffix(art.output);
 
-  for (const dir of listDirs(deltaDir)) {
-    const fm = readFrontmatter(resolve(deltaDir, dir, filename));
+  for (const name of listFiles(deltaDir, suffix)) {
+    const fm = readFrontmatter(resolve(deltaDir, name));
 
     if (fm?.description) {
-      domains.push({ name: dir, description: fm.description });
+      domains.push({ name: name.slice(0, -suffix.length), description: fm.description });
     }
   }
 }

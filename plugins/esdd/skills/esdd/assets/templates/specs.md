@@ -1,12 +1,12 @@
 ---
-description: <!-- one line domain description -->
+description: <!-- one-line domain description -->
 ---
 
-## ADDED Requirements
+## <!-- ADDED/MODIFIED/REMOVED/RENAMED --> Requirements
 
 ### Requirement: <!-- requirement name -->
 
-<!-- requirement text -->
+<!-- requirement description -->
 
 #### Scenario: <!-- scenario name -->
 

@@ -7,8 +7,8 @@ import {
   listOutputFiles,
   mtime,
   mtimeOrNull,
-  multiFileOutputFilename,
   multiFileOutputPrefix,
+  multiFileOutputSuffix,
   readText
 } from "./fs-utils.mjs";
 import { parseTasks } from "./tasks.mjs";
@@ -108,7 +108,7 @@ function computePlanStatus(changeName, schema, { trackLastModified = false } = {
       const artDir = artifactPath(changeName, output);
       const files = (outputFilesCache[id] ??= listOutputFiles(
         artDir,
-        multiFileOutputFilename(output)
+        multiFileOutputSuffix(output)
       ));
       hasArtifact = existsCache[id] = files.length > 0;
       if (trackLastModified && hasArtifact) {
@@ -153,7 +153,7 @@ function computePlanStatus(changeName, schema, { trackLastModified = false } = {
         const depExists = isMultiFileOutput(depOutput)
           ? (outputFilesCache[depId] ??= listOutputFiles(
               artifactPath(changeName, depOutput),
-              multiFileOutputFilename(depOutput)
+              multiFileOutputSuffix(depOutput)
             )).length > 0
           : exists(resolve(changePath(changeName), depOutput));
         existsCache[depId] = depExists;
@@ -181,9 +181,9 @@ function validateArtifact({ output, outputFiles, isApplyArtifact, taskProgress }
     if (outputFiles.length === 0) {
       return [{ path: prefix, errors: ["No files found"] }];
     }
-    const filename = multiFileOutputFilename(output);
+    const suffix = multiFileOutputSuffix(output);
     return outputFiles.map(f => {
-      const relPath = `${f.name}/${filename}`;
+      const relPath = `${prefix}${f.name}${suffix}`;
       return { path: relPath, errors: [] };
     });
   }

@@ -52,7 +52,7 @@ artifact and the one that persists longest in spec-anchored workflows.
 
 **Structure:**
 
-Each domain gets its own spec file (e.g., `specs/auth/spec.md`) with YAML
+Each domain gets its own spec file (e.g., `specs/auth.md`) with YAML
 frontmatter containing a description.
 
 Requirements follow a strict format:
@@ -85,7 +85,7 @@ Every requirement must have at least one scenario. Scenarios use exactly four
 hashtags (`####`).
 
 During the archive phase of spec-anchored workflows, delta specs are merged into
-the accumulated domain specs under `.ai/esdd/domains/<domain>/spec.md`.
+the accumulated domain specs under `.ai/esdd/domains/<domain>.md`.
 
 ## Design
 

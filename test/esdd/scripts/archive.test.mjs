@@ -57,12 +57,12 @@ describe("archive.mjs", () => {
     initFixture(esddPath);
     writeFixture(
       esddPath,
-      "changes/add-auth/specs/auth/spec.md",
+      "changes/add-auth/specs/auth.md",
       "---\ndescription: Authentication and authorization\n---\n# Auth spec"
     );
     writeFixture(
       esddPath,
-      "changes/add-auth/specs/billing/spec.md",
+      "changes/add-auth/specs/billing.md",
       "---\ndescription: Billing and payments\n---\n# Billing spec"
     );
 
@@ -81,7 +81,7 @@ describe("archive.mjs", () => {
   test("no domains without frontmatter", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Auth spec");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Auth spec");
 
     const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
 
@@ -93,7 +93,7 @@ describe("archive.mjs", () => {
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
     writeFixture(
       esddPath,
-      "changes/add-auth/specs/auth/spec.md",
+      "changes/add-auth/specs/auth.md",
       "---\ndescription: Authentication and authorization\n---\n# Auth spec"
     );
 
@@ -124,7 +124,7 @@ describe("archive.mjs", () => {
     initFixture(esddPath);
     writeFixture(
       esddPath,
-      "changes/med-change/specs/auth/spec.md",
+      "changes/med-change/specs/auth.md",
       "---\ndescription: Auth module\n---\n# Auth delta"
     );
     writeYamlFixture(esddPath, "changes/med-change/change.yaml", {

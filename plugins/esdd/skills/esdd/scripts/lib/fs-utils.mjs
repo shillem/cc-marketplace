@@ -61,22 +61,21 @@ export function listFiles(dirPath, ext) {
   }
 }
 
-export function listOutputFiles(dirPath, filename) {
+export function listOutputFiles(dirPath, suffix) {
   const results = [];
 
-  for (const dir of listDirs(dirPath)) {
-    const filePath = resolve(dirPath, dir, filename);
-
-    if (exists(filePath)) {
-      results.push({ name: dir, path: filePath });
-    }
+  for (const name of listFiles(dirPath, suffix)) {
+    results.push({
+      name: name.slice(0, -suffix.length),
+      path: resolve(dirPath, name)
+    });
   }
 
   return results;
 }
 
-export function multiFileOutputFilename(output) {
-  return output.split("/").pop();
+export function multiFileOutputSuffix(output) {
+  return output.slice(output.indexOf("}") + 1);
 }
 
 export function multiFileOutputPrefix(output) {

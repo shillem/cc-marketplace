@@ -65,7 +65,7 @@ describe("status.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Spec");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Spec");
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
     writeFixture(esddPath, "changes/add-auth/tasks.md", "No checkboxes here");
 
@@ -78,7 +78,7 @@ describe("status.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Spec");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Spec");
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
     writeFixture(esddPath, "changes/add-auth/tasks.md", "## Group 1\n- [ ] 1.1 Do something");
 

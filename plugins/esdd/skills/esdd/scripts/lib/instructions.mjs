@@ -5,7 +5,7 @@ import {
   exists,
   isMultiFileOutput,
   listOutputFiles,
-  multiFileOutputFilename,
+  multiFileOutputSuffix,
   readText
 } from "./fs-utils.mjs";
 import { parseTasks } from "./tasks.mjs";
@@ -32,8 +32,8 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
     };
   }
 
-  const filename = multiFileOutputFilename(art.output);
-  const deltaFiles = listOutputFiles(artifactPath(changeName, art.output), filename);
+  const suffix = multiFileOutputSuffix(art.output);
+  const deltaFiles = listOutputFiles(artifactPath(changeName, art.output), suffix);
 
   if (deltaFiles.length === 0) {
     return { instruction: null };
@@ -54,7 +54,7 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
       return {
         name: df.name,
         description: domain ? domain.description : "",
-        path: resolve(domainsPath(), df.name, "spec.md")
+        path: resolve(domainsPath(), df.name + ".md")
       };
     }),
     cwd
@@ -121,7 +121,7 @@ export function buildPlanInstructions(config, changeName, artifactId) {
       config.domains.map(d => ({
         name: d.name,
         description: d.description,
-        path: resolve(domainsPath(), d.name, "spec.md")
+        path: resolve(domainsPath(), d.name + ".md")
       })),
       process.cwd()
     ),
@@ -138,7 +138,7 @@ function collectDependencyFiles(changeName, artifacts, artifactIds) {
     if (isMultiFileOutput(output)) {
       const outputFiles = listOutputFiles(
         artifactPath(changeName, output),
-        multiFileOutputFilename(output)
+        multiFileOutputSuffix(output)
       );
       for (const file of outputFiles) {
         files.push(relative(process.cwd(), file.path));

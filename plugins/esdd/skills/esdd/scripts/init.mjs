@@ -72,18 +72,8 @@ if (args.includes("--create")) {
   ensureDir(root);
   writeYaml(getConfigPath(), { workflow, domains });
 
-  const dirs = [resolve(root, "changes"), resolve(root, "archive"), resolve(root, "templates")];
-
-  for (const domain of domains) {
-    dirs.push(resolve(root, "domains", domain.name));
-  }
-
-  if (domains.length === 0) {
-    dirs.push(resolve(root, "domains"));
-  }
-
-  for (const dir of dirs) {
-    ensureDir(dir);
+  for (const dir of ["archive", "changes", "domains", "templates"]) {
+    ensureDir(resolve(root, dir));
   }
 
   const cwd = process.cwd();

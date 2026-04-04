@@ -48,7 +48,7 @@ describe("init.mjs", () => {
     expect(existsSync(resolve(esddPath, "domains"))).toBe(true);
   });
 
-  test("--create with domains creates domain directories", async () => {
+  test("--create with domains records them in config", async () => {
     const esddPath = createTmpDir();
     const { json, exitCode } = await run(
       "init.mjs",
@@ -66,8 +66,7 @@ describe("init.mjs", () => {
 
     expect(exitCode).toBe(0);
     expect(json.domains).toBe("auth, billing");
-    expect(existsSync(resolve(esddPath, "domains/auth"))).toBe(true);
-    expect(existsSync(resolve(esddPath, "domains/billing"))).toBe(true);
+    expect(existsSync(resolve(esddPath, "domains"))).toBe(true);
   });
 
   test("--create fails when already initialized", async () => {

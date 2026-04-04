@@ -8,11 +8,11 @@ artifacts:
 
         Sections:
         - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
-        - **What Changes**: Bullet list of concrete changes. Mark breaking changes with **BREAKING**.
+        - **What Changes**: Bullet list of concrete changes. Mark breaking changes with **BREAKING**
         - **Domains**: Identify which domain specs will be created or modified:
           - **New Domains**: Domains not yet defined. Use kebab-case names.
-          - **Modified Domains**: Existing domains whose REQUIREMENTS are changing.
-          - Remove either subsection if not applicable.
+          - **Modified Domains**: Existing domains whose REQUIREMENTS are changing
+          - Remove either subsection if not applicable
         - **Approach**: Key technical decisions with rationale (why X over Y?)
         - **Risks**: Known risks or trade-offs (omit section if none)
 
@@ -20,7 +20,6 @@ artifacts:
         {{DOMAINS}}
 
         Keep it to half a page.
-
   proposal:
     description: Initial proposal document outlining the change
     output: proposal.md
@@ -31,50 +30,51 @@ artifacts:
 
         Sections:
         - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
-        - **What Changes**: Bullet list of changes. Be specific about new domains, modifications, or removals. Mark breaking changes with **BREAKING**.
+        - **What Changes**: Bullet list of changes. Be specific about new domains, modifications, or removals. Mark breaking changes with **BREAKING**
         - **Domains**: Identify which domain specs will be created or modified:
           - **New Domains**: Domains not yet defined that this change introduces. Use kebab-case names.
           - **Modified Domains**: Existing domains whose REQUIREMENTS are changing. Only include if spec-level behavior changes (not just implementation details).
-          - Remove either subsection if not applicable.
-        - **Impact**: Affected code, APIs, dependencies, or systems.
+          - Remove either subsection if not applicable
+        - **Impact**: Affected code, APIs, dependencies, or systems
 
-        Existing domains:
+        Existing domain specs:
         {{DOMAINS}}
 
-        Keep it concise (1-2 pages). Focus on the "why" not the "how" — implementation details belong in design.md.
+        Keep it concise (1-2 pages). Focus on the "why" not the "how".
 
         **Important**:
         - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When domain's description appears insufficient, use the **Agent** tool to evaluate which ones will be affected.
-
+        - When a domain's description appears insufficient, use the **Agent** tool to evaluate which ones will be affected.
   specs:
     description: Detailed specifications for the change
-    output: specs/{domain}/spec.md
+    output: specs/{domain}.md
     plan:
       instruction: |
         Create specification files that define WHAT the system should do.
 
-        Create one spec file per domain listed in the proposal's Domains section.
-        - New Domains: use the exact kebab-case name from the proposal.
-        - Modified Domains: use the existing domain name when creating the delta spec.
+        Existing domains:
+        {{DOMAINS}}
 
         Read the existing domain specs for each of the mentioned domains in the proposal's Domains section.
 
-        Existing domains:
-        {{DOMAINS}}
+        Create one spec file per domain listed in the proposal's Domains section:
+        - New Domains: use the exact kebab-case name from the proposal
+          - In the frontmatter description field, write the initial description of the domain's responsibility
+        - Modified Domains: use the existing domain name when creating the delta spec
+          - In the frontmatter description field, write the current domain's description, or update it if the domain's scope has changed
 
         Delta operations (use ## headers):
         - **ADDED Requirements**: New requirements for this domain
         - **MODIFIED Requirements**: Changed behavior — MUST include full updated content
-        - **REMOVED Requirements**: Deprecated features — MUST include **Reason** and **Migration**
         - **RENAMED Requirements**: Name changes only — use FROM:/TO: format
+        - **REMOVED Requirements**: Deprecated features — MUST include **Reason** and **Migration**
 
         Format requirements:
         - Each requirement: `### Requirement: <name>` followed by description
         - Use SHALL/MUST for normative requirements (avoid should/may)
         - Each scenario: `#### Scenario: <name>` with WHEN/THEN format
         - **CRITICAL**: Scenarios MUST use exactly 4 hashtags (`####`). Using 3 hashtags or bullets will fail silently.
-        - Every requirement MUST have at least one scenario.
+        - Every requirement MUST have at least one scenario
 
         MODIFIED requirements workflow:
         1. Locate the existing requirement in the domain spec file
@@ -98,18 +98,12 @@ artifacts:
 
         For each delta spec file, read the corresponding domain spec file (if it exists) and apply changes:
 
-        - **ADDED Requirements**: Append under an `## Requirements` section in the domain spec.
+        - **ADDED Requirements**: Append under a `## Requirements` section in the domain spec.
         - **MODIFIED Requirements**: Find the matching requirement in the domain spec by header text (whitespace-insensitive) and replace it entirely. If not found, treat as ADDED.
         - **RENAMED Requirements**: Find by the FROM: name and update the header to the TO: name.
         - **REMOVED Requirements**: Find and remove the matching requirement from the domain spec. If not found, skip silently.
 
-        If the domain spec file doesn't exist yet, create the domain directory and spec file with the ADDED requirements.
-
-        Every delta spec file MUST include a YAML frontmatter `description` field:
-
-        - For new domains, write the initial description of the domain's responsibility.
-        - For modified domains, update the description if the domain's scope has changed.
-
+        If the domain spec file doesn't exist yet, create it with the ADDED requirements.
   design:
     description: Technical design document with implementation details
     output: design.md
@@ -132,7 +126,6 @@ artifacts:
         Focus on architecture and approach, not line-by-line implementation.
 
         Good design docs explain the "why" behind technical decisions.
-
   tasks:
     description: Implementation checklist with trackable tasks
     output: tasks.md

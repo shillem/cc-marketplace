@@ -3,7 +3,6 @@ import {
   changePath,
   exists,
   esddPath,
-  multiFileOutputFilename,
   readText,
   readYaml,
   assetsPath,
@@ -199,7 +198,7 @@ function mergeConfigs(schema, config, workflowOverride) {
     const applyInstruction = resolvePhaseInstruction("apply", id, allArtifacts, config);
     const archiveInstruction = resolvePhaseInstruction("archive", id, allArtifacts, config);
 
-    const templatePath = resolveTemplatePath(id, allArtifacts, config);
+    const templatePath = resolveTemplatePath(id, config);
     if (!templatePath) {
       errors.push(`Artifact '${id}' has no template`);
     }
@@ -297,10 +296,8 @@ function resolvePhaseInstruction(phase, artifactId, allArtifacts, config) {
   return mergeInstruction(base, cfg?.[phase]?.instruction, cfg?.[phase]?.instruction_addendum);
 }
 
-function resolveTemplatePath(artifactId, allArtifacts, config) {
-  const art = allArtifacts[artifactId];
-  const output = art?.output;
-  const templateName = output ? multiFileOutputFilename(output) : `${artifactId}.md`;
+function resolveTemplatePath(artifactId, config) {
+  const templateName = `${artifactId}.md`;
 
   // 1. Explicit per-artifact template override from config.yaml
   const configTemplate = config?.artifacts?.[artifactId]?.template;

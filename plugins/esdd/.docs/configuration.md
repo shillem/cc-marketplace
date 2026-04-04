@@ -101,9 +101,9 @@ domains:
 ### How domains are used
 
 1. **During planning** — Specs are scoped per domain, so each domain gets its own
-   spec file (e.g., `specs/auth/spec.md`)
+   spec file (e.g., `specs/auth.md`)
 2. **During archiving** — Delta specs are merged into accumulated domain specs at
-   `.ai/esdd/domains/<domain>/spec.md`
+   `.ai/esdd/domains/<domain>.md`
 3. **As persistent context** — Accumulated specs give agents understanding of your
    system that carries across changes
 
@@ -125,8 +125,7 @@ After initialization:
       change.yaml                 # Per-change workflow override
       proposal.md                 # Plan artifacts
       specs/
-        auth/
-          spec.md
+        auth.md
       design.md
       tasks.md
   archive/                        # Completed changes
@@ -134,10 +133,8 @@ After initialization:
       ...
   templates/                      # (Optional) Project-specific artifact templates
   domains/                        # Accumulated domain specs
-    auth/
-      spec.md                     # Grows with each archived change
-    billing/
-      spec.md
+    auth.md                       # Grows with each archived change
+    billing.md
 ```
 
 ## Artifact Overrides

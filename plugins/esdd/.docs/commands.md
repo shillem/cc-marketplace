@@ -30,8 +30,7 @@ Surveys the project and walks you through setup:
   changes/            # Active changes
   archive/            # Completed changes
   templates/          # (Optional) Project-specific artifact templates
-  domains/
-    <domain>/         # One directory per domain
+  domains/            # One <domain>.md file per domain (created on archive)
 ```
 
 ## explore

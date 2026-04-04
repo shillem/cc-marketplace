@@ -93,7 +93,7 @@ describe("instructions.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Spec");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Spec");
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
 
     const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "tasks"], {
@@ -226,7 +226,7 @@ describe("instructions.mjs", () => {
   test("archive returns instruction with delta spec domains", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Delta spec");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Delta spec");
 
     const { json, exitCode } = await run(
       "instructions.mjs",
@@ -239,15 +239,15 @@ describe("instructions.mjs", () => {
     expect(json.instruction).toContain(": Authentication");
     expect(json.instruction).not.toContain("{{DELTAS}}");
     expect(json.instruction).not.toContain("{{DOMAINS}}");
-    expect(json.instruction).toContain("specs/auth/spec.md");
-    expect(json.instruction).toContain("domains/auth/spec.md");
+    expect(json.instruction).toContain("specs/auth.md");
+    expect(json.instruction).toContain("domains/auth.md");
   });
 
   test("archive includes known and unknown domains from delta files", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
-    writeFixture(esddPath, "changes/add-auth/specs/auth/spec.md", "# Auth delta");
-    writeFixture(esddPath, "changes/add-auth/specs/billing/spec.md", "# Billing delta");
+    writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Auth delta");
+    writeFixture(esddPath, "changes/add-auth/specs/billing.md", "# Billing delta");
 
     const { json, exitCode } = await run(
       "instructions.mjs",
