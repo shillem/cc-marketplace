@@ -42,6 +42,18 @@
       }
     },
     {
+      "name": "esdd",
+      "description": "Express spec-driven development — lightweight, customizable, building living specs that document your project's intent over time",
+      "version": "1.0.0",
+      "author": {
+        "name": "Shillem Volpato",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/esdd",
+      "category": "development",
+      "strict": false
+    },
+    {
       "name": "scala-lsp",
       "description": "Scala language server for enhanced code intelligence",
       "version": "1.0.0",
@@ -66,7 +78,7 @@
     {
       "name": "stickies",
       "description": "Manage local project stickies as markdown files",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
