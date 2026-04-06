@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun test
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(jq -r '.version' .claude-plugin/marketplace.json)
+          CHANGELOG=$(awk '/^## \['"$VERSION"'\]/{found=1; next} /^## \[/{if(found) exit} found' CHANGELOG.md)
+
+          gh release create "v$VERSION" \
+            --title "v$VERSION" \
+            --notes "$CHANGELOG" \
+            --target main
