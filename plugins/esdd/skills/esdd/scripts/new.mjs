@@ -10,19 +10,13 @@ import {
 } from "./lib/fs-utils.mjs";
 import { Config } from "./lib/config.mjs";
 import { computeChange } from "./lib/status.mjs";
+import { monitorErrors, parseArg } from "./lib/init.mjs";
+
+monitorErrors();
 
 const args = process.argv.slice(2);
-let name = null;
-let workflowName = null;
-
-for (let i = 0; i < args.length; i++) {
-  if (args[i] === "--workflow" && args[i + 1]) {
-    workflowName = args[i + 1];
-    i++;
-  } else if (!name) {
-    name = args[i];
-  }
-}
+const workflowName = parseArg(args, "--workflow");
+const name = args.find(a => !a.startsWith("--") && a !== workflowName) || null;
 
 if (!name) {
   outputError("Usage: new.mjs <name> [--workflow <workflow>]");
@@ -42,10 +36,6 @@ if (exists(dest)) {
 }
 
 const config = new Config();
-if (config.error) {
-  outputError(config.error);
-  process.exit(1);
-}
 
 if (workflowName) {
   const names = config.workflows.map(w => w.name);
@@ -58,12 +48,8 @@ if (workflowName) {
 
 const schema = config.schema({ workflowName });
 
-if (schema.errors) {
-  outputError(`Workflow '${schema.workflow}' has errors: ${schema.errors.join(", ")}`);
-  process.exit(1);
-}
-
 ensureDir(dest);
+
 config.writeChangeConfig(name, { workflow: schema.workflow });
 
 output(computeChange(name, schema, []));

@@ -10,7 +10,7 @@
    ```markdown
    ## Tech Stack
 
-   TypeScript, React, Node.js, PostgreSQL
+   TypeScript, React, Node.js, PostgreSQL.
 
    ## Project Map
 
@@ -18,12 +18,6 @@
    - `src/web/` — React web application
    - `src/shared/` — shared utilities and types
    - `tests/` — test suites
-   - `docs/` — documentation
-
-   <important if="you are creating new API endpoints">
-   - All endpoints require auth middleware (see `src/api/middleware/auth.ts`)
-   - Return standardized error responses using `ApiError` from `src/api/errors.ts`
-   </important>
    ```
 
 2. **Present workflows:**
@@ -54,4 +48,4 @@
    **Workflow**: <workflow>
    ```
 
-7. **Suggest next steps:** `/esdd new <feature>` to plan a change, or `/esdd explore` to think about something first
+7. **Suggest next steps:** `/esdd new <feature>` to plan a change, or `/esdd explore` to think about something first. If the workflow supports it and the project has existing code, `/esdd document --domain <name>:<description>` can bootstrap accumulated domain specs from that code.

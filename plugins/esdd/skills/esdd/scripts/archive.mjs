@@ -16,6 +16,9 @@ import {
   validateChangeName
 } from "./lib/fs-utils.mjs";
 import { Config } from "./lib/config.mjs";
+import { monitorErrors } from "./lib/init.mjs";
+
+monitorErrors();
 
 const changeName = process.argv[2];
 
@@ -47,10 +50,6 @@ if (exists(archivePath)) {
 }
 
 const config = new Config();
-if (config.error) {
-  outputError(config.error);
-  process.exit(1);
-}
 
 const domains = [];
 

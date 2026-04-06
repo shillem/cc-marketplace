@@ -70,6 +70,7 @@ ESDD keeps the leverage while cutting the ceremony:
 
 ```
 /esdd init          # Set up ESDD for your project
+/esdd document      # Document domains from existing code
 /esdd new           # Plan a new change
 /esdd apply         # Implement the planned tasks
 /esdd verify        # Check implementation against intent
@@ -136,6 +137,7 @@ See [Workflows](.docs/workflows.md) for when and why to use each.
 | Command    | Purpose                                   | Key Flags              |
 | ---------- | ----------------------------------------- | ---------------------- |
 | `init`     | Initialize ESDD for the project           | —                      |
+| `document` | Document domains from existing code       | `--domain`, `--scan`   |
 | `explore`  | Open-ended thinking partner (no code)     | —                      |
 | `new`      | Create and plan a new change              | `--fast`, `--workflow` |
 | `continue` | Resume planning an incomplete change      | `--fast`               |

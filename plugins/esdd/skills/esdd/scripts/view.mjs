@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 import { relative, resolve } from "path";
-import { esddPath, listDirs, output, outputError } from "./lib/fs-utils.mjs";
+import { esddPath, listDirs, output } from "./lib/fs-utils.mjs";
 import { checkConstitution, Config } from "./lib/config.mjs";
 import { computeChange } from "./lib/status.mjs";
+import { monitorErrors } from "./lib/init.mjs";
 
 function buildEntry(changeName) {
   const changeSchema = config.schema({ changeName });
@@ -48,12 +49,9 @@ function relativeTime(iso) {
   return `${days}d ago`;
 }
 
-const config = new Config();
-if (config.error) {
-  outputError(config.error);
-  process.exit(1);
-}
+monitorErrors();
 
+const config = new Config();
 const defaultSchema = config.schema();
 const changesDir = resolve(esddPath(), "changes");
 const archiveDir = resolve(esddPath(), "archive");

@@ -3,6 +3,7 @@
 import { relative, resolve } from "path";
 import { esddPath, exists, ensureDir, writeYaml, output, outputError } from "./lib/fs-utils.mjs";
 import { checkConstitution, Config, getConfigPath } from "./lib/config.mjs";
+import { parseDomain } from "./lib/init.mjs";
 
 const args = process.argv.slice(2);
 
@@ -24,30 +25,19 @@ if (args.includes("--survey")) {
 }
 
 if (args.includes("--create")) {
-  const config = new Config();
-
-  if (!config.error) {
+  if (exists(getConfigPath())) {
     outputError("ESDD is already initialized");
     process.exit(1);
   }
+
+  const config = new Config();
 
   const domains = [];
   let workflow = null;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--domain" && args[i + 1]) {
-      const value = args[i + 1];
-      const colonIndex = value.indexOf(":");
-
-      if (colonIndex === -1) {
-        domains.push({ name: value, description: "" });
-      } else {
-        domains.push({
-          name: value.slice(0, colonIndex).trim(),
-          description: value.slice(colonIndex + 1).trim()
-        });
-      }
-
+      domains.push(parseDomain(args[i + 1]));
       i++;
     }
 

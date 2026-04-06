@@ -3,6 +3,7 @@ artifacts:
     description: Combined proposal and design brief for smaller changes
     output: brief.md
     plan:
+      template: brief.md
       instruction: |
         Create a brief document that captures WHY this change is needed and HOW you plan to approach it.
 
@@ -24,6 +25,7 @@ artifacts:
     description: Initial proposal document outlining the change
     output: proposal.md
     plan:
+      template: proposal.md
       discussion: true
       instruction: |
         Create the proposal document that establishes WHY this change is needed.
@@ -49,6 +51,7 @@ artifacts:
     description: Detailed specifications for the change
     output: specs/{domain}.md
     plan:
+      template: spec.md
       instruction: |
         Create specification files that define WHAT the system should do.  
         One spec file per domain listed in the proposal's Domains section.
@@ -99,10 +102,29 @@ artifacts:
         - **REMOVED Requirements**: Find and remove the matching requirement from the domain spec. If not found, skip silently.
 
         If the domain spec file doesn't exist yet, create it with the ADDED requirements.
+    document:
+      template: domain.md
+      instruction: |
+        Analyze the code within the scope and produce an accumulated domain spec.
+        If the scope is empty, infer relevant paths from the domain name, its description, and project map if defined.
+
+        Format requirements:
+        - Each requirement: `### Requirement: <name>` followed by description
+          - Use SHALL/MUST for normative requirements (avoid should/may)
+        - Each scenario: `#### Scenario: <name>` with WHEN/THEN format
+          - Each scenario is a potential test case — make WHEN/THEN concrete and verifiable
+        - Every requirement MUST have at least one scenario. Split into multiple scenarios for distinct paths (happy path, error cases, edge conditions).
+
+        If a spec file already exists at the output path, treat its requirements as the authoritative baseline. For each existing requirement:
+          - If code within the scope supports it, keep and optionally refine wording
+          - If code within the scope contradicts it, report to the user
+          - If the scope is silent on it, report to the user. Silence does not imply the requirement is invalid
+          - Then add any new requirements for behaviors found within the scope that aren't covered by existing requirements
   design:
     description: Technical design document with implementation details
     output: design.md
     plan:
+      template: design.md
       discussion: true
       instruction: |
         Create the design document that explains HOW to implement the change.
@@ -125,6 +147,7 @@ artifacts:
     description: Implementation checklist with trackable tasks
     output: tasks.md
     plan:
+      template: tasks.md
       instruction: |
         Create the task list that breaks down the implementation work.
 
@@ -155,11 +178,13 @@ workflows:
     plan: [proposal, specs, design, tasks]
     apply: [tasks]
     archive: [specs]
+    document: specs
   spec-anchored-quick:
     description: Lighter version of spec-anchored with a brief instead of separate proposal and design. Good for smaller changes that still need spec tracking.
     plan: [brief, specs, tasks]
     apply: [tasks]
     archive: [specs]
+    document: specs
   spec-first:
     description: Pipeline with proposal, specs, design, and tasks. Specs organize the change but aren't archived. Best for projects where you want structured planning without long-term spec maintenance.
     plan: [proposal, specs, design, tasks]

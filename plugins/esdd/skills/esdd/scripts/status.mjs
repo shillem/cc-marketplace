@@ -3,7 +3,10 @@
 import { relative } from "path";
 import { changePath, output, outputError } from "./lib/fs-utils.mjs";
 import { Config } from "./lib/config.mjs";
-import { computeChange, phasesFromArgs } from "./lib/status.mjs";
+import { computeChange } from "./lib/status.mjs";
+import { monitorErrors, parsePhases } from "./lib/init.mjs";
+
+monitorErrors();
 
 const args = process.argv.slice(2);
 
@@ -15,13 +18,8 @@ if (!changeName) {
 }
 
 const config = new Config();
-if (config.error) {
-  output(config);
-  process.exit(1);
-}
-
 const schema = config.schema({ changeName });
-const entry = computeChange(changeName, schema, phasesFromArgs(args));
+const entry = computeChange(changeName, schema, parsePhases(args));
 
 if (entry.error) {
   output(entry);

@@ -26,7 +26,7 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
 
   if (!multiFile) {
     return {
-      instruction: art.archiveInstruction
+      instruction: art.archive.instruction
         .replace("{{DELTAS}}", `- ${relative(cwd, artifactPath(changeName, art.output))}`)
         .replace("{{DOMAINS}}", `- ${relative(cwd, domainsPath())}`)
     };
@@ -39,7 +39,7 @@ export function buildArchiveInstructions(config, changeName, artifactId) {
     return { instruction: null };
   }
 
-  let instruction = art.archiveInstruction;
+  let instruction = art.archive.instruction;
 
   if (instruction.includes("{{DELTAS}}")) {
     const lines = deltaFiles.map(df => `- [${df.name}](${relative(cwd, df.path)})`);
@@ -87,7 +87,7 @@ export function buildApplyInstructions(config, changeName, artifactId, groupId) 
     return { error: `Group id ${groupId} out of range (1-${groups.length})` };
   }
 
-  let instruction = art.applyInstruction;
+  let instruction = art.apply.instruction;
 
   if (instruction.includes("{{TASK_GROUP}}")) {
     instruction = instruction.replace("{{TASK_GROUP}}", groups[groupIndex].group);
@@ -114,10 +114,10 @@ export function buildPlanInstructions(config, changeName, artifactId) {
   const art = artifacts[artifactId];
 
   return {
-    discussion: art.discussion,
-    templatePath: art.templatePath,
+    discussion: art.plan.discussion,
+    templatePath: art.plan.template,
     instruction: replaceDomains(
-      art.instruction,
+      art.plan.instruction,
       config.domains.map(d => ({
         name: d.name,
         description: d.description,

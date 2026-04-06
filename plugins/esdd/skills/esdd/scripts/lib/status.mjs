@@ -27,15 +27,6 @@ export function computeChange(changeName, schema, phases, options) {
   return entry;
 }
 
-export function phasesFromArgs(args) {
-  const phases = [];
-
-  if (args.includes("--plan")) phases.push("plan");
-  if (args.includes("--apply")) phases.push("apply");
-
-  return phases;
-}
-
 function computeApplyStatus(changeName, schema, { trackLastModified = false } = {}) {
   const { phases, artifacts } = schema;
   const apply = phases.apply;

@@ -30,8 +30,38 @@ Surveys the project and walks you through setup:
   changes/            # Active changes
   archive/            # Completed changes
   templates/          # (Optional) Project-specific artifact templates
-  domains/            # One <domain>.md file per domain (created on archive)
+  domains/            # One <domain>.md file per domain (created via document or archive)
 ```
+
+## document
+
+Document domains directly from existing code, creating or updating domain spec
+files without going through a full change workflow.
+
+```
+/esdd document --domain <name>:<description> [--domain ...] [--scan <glob>]
+```
+
+Scans your codebase and produces domain spec files at `.ai/esdd/domains/`. Use
+this to bootstrap domain knowledge from an existing project or to update domain
+specs independently of a change.
+
+**Flags:**
+
+| Flag                            | Effect                                    |
+| ------------------------------- | ----------------------------------------- |
+| `--domain <name>:<description>` | Domain to document (required, repeatable) |
+| `--scan <glob>`                 | Glob pattern to scope the code scan       |
+
+If `--scan` is omitted, ESDD suggests a scope derived from the domain name and
+project map, then asks for confirmation.
+
+**What happens:**
+
+1. For each domain, scans the code within the specified scope
+2. Produces a domain spec file at `.ai/esdd/domains/<name>.md` using the domain
+   template
+3. Registers the domain in `config.yaml` if it isn't already defined
 
 ## explore
 

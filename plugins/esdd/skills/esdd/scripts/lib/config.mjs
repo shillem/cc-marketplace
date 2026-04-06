@@ -23,10 +23,14 @@ export class Config {
     try {
       this.#userConfig = readYaml(getConfigPath());
     } catch {
-      this.error = "ESDD not initialized. Run /esdd init first.";
+      // uninitialized; #userConfig stays undefined
     }
 
     this.#baseSchema = readYaml(resolve(assetsPath(), "schema.yaml"));
+  }
+
+  get initialized() {
+    return this.#userConfig != null;
   }
 
   get domains() {
@@ -38,29 +42,17 @@ export class Config {
   }
 
   schema({ changeName, workflowName } = {}) {
-    if (!this.#userConfig) return undefined;
-
-    if (workflowName) {
-      return this.#resolveWorkflow(workflowName);
+    if (!this.initialized) {
+      throw new ConfigError("ESDD not initialized. Run /esdd init first.");
     }
 
-    if (!changeName) {
-      return this.#resolveWorkflow();
+    const resolved = this.#resolveAny({ changeName, workflowName });
+
+    if (resolved.errors) {
+      throw new ConfigError(resolved.errors);
     }
 
-    if (this.#changeCache[changeName]) {
-      return this.#changeCache[changeName];
-    }
-
-    let workflow;
-
-    try {
-      workflow = readYaml(resolve(changePath(changeName), "change.yaml"))?.workflow;
-    } catch {
-      // no per-change config
-    }
-
-    return (this.#changeCache[changeName] = this.#resolveWorkflow(workflow));
+    return resolved;
   }
 
   updateConfig(properties) {
@@ -93,6 +85,30 @@ export class Config {
     writeYaml(resolve(changePath(changeName), "change.yaml"), data);
   }
 
+  #resolveAny({ changeName, workflowName }) {
+    if (workflowName) {
+      return this.#resolveWorkflow(workflowName);
+    }
+
+    if (!changeName) {
+      return this.#resolveWorkflow();
+    }
+
+    if (this.#changeCache[changeName]) {
+      return this.#changeCache[changeName];
+    }
+
+    let workflow;
+
+    try {
+      workflow = readYaml(resolve(changePath(changeName), "change.yaml"))?.workflow;
+    } catch {
+      // no per-change config
+    }
+
+    return (this.#changeCache[changeName] = this.#resolveWorkflow(workflow));
+  }
+
   #resolveWorkflow(workflowName) {
     const defaultSchema = (this.#workflowCache[""] ??= mergeConfigs(
       this.#baseSchema,
@@ -108,6 +124,13 @@ export class Config {
       this.#userConfig,
       workflowName
     ));
+  }
+}
+
+export class ConfigError extends Error {
+  constructor(messages) {
+    super(Array.isArray(messages) ? messages.join("; ") : messages);
+    this.name = "ConfigError";
   }
 }
 
@@ -142,106 +165,104 @@ function isPlainObject(val) {
 }
 
 function mergeConfigs(schema, config, workflowOverride) {
-  const wn = workflowOverride || config?.workflow || Object.keys(schema.workflows || {})[0];
+  const result = {
+    workflow: workflowOverride || config?.workflow || Object.keys(schema.workflows || {})[0],
+    phases: {},
+    artifacts: {}
+  };
 
-  if (!wn) {
+  if (!result.workflow) {
     return { errors: ["No workflow defined"] };
   }
 
-  const workflow = config?.workflows?.[wn] || schema.workflows?.[wn] || null;
+  const workflow =
+    config?.workflows?.[result.workflow] || schema.workflows?.[result.workflow] || null;
 
   if (!workflow) {
-    return { errors: [`Workflow '${wn}' not found`] };
-  }
-
-  const plan = workflow.plan || [];
-  const apply = workflow.apply || [];
-  const archive = workflow.archive || [];
-
-  if (plan.length === 0) {
-    return { errors: ["Plan phase is empty"] };
-  }
-
-  if (apply.length === 0) {
-    return { errors: ["Apply phase is empty"] };
+    return { errors: [`Workflow '${result.workflow}' not found`] };
   }
 
   const allArtifacts = resolveArtifacts(schema, config);
   const errors = [];
-  const seen = new Set();
-  const artifacts = {};
 
-  for (const id of plan) {
-    if (seen.has(id)) {
-      errors.push(`Duplicate artifact ID in plan phase: ${id}`);
-    }
-    seen.add(id);
+  for (const phase of ["plan", "apply", "archive"]) {
+    result.phases[phase] = workflow[phase] || [];
 
-    const art = allArtifacts[id];
-    if (!art) {
-      errors.push(`Artifact '${id}' not found in artifacts`);
-      continue;
+    if (phase === "plan" && result.phases[phase].length === 0) {
+      return { errors: ["Plan phase is empty"] };
     }
 
-    const description = art.description || null;
-    const output = art.output || null;
-    if (!output) {
-      errors.push(`Artifact '${id}' has no output`);
+    if (phase === "apply" && result.phases[phase].length === 0) {
+      return { errors: ["Apply phase is empty"] };
     }
 
-    const instruction = resolvePhaseInstruction("plan", id, allArtifacts, config);
-    if (!instruction) {
-      errors.push(`Artifact '${id}' has no plan.instruction`);
-    }
+    const seen = new Set();
 
-    const discussion = allArtifacts[id]?.plan?.discussion === true;
-    const applyInstruction = resolvePhaseInstruction("apply", id, allArtifacts, config);
-    const archiveInstruction = resolvePhaseInstruction("archive", id, allArtifacts, config);
+    for (const id of result.phases[phase]) {
+      if (seen.has(id)) {
+        errors.push(`Duplicate artifact ID in ${phase} phase: ${id}`);
+      }
+      seen.add(id);
 
-    const templatePath = resolveTemplatePath(id, config);
-    if (!templatePath) {
-      errors.push(`Artifact '${id}' has no template`);
-    }
+      const art = allArtifacts[id];
+      if (!art) {
+        errors.push(`Artifact '${id}' not found in artifacts`);
+        continue;
+      }
 
-    artifacts[id] = {
-      description,
-      discussion,
-      output,
-      instruction,
-      applyInstruction,
-      archiveInstruction,
-      templatePath
-    };
-  }
+      const entry =
+        result.artifacts[id] ||
+        (result.artifacts[id] = {
+          description: art.description,
+          output: art.output
+        });
 
-  function validatePhaseArtifacts(phase, ids) {
-    for (const id of ids) {
-      if (!seen.has(id)) {
-        errors.push(`${phase} phase artifact '${id}' not found in plan phase`);
-      } else if (!artifacts[id]?.[`${phase}Instruction`]) {
-        errors.push(`${phase} phase artifact '${id}' has no ${phase}.instruction`);
+      if (!entry.output) {
+        errors.push(`Artifact '${id}' has no output`);
+      }
+
+      entry[phase] = {
+        instruction: mergeInstruction(art[phase]?.instruction, art[phase]?.instruction_addendum),
+        template: resolveTemplatePath(art[phase]?.template)
+      };
+
+      if (phase === "plan") {
+        entry[phase].discussion = art[phase]?.discussion === true;
+      }
+
+      if (!entry[phase].instruction) {
+        errors.push(`Artifact '${id}' has no ${phase}.instruction`);
       }
     }
   }
 
-  validatePhaseArtifacts("apply", apply);
-  validatePhaseArtifacts("archive", archive);
+  if (workflow.document) {
+    const id = workflow.document;
+    const art = allArtifacts[id];
 
-  if (errors.length > 0) {
-    return { errors };
+    if (!art) {
+      errors.push(`Artifact '${id}' not found in artifacts`);
+    } else {
+      result.document = {
+        id,
+        instruction: mergeInstruction(
+          art.document?.instruction,
+          art.document?.instruction_addendum
+        ),
+        template: resolveTemplatePath(art.document?.template)
+      };
+
+      if (!result.document.instruction) {
+        errors.push(`Artifact '${id}' has no document.instruction`);
+      }
+    }
   }
 
-  return {
-    workflow: wn,
-    phases: { plan, apply, archive },
-    artifacts
-  };
+  return errors.length > 0 ? { errors } : result;
 }
 
-function mergeInstruction(base, override, addendum) {
-  if (override) return override;
-  if (addendum && base) return base + "\n" + addendum;
-  return base;
+function mergeInstruction(base, addendum) {
+  return addendum ? base + "\n" + addendum : base;
 }
 
 function mergeWorkflows(sw, cw) {
@@ -289,37 +310,13 @@ function resolveArtifacts(schema, config) {
   return merged;
 }
 
-function resolvePhaseInstruction(phase, artifactId, allArtifacts, config) {
-  const base = allArtifacts[artifactId]?.[phase]?.instruction || null;
-  const cfg = config?.artifacts?.[artifactId];
+function resolveTemplatePath(template) {
+  if (template) {
+    const userPhasePath = resolve(esddPath(), "templates", template);
+    if (exists(userPhasePath)) return userPhasePath;
 
-  return mergeInstruction(base, cfg?.[phase]?.instruction, cfg?.[phase]?.instruction_addendum);
-}
-
-function resolveTemplatePath(artifactId, config) {
-  const templateName = `${artifactId}.md`;
-
-  // 1. Explicit per-artifact template override from config.yaml
-  const configTemplate = config?.artifacts?.[artifactId]?.template;
-
-  if (configTemplate) {
-    const overridePath = resolve(esddPath(), "templates", configTemplate);
-    if (exists(overridePath)) {
-      return overridePath;
-    }
-  }
-
-  // 2. Implicit user template (same name, in project templates dir)
-  const userPath = resolve(esddPath(), "templates", templateName);
-  if (exists(userPath)) {
-    return userPath;
-  }
-
-  // 3. Bundled plugin default
-  const defaultPath = resolve(assetsPath(), "templates", templateName);
-
-  if (exists(defaultPath)) {
-    return defaultPath;
+    const defaultPhasePath = resolve(assetsPath(), "templates", template);
+    if (exists(defaultPhasePath)) return defaultPhasePath;
   }
 
   return null;

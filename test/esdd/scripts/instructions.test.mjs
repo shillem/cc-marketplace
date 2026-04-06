@@ -255,8 +255,6 @@ describe("instructions.mjs", () => {
       { esddPath }
     );
 
-    console.log(json);
-
     expect(exitCode).toBe(0);
     expect(json.instruction).toContain("[auth]");
     expect(json.instruction).toContain(": Authentication");

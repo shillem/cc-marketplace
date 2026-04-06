@@ -109,9 +109,10 @@ domains:
 
 ### Domain growth
 
-Domains can be added during `init` or emerge naturally. When a change introduces
-specs for a new domain, the archive process detects it and updates `config.yaml`
-automatically.
+Domains can be added during `init`, created with `document`, or emerge naturally.
+When a change introduces specs for a new domain, the archive process detects it
+and updates `config.yaml` automatically. The `document` command also registers
+new domains when producing specs from existing code.
 
 ## Directory Structure
 
