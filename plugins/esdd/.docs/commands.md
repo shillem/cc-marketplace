@@ -227,7 +227,8 @@ Display a project status dashboard.
 Shows:
 
 - **Setup** — ESDD path, configured domains, default workflow, constitution status
-- **Active changes** — Table with change name, workflow, plan/apply completion, last modified
+- **Active changes** — Table with change name, workflow, plan completion + last
+  modified, apply completion + last modified
 - **Archived changes** — Count of completed changes
 
 No suggestions or next steps — just the current state.

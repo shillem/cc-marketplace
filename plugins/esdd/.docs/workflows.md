@@ -106,7 +106,28 @@ workflows:
 ```
 
 Custom workflows can use any combination of the available artifact types: `brief`,
-`proposal`, `specs`, `design`, `tasks`.
+`proposal`, `specs`, `design`, `tasks`. To include an archive phase (required for
+spec merging into domain knowledge), add an `archive` section:
+
+```yaml
+workflows:
+  my-workflow:
+    plan:
+      workflow:
+        - proposal
+        - specs
+        - design
+        - tasks
+    apply:
+      workflow:
+        - tasks
+    archive:
+      workflow:
+        - specs
+```
+
+Without an `archive` section, the workflow behaves like spec-first — specs guide
+planning but aren't merged into accumulated domain knowledge.
 
 ## Choosing a Workflow
 

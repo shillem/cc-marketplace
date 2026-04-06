@@ -142,8 +142,9 @@ spec-first-quick:    brief → specs → tasks
 During `apply`, the agent receives all plan artifacts as context alongside the
 specific task group being implemented.
 
-## Custom Templates
+## Customization
 
-You can customize the structure of generated artifacts with project-specific
-templates. See [Configuration](.docs/configuration.md#custom-templates) for
-details.
+You can customize artifact behavior — toggle interactive review, replace or
+extend planning instructions, use project-specific templates — through overrides
+in `config.yaml`. See [Artifact Overrides](configuration.md#artifact-overrides)
+and [Custom Templates](configuration.md#custom-templates) for details.

@@ -117,12 +117,12 @@ Not every change needs the same rigor. A quick fix and a new billing module
 shouldn't go through the same process. ESDD ships with four built-in workflows
 that scale from lightweight to rigorous:
 
-| Workflow              | Plan Phase                        | Best For                                               |
-| --------------------- | --------------------------------- | ------------------------------------------------------ |
-| `spec-anchored`       | proposal → specs → design → tasks | Features that benefit from living documentation        |
-| `spec-anchored-quick` | brief → specs → tasks             | Smaller changes with accumulated specs                 |
-| `spec-first`          | proposal → specs → design → tasks | Structured planning without long-term spec maintenance |
-| `spec-first-quick`    | brief → specs → tasks             | Quick, lightweight changes                             |
+| Workflow              | Plan                              | Apply | Archive | Best For                                               |
+| --------------------- | --------------------------------- | ----- | ------- | ------------------------------------------------------ |
+| `spec-anchored`       | proposal → specs → design → tasks | tasks | specs   | Features that benefit from living documentation        |
+| `spec-anchored-quick` | brief → specs → tasks             | tasks | specs   | Smaller changes with accumulated specs                 |
+| `spec-first`          | proposal → specs → design → tasks | tasks | —       | Structured planning without long-term spec maintenance |
+| `spec-first-quick`    | brief → specs → tasks             | tasks | —       | Quick, lightweight changes                             |
 
 The key choice is between **spec-anchored** (specs persist as living
 documentation that grows with each change) and **spec-first** (specs guide
