@@ -24,7 +24,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=$(jq -r '.version' .claude-plugin/marketplace.json)
+          VERSION=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
           CHANGELOG=$(awk '/^## \['"$VERSION"'\]/{found=1; next} /^## \[/{if(found) exit} found' CHANGELOG.md)
 
           gh release create "v$VERSION" \

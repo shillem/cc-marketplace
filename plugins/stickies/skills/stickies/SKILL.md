@@ -1,8 +1,8 @@
 ---
 name: stickies
-description: Manage local project stickies as markdown files — create new, read, list, or delete. Use when the user mentions "sticky", "stickies", or wants to take a quick note or save a reminder.
+description: Manage stickies as markdown files — create new, read, list, or delete. Use when the user mentions "sticky", "stickies", or wants to take a quick note or save a reminder.
 argument-hint: "[new|list|read|delete] [text]"
-allowed-tools: Bash(mkdir), Bash(ls), Bash(rm), Glob, Read, Write
+allowed-tools: Bash(mkdir), Bash(rm), Glob, Read, Write
 model: haiku
 ---
 
@@ -12,9 +12,9 @@ Parse `$ARGUMENTS`:
 2. If `$ACTION` matches one of the actions, follow the action's instructions
 3. If `$ACTION` is empty or does not match an action — list the available actions and suggest running `/stickies list` to see current state
 
-## Actions
+**Stickies folder:** !`echo "$PWD/.ai/stickies"`.
 
-**Important**: if the folder doesn't exist, create it by executing `mkdir -p .ai/stickies`.
+## Actions
 
 ### New
 
@@ -22,7 +22,7 @@ Create a new sticky from information the user provides or from your current cont
 
 1. Derive the title from what the user says (keep it short and descriptive)
 2. Convert the title to snake-case for the filename, prepend today's date
-3. Write the `.md` file to `.ai/stickies/` using the Write tool, and do not ask for confirmation
+3. Write the `.md` file in the stickies folder
 
 ### Read
 
@@ -38,7 +38,7 @@ Open a sticky so the user can review or work with its content.
 
 Show all stickies as a table sorted by date (newest first).
 
-1. List the `.ai/stickies/` directory by executing `ls -1 .ai/stickies/*.md`
+1. List the `.md` files in the stickies folder
 2. Parse each filename to extract the date and title (convert snake-case back to sentence case, e.g., `fix-login-redirect` → `Fix login redirect`)
 3. Present as a markdown table:
 

@@ -1,8 +1,8 @@
-## Plan Loop
+## ESDD Plan Loop
 
 **Expects from calling action:** `<change-name>` and optional `--fast` flag.
 
-Use the **TodoWrite** tool to track progress through the artifacts.
+Use the **Task** tools to track progress through the artifacts.
 
 Loop through the `plan.workflow` array:
 

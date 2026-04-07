@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2] - 2026-04-07
+
+### Updated
+
+- **stickies** plugin bumped to 1.0.3 — dynamic stickies folder path, removed unused `Bash(ls)` tool, simplified description
+- **esdd** plugin bumped to 1.0.1 — replaced `TodoWrite` with Task tools for progress tracking
+
 ## [1.1.1] - 2026-04-06
 
 ### Added

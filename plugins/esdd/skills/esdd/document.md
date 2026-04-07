@@ -25,7 +25,7 @@
    If an `error` field is present, report it and stop.
 
 4. **Per-domain loop:**
-   Use the **TodoWrite** tool to track progress through domains.
+   Use the **Task** tools to track progress through domains.
 
    For each domain collected in step 1:
 
