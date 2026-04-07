@@ -23,7 +23,7 @@
    - Otherwise: proceed to step 4
 
 4. **Process artifacts:**
-   Use the **TodoWrite** tool to track progress through the artifacts and groups.
+   Use the **Task** tools to track progress through the artifacts and groups.
 
    Loop through the `apply.workflow` array. For each artifact, iterate its `groups`:
 

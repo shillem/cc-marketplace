@@ -30,7 +30,7 @@
 5. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 6.
 
-   Use the **TodoWrite** tool to track progress through the artifacts and groups.
+   Use the **Task** tools to track progress through the artifacts and groups.
 
    Loop through the `archive.workflow` array. For each artifact, use **Agent** tool with this prompt:
 
