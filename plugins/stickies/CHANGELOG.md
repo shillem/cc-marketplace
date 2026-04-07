@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.3 (2026-04-07)
+
+### Improved
+
+- Removed "local project" qualifier from skill description
+- Removed `Bash(ls)` from allowed-tools (unused)
+- Made stickies folder path dynamic — resolved at runtime via shell interpolation
+- Simplified folder-creation and file-listing instructions to use the dynamic folder reference
+
 ## 1.0.2 (2026-03-26)
 
 ### Improved
