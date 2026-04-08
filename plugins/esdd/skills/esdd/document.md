@@ -34,7 +34,7 @@
    - Derive the output path as `<domainsPath>/<name>.md`
    - Read the existing file at the output path if it exists
    - Scan the code within the scope determined in step 2
-   - Follow `instruction` — write the result to the output path
+   - Follow the `instruction` — write the result to the output path
 
    b. **Register the domain:**
    Run `node "${CLAUDE_SKILL_DIR}/scripts/document.mjs" --register "<name>:<description>"`.
