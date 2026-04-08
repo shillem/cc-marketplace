@@ -18,8 +18,8 @@
    Run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<name>" --apply`.
 
 3. **Handle status:**
-   - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest `/esdd continue`
-   - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest `/esdd apply`
+   - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest running `/esdd continue`
+   - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
 
 4. **Verify the change:**
 

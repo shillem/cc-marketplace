@@ -23,7 +23,7 @@
    - Offer to fix: read the artifact, fill in missing sections
    - Fix before moving to new artifacts
 
-4. **If all artifacts status is `ready`:** Report completion, suggest `/esdd apply`
+4. **If all artifacts status is `ready`:** Report completion, suggest running `/esdd apply`
 
 5. **Process artifacts:**
 
@@ -33,4 +33,4 @@
    After completing all artifacts, summarize:
    - Change name and location
    - List of artifacts created with brief descriptions
-   - Suggest `/esdd apply` to implement
+   - Suggest to execute `/esdd apply` to implement

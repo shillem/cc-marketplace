@@ -18,7 +18,7 @@
 3. **Create the change directory:**
    Run `node "${CLAUDE_SKILL_DIR}/scripts/new.mjs" "<change-name>"` (add `--workflow "<workflow>"` if specified)
    - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
-   - If error says not initialized, suggest `/esdd init`.
+   - If error says not initialized, suggest running `/esdd init`.
 
 4. **Generate artifacts:**
 
@@ -29,4 +29,4 @@
    After completing all artifacts, summarize:
    - Change name and location
    - List of artifacts created with brief descriptions
-   - Suggest `/esdd apply` to implement
+   - Suggest to execute `/esdd apply` to implement
