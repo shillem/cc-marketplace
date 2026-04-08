@@ -10,5 +10,7 @@
 
 #### Scenario: <!-- scenario name -->
 
-- **WHEN** <!-- condition -->
+- **GIVEN** <!-- preconditions and initial state (omit if none) -->
+- **WHEN** <!-- triggering action or event -->
 - **THEN** <!-- expected outcome -->
+<!-- use AND to chain multiple conditions within any step -->
