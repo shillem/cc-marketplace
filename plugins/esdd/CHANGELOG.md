@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.2 (2026-04-08)
+
+### Fixed
+
+- Status script loop variable bug in plan status computation
+- Archive phase missing from status output — `archive.workflow` was never produced
+
+### Improved
+
+- Status phases now cascade: `--archive` implies apply and plan, `--apply` implies plan
+- Skill actions (`apply`, `verify`, `archive`) now request only the phases they need
+- Minor wording fixes in document and verification instructions
+
 ## 1.0.1 (2026-04-07)
 
 ### Improved

@@ -15,7 +15,7 @@
 
 2. **Get detailed status:**
 
-   Run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<name>"`.
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<name>" --apply`.
 
 3. **Handle status:**
    - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest `/esdd continue`

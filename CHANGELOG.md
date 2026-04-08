@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3] - 2026-04-08
+
+### Updated
+
+- **esdd** plugin bumped to 1.0.2 — fixed status script bugs (loop variable, missing archive phase), added phase cascading
+
 ## [1.1.2] - 2026-04-07
 
 ### Updated

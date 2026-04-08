@@ -61,7 +61,7 @@ describe("list.mjs", () => {
 
     const change = json.changes[0];
     expect(change.apply).toBeDefined();
-    expect(change.plan).toBeUndefined();
+    expect(change.plan).toBeDefined();
   });
 
   test("handles changes with different workflows", async () => {
