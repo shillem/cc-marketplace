@@ -1,17 +1,11 @@
 # Changelog
 
-## [1.1.3] - 2026-04-08
-
-### Updated
-
-- **esdd** plugin bumped to 1.0.2 — fixed status script bugs (loop variable, missing archive phase), added phase cascading
-
-## [1.1.2] - 2026-04-07
+## [1.1.2] - 2026-04-08
 
 ### Updated
 
 - **stickies** plugin bumped to 1.0.3 — dynamic stickies folder path, removed unused `Bash(ls)` tool, simplified description
-- **esdd** plugin bumped to 1.0.1 — replaced `TodoWrite` with Task tools for progress tracking
+- **esdd** plugin bumped to 1.0.2 — replaced `TodoWrite` with Task tools, fixed status script bugs, added archive phase and phase cascading
 
 ## [1.1.1] - 2026-04-06
 
