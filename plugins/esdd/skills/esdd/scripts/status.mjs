@@ -13,7 +13,7 @@ const args = process.argv.slice(2);
 const changeName = args.find(a => !a.startsWith("--")) || null;
 
 if (!changeName) {
-  outputError("Usage: status.mjs <name> [--plan|--apply]");
+  outputError("Usage: status.mjs <name> [--plan|--apply|--archive]");
   process.exit(1);
 }
 

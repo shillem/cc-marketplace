@@ -16,34 +16,33 @@ import { parseTasks } from "./tasks.mjs";
 export function computeChange(changeName, schema, phases, options) {
   const entry = { name: changeName };
 
-  if (phases.length === 0 || phases.includes("plan")) {
-    entry.plan = computePlanStatus(changeName, schema, options);
+  if (phases.length === 0 || phases.includes("archive")) {
+    entry.archive = computeArchiveStatus(schema);
   }
 
-  if (phases.length === 0 || phases.includes("apply")) {
+  if (phases.length === 0 || phases.includes("apply") || entry.archive) {
     entry.apply = computeApplyStatus(changeName, schema, options);
+  }
+
+  if (phases.length === 0 || phases.includes("plan") || entry.apply) {
+    entry.plan = computePlanStatus(changeName, schema, options);
   }
 
   return entry;
 }
 
 function computeApplyStatus(changeName, schema, { trackLastModified = false } = {}) {
-  const { phases, artifacts } = schema;
-  const apply = phases.apply;
-
-  if (!apply || apply.length === 0) {
-    return null;
-  }
-
-  const applyArtifacts = {};
+  const { phases } = schema;
+  const apply = phases.apply || [];
+  const artifacts = {};
   let lastModified = new Date(0);
 
   for (const id of apply) {
-    const art = artifacts[id];
+    const art = schema.artifacts[id];
     const artPath = artifactPath(changeName, art.output);
 
     if (!exists(artPath)) {
-      applyArtifacts[id] = { status: "pending", groups: [] };
+      artifacts[id] = { status: "pending", groups: [] };
       continue;
     }
 
@@ -62,26 +61,25 @@ function computeApplyStatus(changeName, schema, { trackLastModified = false } = 
 
     const allDone = groupSummaries.length > 0 && groupSummaries.every(g => g.status === "done");
 
-    applyArtifacts[id] = {
+    artifacts[id] = {
       status: allDone ? "done" : "pending",
       groups: groupSummaries
     };
   }
 
-  const result = {
-    workflow: apply,
-    artifacts: applyArtifacts
-  };
-
+  const result = { workflow: apply, artifacts };
   if (trackLastModified) result.lastModified = lastModified.toISOString();
-
   return result;
+}
+
+function computeArchiveStatus(schema) {
+  return { workflow: schema.phases.archive || [] };
 }
 
 function computePlanStatus(changeName, schema, { trackLastModified = false } = {}) {
   const { phases } = schema;
-  const plan = phases.plan;
-  const applySet = new Set(phases.apply || []);
+  const plan = phases.plan || [];
+  const applySet = new Set(phases.apply);
   const artifacts = {};
   const existsCache = {};
   const outputFilesCache = {};

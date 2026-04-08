@@ -24,6 +24,8 @@ describe("status.mjs", () => {
     expect(json.plan).toBeDefined();
     expect(json.plan.workflow).toEqual(["proposal", "specs", "design", "tasks"]);
     expect(json.apply).toBeDefined();
+    expect(json.archive).toBeDefined();
+    expect(json.archive.workflow).toEqual(["specs"]);
   });
 
   test("--plan returns only plan status", async () => {
@@ -36,9 +38,10 @@ describe("status.mjs", () => {
     expect(exitCode).toBe(0);
     expect(json.plan).toBeDefined();
     expect(json.apply).toBeUndefined();
+    expect(json.archive).toBeUndefined();
   });
 
-  test("--apply returns only apply status", async () => {
+  test("--apply cascades to include plan", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
@@ -47,7 +50,22 @@ describe("status.mjs", () => {
 
     expect(exitCode).toBe(0);
     expect(json.apply).toBeDefined();
-    expect(json.plan).toBeUndefined();
+    expect(json.plan).toBeDefined();
+    expect(json.archive).toBeUndefined();
+  });
+
+  test("--archive cascades to include apply and plan", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
+
+    const { json, exitCode } = await run("status.mjs", ["add-auth", "--archive"], { esddPath });
+
+    expect(exitCode).toBe(0);
+    expect(json.archive).toBeDefined();
+    expect(json.archive.workflow).toEqual(["specs"]);
+    expect(json.apply).toBeDefined();
+    expect(json.plan).toBeDefined();
   });
 
   test("shows ready status for existing artifacts", async () => {
@@ -85,6 +103,17 @@ describe("status.mjs", () => {
     const { json } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
 
     expect(json.plan.artifacts.tasks.status).toBe("ready");
+  });
+
+  test("archive returns empty workflow for non-archive workflow", async () => {
+    const esddPath = createTmpDir();
+    initFixture(esddPath);
+    writeFixture(esddPath, "changes/quick-fix/.keep", "");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first" });
+
+    const { json } = await run("status.mjs", ["quick-fix", "--archive"], { esddPath });
+
+    expect(json.archive.workflow).toEqual([]);
   });
 
   test("uses per-change workflow from change.yaml", async () => {
