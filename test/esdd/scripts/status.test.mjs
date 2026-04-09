@@ -1,12 +1,12 @@
 import { describe, test, expect } from "bun:test";
 import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
-describe("status.mjs", () => {
+describe("status", () => {
   test("fails without a change name", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("status.mjs", [], { esddPath });
+    const { json, exitCode } = await run("status", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");
@@ -17,7 +17,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("status.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("status", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.name).toBe("add-auth");
@@ -33,7 +33,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
+    const { json, exitCode } = await run("status", ["add-auth", "--plan"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.plan).toBeDefined();
@@ -46,7 +46,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("status.mjs", ["add-auth", "--apply"], { esddPath });
+    const { json, exitCode } = await run("status", ["add-auth", "--apply"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.apply).toBeDefined();
@@ -59,7 +59,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("status.mjs", ["add-auth", "--archive"], { esddPath });
+    const { json, exitCode } = await run("status", ["add-auth", "--archive"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.archive).toBeDefined();
@@ -73,7 +73,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal\n## Why\nNeed auth");
 
-    const { json } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
+    const { json } = await run("status", ["add-auth", "--plan"], { esddPath });
 
     expect(json.plan.artifacts.proposal.status).toBe("ready");
     expect(json.plan.artifacts.specs.status).toBe("pending");
@@ -87,7 +87,7 @@ describe("status.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
     writeFixture(esddPath, "changes/add-auth/tasks.md", "No checkboxes here");
 
-    const { json } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
+    const { json } = await run("status", ["add-auth", "--plan"], { esddPath });
 
     expect(json.plan.artifacts.tasks.status).toBe("invalid");
   });
@@ -100,7 +100,7 @@ describe("status.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
     writeFixture(esddPath, "changes/add-auth/tasks.md", "## Group 1\n- [ ] 1.1 Do something");
 
-    const { json } = await run("status.mjs", ["add-auth", "--plan"], { esddPath });
+    const { json } = await run("status", ["add-auth", "--plan"], { esddPath });
 
     expect(json.plan.artifacts.tasks.status).toBe("ready");
   });
@@ -111,7 +111,7 @@ describe("status.mjs", () => {
     writeFixture(esddPath, "changes/quick-fix/.keep", "");
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first" });
 
-    const { json } = await run("status.mjs", ["quick-fix", "--archive"], { esddPath });
+    const { json } = await run("status", ["quick-fix", "--archive"], { esddPath });
 
     expect(json.archive.workflow).toEqual([]);
   });
@@ -122,7 +122,7 @@ describe("status.mjs", () => {
     writeFixture(esddPath, "changes/quick-fix/.keep", "");
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
 
-    const { json, exitCode } = await run("status.mjs", ["quick-fix"], { esddPath });
+    const { json, exitCode } = await run("status", ["quick-fix"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.plan.workflow).toEqual(["brief", "specs", "tasks"]);
@@ -135,7 +135,7 @@ describe("status.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json } = await run("status.mjs", ["add-auth"], { esddPath });
+    const { json } = await run("status", ["add-auth"], { esddPath });
 
     expect(json.plan.workflow).toEqual(["proposal", "specs", "design", "tasks"]);
   });

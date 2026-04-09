@@ -3,10 +3,10 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 import { createTmpDir, run, writeYamlFixture } from "./helpers.mjs";
 
-describe("init.mjs", () => {
+describe("init", () => {
   test("--status returns uninitialized when no config exists", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", ["--status"], { esddPath });
+    const { json, exitCode } = await run("init", ["--status"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.initialized).toBe(false);
@@ -16,7 +16,7 @@ describe("init.mjs", () => {
     const esddPath = createTmpDir();
     writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-anchored", domains: [] });
 
-    const { json, exitCode } = await run("init.mjs", ["--status"], { esddPath });
+    const { json, exitCode } = await run("init", ["--status"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.initialized).toBe(true);
@@ -25,7 +25,7 @@ describe("init.mjs", () => {
 
   test("--survey returns available workflows", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", ["--survey"], { esddPath });
+    const { json, exitCode } = await run("init", ["--survey"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.workflows).toBeArray();
@@ -36,7 +36,7 @@ describe("init.mjs", () => {
 
   test("--create initializes esdd with default workflow", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", ["--create", "--workflow", "spec-anchored"], {
+    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-anchored"], {
       esddPath
     });
 
@@ -51,7 +51,7 @@ describe("init.mjs", () => {
   test("--create with domains records them in config", async () => {
     const esddPath = createTmpDir();
     const { json, exitCode } = await run(
-      "init.mjs",
+      "init",
       [
         "--create",
         "--workflow",
@@ -73,7 +73,7 @@ describe("init.mjs", () => {
     const esddPath = createTmpDir();
     writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-anchored", domains: [] });
 
-    const { json, exitCode } = await run("init.mjs", ["--create", "--workflow", "spec-anchored"], {
+    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-anchored"], {
       esddPath
     });
 
@@ -83,7 +83,7 @@ describe("init.mjs", () => {
 
   test("--create fails with unknown workflow", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", ["--create", "--workflow", "nonexistent"], {
+    const { json, exitCode } = await run("init", ["--create", "--workflow", "nonexistent"], {
       esddPath
     });
 
@@ -93,7 +93,7 @@ describe("init.mjs", () => {
 
   test("exits with error when no flags provided", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init.mjs", [], { esddPath });
+    const { json, exitCode } = await run("init", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");

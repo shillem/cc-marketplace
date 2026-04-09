@@ -18,8 +18,8 @@ export function initFixture(esddDir, { workflow = "spec-anchored", domains = [] 
   mkdirSync(resolve(esddDir, "domains"), { recursive: true });
 }
 
-export async function run(script, args = [], { esddPath }) {
-  const proc = Bun.spawn(["bun", resolve(SCRIPTS_DIR, script), ...args], {
+export async function run(action, args = [], { esddPath }) {
+  const proc = Bun.spawn(["bun", resolve(SCRIPTS_DIR, "cli.mjs"), action, ...args], {
     env: { ...process.env, ESDD_PATH: esddPath },
     stdout: "pipe",
     stderr: "pipe"

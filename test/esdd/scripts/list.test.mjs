@@ -1,12 +1,12 @@
 import { describe, test, expect } from "bun:test";
 import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
-describe("list.mjs", () => {
+describe("list", () => {
   test("returns empty list when no changes exist", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("list.mjs", [], { esddPath });
+    const { json, exitCode } = await run("list", [], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.changes).toEqual([]);
@@ -18,7 +18,7 @@ describe("list.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
     writeFixture(esddPath, "changes/add-billing/.keep", "");
 
-    const { json, exitCode } = await run("list.mjs", [], { esddPath });
+    const { json, exitCode } = await run("list", [], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.changes).toHaveLength(2);
@@ -33,7 +33,7 @@ describe("list.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
 
-    const { json } = await run("list.mjs", [], { esddPath });
+    const { json } = await run("list", [], { esddPath });
 
     const change = json.changes.find(c => c.name === "add-auth");
     expect(change.plan.artifacts.proposal).toBe("ready");
@@ -45,7 +45,7 @@ describe("list.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json } = await run("list.mjs", ["--plan"], { esddPath });
+    const { json } = await run("list", ["--plan"], { esddPath });
 
     const change = json.changes[0];
     expect(change.plan).toBeDefined();
@@ -57,7 +57,7 @@ describe("list.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json } = await run("list.mjs", ["--apply"], { esddPath });
+    const { json } = await run("list", ["--apply"], { esddPath });
 
     const change = json.changes[0];
     expect(change.apply).toBeDefined();
@@ -72,7 +72,7 @@ describe("list.mjs", () => {
     writeFixture(esddPath, "changes/quick-fix/.keep", "");
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
 
-    const { json, exitCode } = await run("list.mjs", ["--plan"], { esddPath });
+    const { json, exitCode } = await run("list", ["--plan"], { esddPath });
 
     expect(exitCode).toBe(0);
     const big = json.changes.find(c => c.name === "big-feature");
@@ -84,7 +84,7 @@ describe("list.mjs", () => {
   test("fails if not initialized", async () => {
     const esddPath = createTmpDir();
 
-    const { json, exitCode } = await run("list.mjs", [], { esddPath });
+    const { json, exitCode } = await run("list", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toBeDefined();

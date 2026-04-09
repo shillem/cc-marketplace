@@ -9,13 +9,13 @@
 
 1. **Select the change:**
    - If a change name was provided as argument, use it directly — skip list/disambiguation
-   - Otherwise, run: `node "${CLAUDE_SKILL_DIR}/scripts/list.mjs" --plan`
+   - Otherwise, run: `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" list --plan`
    - If no changes exist: suggest `/esdd new`
    - If one change exists: use it
    - If multiple changes: use **AskUserQuestion** tool to let the user select, presenting each change with its artifact completion status and last modified time. Mark the most recently modified as "(Recommended)".
 
 2. **Get detailed status:**
-   Run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<change-name>" --plan`.
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" status "<change-name>" --plan`.
 
 3. **Handle status:**
    If any artifact has status `invalid`:

@@ -4,12 +4,12 @@ import { resolve } from "path";
 import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
 import { createTmpDir, initFixture, run } from "./helpers.mjs";
 
-describe("document.mjs", () => {
+describe("document", () => {
   test("fails without flags", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("document.mjs", [], { esddPath });
+    const { json, exitCode } = await run("document", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");
@@ -20,7 +20,7 @@ describe("document.mjs", () => {
       const esddPath = createTmpDir();
       initFixture(esddPath);
 
-      const { json, exitCode } = await run("document.mjs", ["--instruction"], { esddPath });
+      const { json, exitCode } = await run("document", ["--instruction"], { esddPath });
 
       expect(exitCode).toBe(0);
       expect(json.instruction).toContain("accumulated domain spec");
@@ -31,7 +31,7 @@ describe("document.mjs", () => {
     test("fails when ESDD is not initialized", async () => {
       const esddPath = createTmpDir();
 
-      const { json, exitCode } = await run("document.mjs", ["--instruction"], { esddPath });
+      const { json, exitCode } = await run("document", ["--instruction"], { esddPath });
 
       expect(exitCode).toBe(1);
       expect(json.error).toContain("not initialized");
@@ -41,7 +41,7 @@ describe("document.mjs", () => {
       const esddPath = createTmpDir();
       initFixture(esddPath, { workflow: "spec-first" });
 
-      const { json, exitCode } = await run("document.mjs", ["--instruction"], { esddPath });
+      const { json, exitCode } = await run("document", ["--instruction"], { esddPath });
 
       expect(exitCode).toBe(1);
       expect(json.error).toContain("does not support document");
@@ -54,7 +54,7 @@ describe("document.mjs", () => {
       initFixture(esddPath);
 
       const { json, exitCode } = await run(
-        "document.mjs",
+        "document",
         ["--register", "billing:Payments and invoices"],
         { esddPath }
       );
@@ -80,7 +80,7 @@ describe("document.mjs", () => {
         domains: [{ name: "auth", description: "Authentication" }]
       });
 
-      const { json, exitCode } = await run("document.mjs", ["--register", "auth:Authentication"], {
+      const { json, exitCode } = await run("document", ["--register", "auth:Authentication"], {
         esddPath
       });
 
@@ -94,7 +94,7 @@ describe("document.mjs", () => {
         domains: [{ name: "auth", description: "Original description" }]
       });
 
-      await run("document.mjs", ["--register", "auth"], { esddPath });
+      await run("document", ["--register", "auth"], { esddPath });
 
       const configPath = resolve(esddPath, "config.yaml");
       const config = yaml.load(readFileSync(configPath, "utf8"));
@@ -106,7 +106,7 @@ describe("document.mjs", () => {
       const esddPath = createTmpDir();
       initFixture(esddPath);
 
-      const { json, exitCode } = await run("document.mjs", ["--register"], { esddPath });
+      const { json, exitCode } = await run("document", ["--register"], { esddPath });
 
       expect(exitCode).toBe(1);
     });

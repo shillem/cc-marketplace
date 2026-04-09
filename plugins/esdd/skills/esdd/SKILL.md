@@ -14,7 +14,7 @@ Parse `$ARGUMENTS`:
 
 **Init gate**:
 
-Check status: !`node "${CLAUDE_SKILL_DIR}/scripts/init.mjs" --status`
+Check status: !`node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" init --status`
 
 - If `initialized` is `false` and `$ACTION` is not `init` — suggest running `/esdd init` and stop.
 - If `initialized` is `true` and `$ACTION` is `init` — inform already initialized and stop.

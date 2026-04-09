@@ -18,7 +18,7 @@
    Use the change name from arguments if provided. Otherwise, derive one from the user's description (e.g., "Add OAuth support" -> `add-oauth-support`).
 
 3. **Create the change directory:**
-   Run `node "${CLAUDE_SKILL_DIR}/scripts/new.mjs" "<change-name>"` (add `--workflow "<workflow>"` if specified)
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" new "<change-name>"` (add `--workflow "<workflow>"` if specified)
    - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
    - If error says not initialized, suggest running `/esdd init`.
 

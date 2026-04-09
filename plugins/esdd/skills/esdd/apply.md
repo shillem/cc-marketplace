@@ -9,13 +9,13 @@
 
 1. **Select the change:**
    - If a change name was provided as argument, use it directly — skip list/disambiguation
-   - Otherwise, run: `node "${CLAUDE_SKILL_DIR}/scripts/list.mjs" --apply`
+   - Otherwise, run: `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" list --apply`
    - If no changes exist: suggest running `/esdd new`
    - If one change exists: use it
    - If multiple changes: use **AskUserQuestion** tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)".
 
 2. **Get detailed status:**
-   Run `node "${CLAUDE_SKILL_DIR}/scripts/status.mjs" "<name>" --apply`.
+   Run `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" status "<name>" --apply`.
 
 3. **Handle status:**
    - If any `plan.artifacts` do not have `ready` status: stop, report which ones, and suggest running `/esdd continue`
@@ -31,7 +31,7 @@
 
    b. **For each pending group**, use **Agent** tool with this prompt:
 
-   > - Get instructions: `node "${CLAUDE_SKILL_DIR}/scripts/instructions.mjs" "<name>" --apply --artifact <artifact> --group <group-id>`
+   > - Get instructions: `node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" instructions "<name>" --apply --artifact <artifact> --group <group-id>`
    > - The JSON output includes:
    >   - `instruction`: Specific guidance for the artifact
    >   - `outputPath`: Where to find and update the artifact
