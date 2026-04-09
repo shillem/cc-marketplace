@@ -26,7 +26,7 @@ artifacts:
     output: proposal.md
     plan:
       template: proposal.md
-      discussion: true
+      review: true
       instruction: |
         Create the proposal document that establishes WHY this change is needed.
 
@@ -133,24 +133,18 @@ artifacts:
     output: design.md
     plan:
       template: design.md
-      discussion: true
+      review: true
       instruction: |
         Create the design document that explains HOW to implement the change.
         If the change is straightforward, keep design content minimal.
 
         Sections:
-        - **Context**: Background, current state, constraints, stakeholders
+        - **Context**: Background, current state, constraints
         - **Goals / Non-Goals**: What this design achieves and explicitly excludes
-        - **Decisions**: Key technical choices with rationale (why X over Y?). Include alternatives considered for each decision.
-        - **Risks / Trade-offs**: Known limitations, things that could go wrong. Format: [Risk] → Mitigation
-        - **Migration Plan**: Steps to deploy, rollback strategy (if applicable)
-        - **Open Questions**: Outstanding decisions or unknowns to resolve (these will be raised with the user during discussion — include anything that could affect implementation)
+        - **Decisions**: Key technical choices with rationale (why X over Y?) and alternatives considered
+        - **Risks / Trade-offs**: Known limitations, what could go wrong. Format: [Risk] → Mitigation
 
-        Reference requirements from specs when making technical decisions.
-        The design should explain how to satisfy the requirements defined in specs.
-        Focus on architecture and approach, not line-by-line implementation.
-
-        Good design docs explain the "why" behind technical decisions.
+        Reference requirements from specs. Focus on architecture and the "why" behind decisions, not line-by-line implementation.
   tasks:
     description: Implementation checklist with trackable tasks
     output: tasks.md

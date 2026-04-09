@@ -47,14 +47,14 @@ describe("instructions.mjs", () => {
     );
 
     expect(exitCode).toBe(0);
-    expect(json.discussion).toBe(true);
+    expect(json.review).toBe(true);
     expect(json.instruction).toContain("proposal document");
     expect(json.outputPath).toContain("proposal.md");
     expect(json.templatePath).toBeDefined();
     expect(json.dependencies).toEqual([]);
   });
 
-  test("plan instruction for design includes discussion flag", async () => {
+  test("plan instruction for design includes review flag", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
@@ -62,10 +62,10 @@ describe("instructions.mjs", () => {
       esddPath
     });
 
-    expect(json.discussion).toBe(true);
+    expect(json.review).toBe(true);
   });
 
-  test("plan instruction for non-discussion artifact returns discussion false", async () => {
+  test("plan instruction for non-review artifact returns review false", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
@@ -73,7 +73,7 @@ describe("instructions.mjs", () => {
       esddPath
     });
 
-    expect(json.discussion).toBe(false);
+    expect(json.review).toBe(false);
   });
 
   test("plan instruction for specs includes proposal as dependency when it exists", async () => {

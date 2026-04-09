@@ -2,7 +2,8 @@
 
 ## Arguments
 
-- `$REST` may contain: `<change-name-or-description>`
+- `$REST` may contain: `[<topic>]`
+- `<topic>`: An optional starting point for the exploration (e.g., `auth`, `billing flow`). This is a conversation starter, not a spec to act on.
 
 ## Premise
 
