@@ -12,9 +12,13 @@ Parse `$ARGUMENTS`:
 1. Split arguments: first word is `$ACTION`, remainder is `$REST`
 2. If `$ACTION` is empty or does not match an action — list the available actions and suggest running `/esdd view` to see current state
 
+**Available scripts:**
+
+- **`scripts/cli.mjs`** - CLI script
+
 **Init gate**:
 
-Check status: !`node "${CLAUDE_SKILL_DIR}/scripts/cli.mjs" init --status`
+Run the CLI script: `node scripts/cli.mjs init --status`
 
 - If `initialized` is `false` and `$ACTION` is not `init` — suggest running `/esdd init` and stop.
 - If `initialized` is `true` and `$ACTION` is `init` — inform already initialized and stop.
