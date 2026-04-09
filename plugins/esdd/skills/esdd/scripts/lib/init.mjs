@@ -1,17 +1,3 @@
-import { outputError } from "./fs-utils.mjs";
-import { ConfigError } from "./config.mjs";
-
-export function monitorErrors() {
-  process.on("uncaughtException", err => {
-    if (err instanceof ConfigError) {
-      outputError(err.message);
-      process.exit(1);
-    }
-    console.error(err);
-    process.exit(1);
-  });
-}
-
 export function parseArg(args, flag) {
   const idx = args.indexOf(flag);
   return idx !== -1 ? args[idx + 1] || null : null;

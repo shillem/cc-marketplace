@@ -2,7 +2,8 @@
 
 ## Arguments
 
-- `$REST` may contain: `<change-name-or-description>`
+- `$REST` may contain: `[<topic>]`
+- `<topic>`: An optional starting point for the exploration (e.g., `auth`, `billing flow`). This is a conversation starter, not a spec to act on.
 
 ## Premise
 
@@ -23,7 +24,7 @@ If the user asks you to implement something, remind them to exit explore mode an
 
 ## Active Changes Awareness
 
-At the start, run `node "${CLAUDE_SKILL_DIR}/scripts/list.mjs"` to check for active changes. This tells you what the user might be working on.
+At the start, run the CLI script: `node scripts/cli.mjs list` to check for active changes. This tells you what the user might be working on.
 
 **Important**: If the script returns an initialization error, proceed without change context — explore works without init.
 

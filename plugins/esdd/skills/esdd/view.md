@@ -4,9 +4,7 @@
 
 1. **Get project info and active changes:**
 
-   ```bash
-   node "${CLAUDE_SKILL_DIR}/scripts/view.mjs"
-   ```
+   Run the CLI script: `node scripts/cli.mjs view`.
 
 2. **Display setup:**
 

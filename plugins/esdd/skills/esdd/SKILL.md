@@ -1,7 +1,7 @@
 ---
 name: esdd
 description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, verifying changes, or archiving completed work.
-argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [change-name|description]"
+argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [...]"
 allowed-tools: Agent, Bash(node *), Bash(mkdir *), Bash(mv *), Edit, Glob, Grep, Read, TaskCreate, TaskGet, TaskList, TaskUpdate, Write
 ---
 
@@ -12,11 +12,15 @@ Parse `$ARGUMENTS`:
 1. Split arguments: first word is `$ACTION`, remainder is `$REST`
 2. If `$ACTION` is empty or does not match an action — list the available actions and suggest running `/esdd view` to see current state
 
+**Available scripts:**
+
+- **`scripts/cli.mjs`** - CLI script
+
 **Init gate**:
 
-Check status: !`node "${CLAUDE_SKILL_DIR}/scripts/init.mjs" --status`
+Run the CLI script: `node scripts/cli.mjs init --status`
 
-- If `initialized` is `false` and `$ACTION` is not `init` — suggest `init` and stop.
+- If `initialized` is `false` and `$ACTION` is not `init` — suggest running `/esdd init` and stop.
 - If `initialized` is `true` and `$ACTION` is `init` — inform already initialized and stop.
 - If `constitution.projectMap` or `constitution.techStack` is `false` — warn that CLAUDE.md is missing project context sections (non-blocking, continue with the action).
 

@@ -1,12 +1,12 @@
 import { describe, test, expect } from "bun:test";
 import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
-describe("instructions.mjs", () => {
+describe("instructions", () => {
   test("fails without change name or phase", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("instructions.mjs", [], { esddPath });
+    const { json, exitCode } = await run("instructions", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");
@@ -16,7 +16,7 @@ describe("instructions.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("instructions.mjs", ["add-auth", "--plan"], { esddPath });
+    const { json, exitCode } = await run("instructions", ["add-auth", "--plan"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("--plan requires --artifact");
@@ -27,7 +27,7 @@ describe("instructions.mjs", () => {
     initFixture(esddPath);
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--apply", "--artifact", "tasks"],
       { esddPath }
     );
@@ -41,39 +41,39 @@ describe("instructions.mjs", () => {
     initFixture(esddPath);
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--plan", "--artifact", "proposal"],
       { esddPath }
     );
 
     expect(exitCode).toBe(0);
-    expect(json.discussion).toBe(true);
+    expect(json.review).toBe(true);
     expect(json.instruction).toContain("proposal document");
     expect(json.outputPath).toContain("proposal.md");
     expect(json.templatePath).toBeDefined();
     expect(json.dependencies).toEqual([]);
   });
 
-  test("plan instruction for design includes discussion flag", async () => {
+  test("plan instruction for design includes review flag", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "design"], {
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "design"], {
       esddPath
     });
 
-    expect(json.discussion).toBe(true);
+    expect(json.review).toBe(true);
   });
 
-  test("plan instruction for non-discussion artifact returns discussion false", async () => {
+  test("plan instruction for non-review artifact returns review false", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "tasks"], {
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "tasks"], {
       esddPath
     });
 
-    expect(json.discussion).toBe(false);
+    expect(json.review).toBe(false);
   });
 
   test("plan instruction for specs includes proposal as dependency when it exists", async () => {
@@ -81,7 +81,7 @@ describe("instructions.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
 
-    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "specs"], {
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "specs"], {
       esddPath
     });
 
@@ -96,7 +96,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Spec");
     writeFixture(esddPath, "changes/add-auth/design.md", "# Design");
 
-    const { json } = await run("instructions.mjs", ["add-auth", "--plan", "--artifact", "tasks"], {
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "tasks"], {
       esddPath
     });
 
@@ -109,11 +109,9 @@ describe("instructions.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
 
-    const { json } = await run(
-      "instructions.mjs",
-      ["add-auth", "--plan", "--artifact", "proposal"],
-      { esddPath }
-    );
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "proposal"], {
+      esddPath
+    });
 
     expect(json.instruction).toContain("[auth]");
     expect(json.instruction).toContain(": Authentication");
@@ -124,11 +122,9 @@ describe("instructions.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json } = await run(
-      "instructions.mjs",
-      ["add-auth", "--plan", "--artifact", "proposal"],
-      { esddPath }
-    );
+    const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "proposal"], {
+      esddPath
+    });
 
     expect(json.instruction).toContain("No domains defined yet.");
   });
@@ -138,7 +134,7 @@ describe("instructions.mjs", () => {
     initFixture(esddPath);
 
     const { json } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--plan", "--artifact", "nonexistent"],
       { esddPath }
     );
@@ -156,7 +152,7 @@ describe("instructions.mjs", () => {
     );
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--apply", "--artifact", "tasks", "--group", "1"],
       { esddPath }
     );
@@ -174,7 +170,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/tasks.md", "## 1. Setup\n- [ ] 1.1 Create project");
 
     const { json } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--apply", "--artifact", "tasks", "--group", "5"],
       { esddPath }
     );
@@ -188,7 +184,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--apply", "--artifact", "tasks", "--group", "1"],
       { esddPath }
     );
@@ -200,7 +196,7 @@ describe("instructions.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("instructions.mjs", ["add-auth", "--archive"], {
+    const { json, exitCode } = await run("instructions", ["add-auth", "--archive"], {
       esddPath
     });
 
@@ -214,7 +210,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--archive", "--artifact", "specs"],
       { esddPath }
     );
@@ -229,7 +225,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Delta spec");
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--archive", "--artifact", "specs"],
       { esddPath }
     );
@@ -250,7 +246,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/add-auth/specs/billing.md", "# Billing delta");
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--archive", "--artifact", "specs"],
       { esddPath }
     );
@@ -269,7 +265,7 @@ describe("instructions.mjs", () => {
     initFixture(esddPath);
 
     const { json } = await run(
-      "instructions.mjs",
+      "instructions",
       ["add-auth", "--archive", "--artifact", "proposal"],
       { esddPath }
     );
@@ -284,7 +280,7 @@ describe("instructions.mjs", () => {
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
 
     const { json, exitCode } = await run(
-      "instructions.mjs",
+      "instructions",
       ["quick-fix", "--plan", "--artifact", "brief"],
       { esddPath }
     );
@@ -301,7 +297,7 @@ describe("instructions.mjs", () => {
     writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
 
-    const { json } = await run("instructions.mjs", ["quick-fix", "--plan", "--artifact", "tasks"], {
+    const { json } = await run("instructions", ["quick-fix", "--plan", "--artifact", "tasks"], {
       esddPath
     });
 
@@ -317,11 +313,9 @@ describe("instructions.mjs", () => {
       workflow: "spec-anchored-quick"
     });
 
-    const { json } = await run(
-      "instructions.mjs",
-      ["med-change", "--plan", "--artifact", "specs"],
-      { esddPath }
-    );
+    const { json } = await run("instructions", ["med-change", "--plan", "--artifact", "specs"], {
+      esddPath
+    });
 
     expect(json.dependencies).toHaveLength(1);
     expect(json.dependencies[0]).toContain("brief.md");

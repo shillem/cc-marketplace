@@ -4,12 +4,12 @@ import { resolve } from "path";
 import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
 import { createTmpDir, initFixture, run, writeFixture } from "./helpers.mjs";
 
-describe("new.mjs", () => {
+describe("new", () => {
   test("creates a new change directory and returns status", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("new.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("new", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.name).toBe("add-auth");
@@ -22,7 +22,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("new.mjs", [], { esddPath });
+    const { json, exitCode } = await run("new", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");
@@ -32,7 +32,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("new.mjs", ["invalid name!"], { esddPath });
+    const { json, exitCode } = await run("new", ["invalid name!"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Invalid change name");
@@ -43,7 +43,7 @@ describe("new.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("new.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("new", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("already exists");
@@ -52,7 +52,7 @@ describe("new.mjs", () => {
   test("fails if not initialized", async () => {
     const esddPath = createTmpDir();
 
-    const { json, exitCode } = await run("new.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("new", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toBeDefined();
@@ -62,7 +62,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json } = await run("new.mjs", ["my-change"], { esddPath });
+    const { json } = await run("new", ["my-change"], { esddPath });
 
     const artifacts = json.plan.artifacts;
     expect(artifacts.proposal.status).toBe("pending");
@@ -75,13 +75,9 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run(
-      "new.mjs",
-      ["quick-fix", "--workflow", "spec-first-quick"],
-      {
-        esddPath
-      }
-    );
+    const { json, exitCode } = await run("new", ["quick-fix", "--workflow", "spec-first-quick"], {
+      esddPath
+    });
 
     expect(exitCode).toBe(0);
     expect(json.name).toBe("quick-fix");
@@ -95,7 +91,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    await run("new.mjs", ["quick-fix", "--workflow", "spec-anchored-quick"], { esddPath });
+    await run("new", ["quick-fix", "--workflow", "spec-anchored-quick"], { esddPath });
 
     const changeConfig = yaml.load(
       readFileSync(resolve(esddPath, "changes/quick-fix/change.yaml"), "utf8")
@@ -107,7 +103,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    await run("new.mjs", ["my-change"], { esddPath });
+    await run("new", ["my-change"], { esddPath });
 
     const changeConfig = yaml.load(
       readFileSync(resolve(esddPath, "changes/my-change/change.yaml"), "utf8")
@@ -119,7 +115,7 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("new.mjs", ["my-change", "--workflow", "nonexistent"], {
+    const { json, exitCode } = await run("new", ["my-change", "--workflow", "nonexistent"], {
       esddPath
     });
 
@@ -132,11 +128,9 @@ describe("new.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run(
-      "new.mjs",
-      ["--workflow", "spec-first-quick", "my-change"],
-      { esddPath }
-    );
+    const { json, exitCode } = await run("new", ["--workflow", "spec-first-quick", "my-change"], {
+      esddPath
+    });
 
     expect(exitCode).toBe(0);
     expect(json.name).toBe("my-change");

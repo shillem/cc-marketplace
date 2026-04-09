@@ -227,7 +227,7 @@ function mergeConfigs(schema, config, workflowOverride) {
       };
 
       if (phase === "plan") {
-        entry[phase].discussion = art[phase]?.discussion === true;
+        entry[phase].review = art[phase]?.review === true;
       }
 
       if (!entry[phase].instruction) {

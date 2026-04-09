@@ -1,12 +1,26 @@
-#!/usr/bin/env node
-
 import { relative, resolve } from "path";
-import { esddPath, listDirs, output } from "./lib/fs-utils.mjs";
-import { checkConstitution, Config } from "./lib/config.mjs";
-import { computeChange } from "./lib/status.mjs";
-import { monitorErrors } from "./lib/init.mjs";
+import { esddPath, listDirs, output } from "../lib/fs-utils.mjs";
+import { checkConstitution, Config } from "../lib/config.mjs";
+import { computeChange } from "../lib/status.mjs";
 
-function buildEntry(changeName) {
+export function run() {
+  const config = new Config();
+  const defaultSchema = config.schema();
+  const changesDir = resolve(esddPath(), "changes");
+  const archiveDir = resolve(esddPath(), "archive");
+
+  output({
+    path: relative(process.cwd(), esddPath()),
+    workflows: config.workflows.map(w => w.name).join(", "),
+    defaultWorkflow: `${defaultSchema.workflow} = ${outputPhases(defaultSchema.phases)}`,
+    domains: config.domains.map(d => d.name).join(", "),
+    constitution: checkConstitution(),
+    activeChanges: listDirs(changesDir).map(name => buildEntry(config, name)),
+    archivedChangesCount: listDirs(archiveDir).length
+  });
+}
+
+function buildEntry(config, changeName) {
   const changeSchema = config.schema({ changeName });
   const entry = computeChange(changeName, changeSchema, [], { trackLastModified: true });
 
@@ -48,20 +62,3 @@ function relativeTime(iso) {
   const days = Math.floor(hrs / 24);
   return `${days}d ago`;
 }
-
-monitorErrors();
-
-const config = new Config();
-const defaultSchema = config.schema();
-const changesDir = resolve(esddPath(), "changes");
-const archiveDir = resolve(esddPath(), "archive");
-
-output({
-  path: relative(process.cwd(), esddPath()),
-  workflows: config.workflows.map(w => w.name).join(", "),
-  defaultWorkflow: `${defaultSchema.workflow} = ${outputPhases(defaultSchema.phases)}`,
-  domains: config.domains.map(d => d.name).join(", "),
-  constitution: checkConstitution(),
-  activeChanges: listDirs(changesDir).map(buildEntry),
-  archivedChangesCount: listDirs(archiveDir).length
-});

@@ -21,7 +21,7 @@ Use the Explore **Agent** tool with this prompt (replace `<change-path>` with th
 **Handle result:**
 
 - Show the verification report with issues grouped by priority (CRITICAL / WARNING / SUGGESTION)
-- If discrepancies between change artifacts and codebase were found, use **AskUserQuestion** tool to let the user choose:
-  - Update change specs to match code changes
-  - Continue without changes
+- If discrepancies between change artifacts and code changes were found, use **AskUserQuestion** tool to let the user choose:
+  - Update change artifacts to match code changes
+  - Continue without updating
   - Stop

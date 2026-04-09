@@ -84,18 +84,18 @@ ESDD keeps the leverage while cutting the ceremony:
 ESDD produces structured documents during planning. Each artifact has a specific
 purpose and builds on the ones before it.
 
-| Artifact     | Purpose                                               | Interactive Review |
-| ------------ | ----------------------------------------------------- | :----------------: |
-| **Brief**    | Combined proposal + design for smaller changes        |         No         |
-| **Proposal** | Why this change matters and what it changes           |        Yes         |
-| **Specs**    | Domain-scoped requirements with testable scenarios    |         No         |
-| **Design**   | Technical approach, decisions, trade-offs             |        Yes         |
-| **Tasks**    | Implementation checklist grouped into vertical slices |         No         |
+| Artifact     | Purpose                                               | Review |
+| ------------ | ----------------------------------------------------- | :----: |
+| **Brief**    | Combined proposal + design for smaller changes        |   No   |
+| **Proposal** | Why this change matters and what it changes           |  Yes   |
+| **Specs**    | Domain-scoped requirements with testable scenarios    |   No   |
+| **Design**   | Technical approach, decisions, trade-offs             |  Yes   |
+| **Tasks**    | Implementation checklist grouped into vertical slices |   No   |
 
-Artifacts marked with interactive review are **discussion artifacts** — ESDD
-pauses to surface decisions and ask for your input before moving on (unless
-`--fast` is used). This is where you steer: reviewing a 200-line proposal is
-faster and higher-leverage than reviewing 2,000 lines of generated code.
+Artifacts marked with interactive review are **review artifacts** — ESDD pauses
+to surface decisions and ask for your input before moving on (unless `--fast` is
+used). This is where you steer: reviewing a 200-line proposal is faster and
+higher-leverage than reviewing 2,000 lines of generated code.
 
 See [Artifacts Reference](.docs/artifacts.md) for full details.
 

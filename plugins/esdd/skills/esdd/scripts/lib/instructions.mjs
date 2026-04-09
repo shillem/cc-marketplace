@@ -114,7 +114,7 @@ export function buildPlanInstructions(config, changeName, artifactId) {
   const art = artifacts[artifactId];
 
   return {
-    discussion: art.plan.discussion,
+    review: art.plan.review,
     templatePath: art.plan.template,
     instruction: replaceDomains(
       art.plan.instruction,

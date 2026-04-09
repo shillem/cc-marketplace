@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.3 (2026-04-09)
+
+### Changed
+
+- Consolidated standalone scripts into a single CLI entrypoint (`cli.mjs`) with action-based routing
+- Replaced `CLAUDE_SKILL_DIR` with relative paths in all skill files
+- Renamed `discussion` flag to `review` across schema, scripts, and plan-loop
+- Adopted GIVEN/WHEN/THEN format (with AND chaining) for spec scenarios, replacing WHEN/THEN
+- Streamlined design artifact by removing Open Questions and Migration Plan sections
+- Clarified argument hints in SKILL.md and standardized command suggestion wording
+
 ## 1.0.2 (2026-04-08)
 
 ### Fixed

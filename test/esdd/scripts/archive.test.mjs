@@ -4,12 +4,12 @@ import { resolve } from "path";
 import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
 import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
 
-describe("archive.mjs", () => {
+describe("archive", () => {
   test("fails without a change name", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("archive.mjs", [], { esddPath });
+    const { json, exitCode } = await run("archive", [], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Usage");
@@ -19,7 +19,7 @@ describe("archive.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("archive.mjs", ["bad name!"], { esddPath });
+    const { json, exitCode } = await run("archive", ["bad name!"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("Invalid change name");
@@ -29,7 +29,7 @@ describe("archive.mjs", () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
 
-    const { json, exitCode } = await run("archive.mjs", ["nonexistent"], { esddPath });
+    const { json, exitCode } = await run("archive", ["nonexistent"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toContain("not found");
@@ -40,7 +40,7 @@ describe("archive.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/proposal.md", "# Proposal");
 
-    const { json, exitCode } = await run("archive.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("archive", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.archived).toBeDefined();
@@ -66,7 +66,7 @@ describe("archive.mjs", () => {
       "---\ndescription: Billing and payments\n---\n# Billing spec"
     );
 
-    const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
+    const { json } = await run("archive", ["add-auth"], { esddPath });
 
     expect(json.domains).toContain("auth");
     expect(json.domains).toContain("billing");
@@ -83,7 +83,7 @@ describe("archive.mjs", () => {
     initFixture(esddPath);
     writeFixture(esddPath, "changes/add-auth/specs/auth.md", "# Auth spec");
 
-    const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
+    const { json } = await run("archive", ["add-auth"], { esddPath });
 
     expect(json.domains).toBeUndefined();
   });
@@ -97,7 +97,7 @@ describe("archive.mjs", () => {
       "---\ndescription: Authentication and authorization\n---\n# Auth spec"
     );
 
-    const { json } = await run("archive.mjs", ["add-auth"], { esddPath });
+    const { json } = await run("archive", ["add-auth"], { esddPath });
 
     expect(json.domains).toContain("auth");
 
@@ -112,7 +112,7 @@ describe("archive.mjs", () => {
     writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
     writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
 
-    const { json, exitCode } = await run("archive.mjs", ["quick-fix"], { esddPath });
+    const { json, exitCode } = await run("archive", ["quick-fix"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.archived).toBeDefined();
@@ -131,7 +131,7 @@ describe("archive.mjs", () => {
       workflow: "spec-anchored-quick"
     });
 
-    const { json, exitCode } = await run("archive.mjs", ["med-change"], { esddPath });
+    const { json, exitCode } = await run("archive", ["med-change"], { esddPath });
 
     expect(exitCode).toBe(0);
     expect(json.domains).toContain("auth");
@@ -141,7 +141,7 @@ describe("archive.mjs", () => {
     const esddPath = createTmpDir();
     writeFixture(esddPath, "changes/add-auth/.keep", "");
 
-    const { json, exitCode } = await run("archive.mjs", ["add-auth"], { esddPath });
+    const { json, exitCode } = await run("archive", ["add-auth"], { esddPath });
 
     expect(exitCode).toBe(1);
     expect(json.error).toBeDefined();
