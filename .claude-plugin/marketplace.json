@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Directory of Claude Code plugins",
-    "version": "1.1.3"
+    "version": "1.1.4"
   },
   "plugins": [
     {
@@ -44,7 +44,7 @@
     {
       "name": "esdd",
       "description": "Express spec-driven development — lightweight, customizable, building living specs that document your project's intent over time",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"

@@ -5,15 +5,15 @@ has a specific purpose and builds on the ones before it.
 
 ## Overview
 
-| Artifact | Purpose                                        | Discussion | Used In         |
-| -------- | ---------------------------------------------- | :--------: | --------------- |
-| Brief    | Combined proposal + design for smaller changes |     No     | quick workflows |
-| Proposal | Why this change matters and what it changes    |    Yes     | full workflows  |
-| Specs    | Domain-scoped requirements with scenarios      |     No     | all workflows   |
-| Design   | Technical approach, decisions, trade-offs      |    Yes     | full workflows  |
-| Tasks    | Implementation checklist grouped into steps    |     No     | all workflows   |
+| Artifact | Purpose                                        | Review | Used In         |
+| -------- | ---------------------------------------------- | :----: | --------------- |
+| Brief    | Combined proposal + design for smaller changes |   No   | quick workflows |
+| Proposal | Why this change matters and what it changes    |  Yes   | full workflows  |
+| Specs    | Domain-scoped requirements with scenarios      |   No   | all workflows   |
+| Design   | Technical approach, decisions, trade-offs      |  Yes   | full workflows  |
+| Tasks    | Implementation checklist grouped into steps    |   No   | all workflows   |
 
-**Discussion artifacts** trigger an interactive review during planning (unless
+**Review artifacts** trigger an interactive review during planning (unless
 `--fast` is used). ESDD surfaces key decisions, assumptions, and scope questions
 for you to validate before moving on.
 
@@ -70,7 +70,8 @@ Generate a secure session token upon successful login.
 
 #### Scenario: Successful Login
 
-- **WHEN** a user submits valid credentials
+- **GIVEN** a registered user with valid credentials
+- **WHEN** the user submits a login request
 - **THEN** a JWT token is returned with a 24-hour expiry
 ```
 
@@ -93,12 +94,10 @@ The _how_ document. Captures technical approach, trade-offs, and decisions.
 
 **Sections:**
 
-- **Context** — Background and current state
+- **Context** — Background, current state, constraints
 - **Goals / Non-Goals** — What's in and out of scope
-- **Decisions** — Technical choices with rationale
+- **Decisions** — Technical choices with rationale and alternatives considered
 - **Risks / Trade-offs** — Known concerns and mitigations
-- **Migration Plan** — Deployment and rollback strategy
-- **Open Questions** — Unresolved items
 
 ## Tasks
 

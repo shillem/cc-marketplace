@@ -98,21 +98,21 @@ change name from your description (e.g., "Add user authentication" becomes
 `add-user-authentication`).
 
 Walks through the plan phase artifacts sequentially. For artifacts marked as
-discussion points (proposal, design), ESDD surfaces key decisions and asks for
-your input before moving on.
+review points (proposal, design), ESDD surfaces key decisions and asks for your
+input before moving on.
 
 **Flags:**
 
-| Flag                | Effect                                                           |
-| ------------------- | ---------------------------------------------------------------- |
-| `--fast`            | Skip interactive discussions and review pauses between artifacts |
-| `--workflow <name>` | Use a specific workflow instead of the project default           |
+| Flag                | Effect                                                 |
+| ------------------- | ------------------------------------------------------ |
+| `--fast`            | Skip interactive reviews and pauses between artifacts  |
+| `--workflow <name>` | Use a specific workflow instead of the project default |
 
 **What happens:**
 
 1. Creates a change directory under `.ai/esdd/changes/<change-name>/`
 2. Generates each plan artifact in order (proposal → specs → design → tasks, varies by workflow)
-3. For discussion artifacts: presents key decisions and asks for confirmation
+3. For review artifacts: presents key decisions and asks for confirmation
 4. Shows final status with artifact summaries
 
 ## continue
@@ -132,9 +132,9 @@ Handles invalid artifacts by surfacing validation errors and offering to fix the
 
 **Flags:**
 
-| Flag     | Effect                                         |
-| -------- | ---------------------------------------------- |
-| `--fast` | Skip interactive discussions and review pauses |
+| Flag     | Effect                              |
+| -------- | ----------------------------------- |
+| `--fast` | Skip interactive reviews and pauses |
 
 ## apply
 

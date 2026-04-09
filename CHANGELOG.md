@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4] - 2026-04-09
+
+### Updated
+
+- **esdd** plugin bumped to 1.0.3 — consolidated scripts into CLI entrypoint, renamed discussion to review, adopted GIVEN/WHEN/THEN scenario format, streamlined design artifact
+
 ## [1.1.3] - 2026-04-08
 
 ### Updated

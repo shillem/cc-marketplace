@@ -47,8 +47,8 @@ The full workflow. Starts with a proposal to align on _why_ and _what_, then
 produces domain-scoped specifications, a design document for _how_, and finally
 actionable task groups.
 
-The proposal and design artifacts are **discussion points** — ESDD will surface
-key decisions and ask for your input before moving on.
+The proposal and design artifacts are **review points** — ESDD will surface key
+decisions and ask for your input before moving on.
 
 ### spec-anchored-quick
 
@@ -155,7 +155,7 @@ new → [continue] → apply → [verify] → archive
              (if issues found)
 ```
 
-1. **Plan** (`new` / `continue`) — Generate artifacts sequentially, with discussion pauses
+1. **Plan** (`new` / `continue`) — Generate artifacts sequentially, with review pauses
 2. **Apply** — Implement task groups one at a time
 3. **Verify** (optional but recommended) — Check implementation against intent
 4. **Archive** — Preserve the change and merge domain knowledge (spec-anchored only)

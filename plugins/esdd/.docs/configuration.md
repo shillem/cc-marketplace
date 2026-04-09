@@ -148,12 +148,12 @@ the plugin.
 artifacts:
   proposal:
     plan:
-      discussion: false
+      review: false
       instruction: |
         Custom proposal instruction...
   design:
     plan:
-      discussion: false
+      review: false
       instruction: |
         Custom design instruction...
 ```
@@ -166,7 +166,7 @@ Each artifact supports these properties:
 | --------------------------- | ------------------------------------------------------- |
 | `description`               | Artifact description                                    |
 | `output`                    | Output filename or pattern                              |
-| `plan.discussion`           | Toggle interactive review (`true`/`false`)              |
+| `plan.review`               | Toggle interactive review (`true`/`false`)              |
 | `plan.instruction`          | Replace the planning instruction entirely               |
 | `plan.instruction_addendum` | Append to the base planning instruction                 |
 | `apply.instruction`         | Replace the apply-phase instruction                     |
@@ -189,11 +189,11 @@ key (like `plan`), those objects are also merged — so you can override individ
 properties without losing siblings:
 
 ```yaml
-# Only overrides discussion — instruction is preserved from schema.yaml
+# Only overrides review — instruction is preserved from schema.yaml
 artifacts:
   proposal:
     plan:
-      discussion: false
+      review: false
 ```
 
 ## Custom Templates
