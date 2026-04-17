@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.5] - 2026-04-17
+
+### Updated
+
+- **esdd** plugin bumped to 1.0.4 — made docs directory visible (`.docs/` → `docs/`) and tightened skill step formatting
+
 ## [1.1.4] - 2026-04-09
 
 ### Updated
