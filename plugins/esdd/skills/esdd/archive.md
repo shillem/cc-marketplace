@@ -14,7 +14,6 @@
    - If multiple changes: use **AskUserQuestion** tool to let the user select
 
 2. **Get detailed status:**
-
    Run the CLI script: `node scripts/cli.mjs status "<name>" --archive`.
 
 3. **Handle status:**
@@ -22,7 +21,6 @@
    - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
 
 4. **Verify the change:**
-
    If `--skip-verify` flag is present, skip to step 5.
 
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
@@ -30,9 +28,7 @@
 5. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 6.
 
-   Use the **Task** tools to track progress through the artifacts and groups.
-
-   Loop through the `archive.workflow` array. For each artifact, use **Agent** tool with this prompt:
+   Loop through the `archive.workflow` array, using the **Task** tools to track progress. For each artifact, use **Agent** tool with this prompt:
 
    > - Get instructions by running the CLI script: `node scripts/cli.mjs instructions "<name>" --archive --artifact <artifact-id>`
    > - The JSON output includes:
@@ -40,7 +36,6 @@
    > - Follow the `instruction`
 
 6. **Run archive script:**
-
    Run the CLI script: `node scripts/cli.mjs archive "<name>"`.
 
    Check for errors.

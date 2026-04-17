@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.4 (2026-04-17)
+
+### Changed
+
+- Renamed `.docs/` to `docs/` so the plugin documentation directory is visible; README links updated accordingly
+- Tightened skill step formatting: inlined Task-tool progress tracking into surrounding loop steps and removed redundant blank lines between step headings and bodies
+
 ## 1.0.3 (2026-04-09)
 
 ### Changed

@@ -1,0 +1,14 @@
+workflow: spec-anchored-quick
+domains:
+  - name: marketplace
+    description: Management of the marketplace.json file
+  - name: plugin-apex-lsp
+    description: Salesforce Apex language server plugin
+  - name: plugin-esdd
+    description: Express spec driven development plugin
+  - name: plugin-scala-lsp
+    description: Scala language server plugin
+  - name: plugin-stickies
+    description: Stickies-as-markdown notes plugin
+  - name: infra
+    description: Repository and CI/CD configurations

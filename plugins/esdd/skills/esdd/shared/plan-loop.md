@@ -2,9 +2,7 @@
 
 **Expects from calling action:** `<change-name>` and optional `--fast` flag.
 
-Use the **Task** tools to track progress through the artifacts.
-
-Loop through the `plan.workflow` array:
+Loop through the `plan.workflow` array, using the **Task** tools to track progress.
 
 a. **For each artifact with `pending` status**:
 

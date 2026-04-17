@@ -25,9 +25,7 @@
    If an `error` field is present, report it and stop.
 
 4. **Per-domain loop:**
-   Use the **Task** tools to track progress through domains.
-
-   For each domain collected in step 1:
+   Loop through each domain, using the **Task** tools to track progress. For each domain, do the following:
 
    a. **Produce the domain spec:**
    - Read the template at `templatePath` for shape reference

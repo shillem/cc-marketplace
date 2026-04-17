@@ -97,7 +97,7 @@ to surface decisions and ask for your input before moving on (unless `--fast` is
 used). This is where you steer: reviewing a 200-line proposal is faster and
 higher-leverage than reviewing 2,000 lines of generated code.
 
-See [Artifacts Reference](.docs/artifacts.md) for full details.
+See [Artifacts Reference](docs/artifacts.md) for full details.
 
 ### Domains
 
@@ -130,7 +130,7 @@ planning but aren't maintained long-term). Spec-anchored workflows create a
 compounding knowledge base; spec-first workflows trade that persistence for
 speed.
 
-See [Workflows](.docs/workflows.md) for when and why to use each.
+See [Workflows](docs/workflows.md) for when and why to use each.
 
 ## Commands
 
@@ -146,7 +146,7 @@ See [Workflows](.docs/workflows.md) for when and why to use each.
 | `archive`  | Archive change                            | `--skip-verify`        |
 | `view`     | Show project status dashboard             | —                      |
 
-See [Commands Reference](.docs/commands.md) for full details.
+See [Commands Reference](docs/commands.md) for full details.
 
 ## Configuration
 
@@ -164,7 +164,7 @@ your actual conventions.
 `.ai/esdd/domains/` — Accumulated domain specifications  
 `<change>/change.yaml` — Per-change configuration (workflow, created automatically)
 
-See [Configuration](.docs/configuration.md) for full setup details.
+See [Configuration](docs/configuration.md) for full setup details.
 
 ## License
 
