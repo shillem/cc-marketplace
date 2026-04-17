@@ -26,7 +26,6 @@
 4. **If all artifacts status is `ready`:** Report completion, suggest running `/esdd apply`
 
 5. **Process artifacts:**
-
    Follow the instructions in [plan-loop.md](shared/plan-loop.md).
 
 6. **Show final status.**

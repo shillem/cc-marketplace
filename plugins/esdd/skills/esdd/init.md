@@ -21,7 +21,6 @@
    ```
 
 2. **Present workflows:**
-
    Present the workflow choices to the user using their names and descriptions from the output. If only one workflow exists, use it as the default and confirm with the user.
 
 3. **Ask user to define domains:**

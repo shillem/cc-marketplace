@@ -14,7 +14,6 @@
    - If multiple changes: use **AskUserQuestion** tool to let the user select
 
 2. **Get detailed status:**
-
    Run the CLI script: `node scripts/cli.mjs status "<name>" --apply`.
 
 3. **Handle status:**
@@ -22,5 +21,4 @@
    - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
 
 4. **Verify the change:**
-
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
