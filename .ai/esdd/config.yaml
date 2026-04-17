@@ -1,0 +1,8 @@
+workflow: spec-anchored-quick
+domains:
+  - name: marketplace
+    description: Management of the marketplace.json file
+  - name: plugin-esdd
+    description: Express spec driven development plugin
+  - name: infra
+    description: Repository and CI/CD configurations
