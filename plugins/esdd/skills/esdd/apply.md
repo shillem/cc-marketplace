@@ -12,7 +12,7 @@
    - Otherwise, run the CLI script: `node scripts/cli.mjs list --apply`
    - If no changes exist: suggest running `/esdd new`
    - If one change exists: use it
-   - If multiple changes: use **AskUserQuestion** tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)".
+   - If multiple changes: use the ask tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)".
 
 2. **Get detailed status:**
    Run the CLI script: `node scripts/cli.mjs status "<name>" --apply`.
@@ -23,11 +23,11 @@
    - Otherwise: proceed to step 4
 
 4. **Process artifacts:**
-   Loop through the `apply.workflow` array, using the **Task** tools to track progress. For each artifact, iterate its `groups`:
+   Loop through the `apply.workflow` array, using the task tool to track progress. For each artifact, iterate its `groups`:
 
    a. **Skip completed groups** (status: `"done"`)
 
-   b. **For each pending group**, use **Agent** tool with this prompt:
+   b. **For each pending group**, use the subagent tool with this prompt:
 
    > - Get instructions by running the CLI script: `node scripts/cli.mjs instructions "<name>" --apply --artifact <artifact> --group <group-id>`
    > - The JSON output includes:

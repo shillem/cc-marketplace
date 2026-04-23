@@ -46,7 +46,7 @@ artifacts:
 
         **Important**:
         - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When a domain's description appears insufficient, use the **Agent** tool to evaluate which ones will be affected.
+        - When a domain's description appears insufficient, use the subagent tool to evaluate which ones will be affected.
   specs:
     description: Detailed specifications for the change
     output: specs/{domain}.md

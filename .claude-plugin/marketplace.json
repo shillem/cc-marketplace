@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Directory of Claude Code plugins",
-    "version": "1.1.5"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -44,7 +44,7 @@
     {
       "name": "esdd",
       "description": "Express spec-driven development — lightweight, customizable, building living specs that document your project's intent over time",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
@@ -78,12 +78,24 @@
     {
       "name": "stickies",
       "description": "Manage stickies as markdown files",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
       },
       "source": "./plugins/stickies",
+      "category": "productivity",
+      "strict": false
+    },
+    {
+      "name": "yt-dlp",
+      "description": "Download videos, audio, and transcripts from YouTube and 1000+ sites with yt-dlp",
+      "version": "1.0.0",
+      "author": {
+        "name": "Shillem Volpato",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/yt-dlp",
       "category": "productivity",
       "strict": false
     }

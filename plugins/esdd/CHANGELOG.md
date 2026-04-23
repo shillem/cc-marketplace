@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5 (2026-04-23)
+
+### Changed
+
+- Clarified skill instructions to use generic ask, task, and subagent tool names instead of harness-specific labels
+- Simplified `SKILL.md` action dispatch guidance and removed the outdated `allowed-tools` frontmatter entry
+
 ## 1.0.4 (2026-04-17)
 
 ### Changed

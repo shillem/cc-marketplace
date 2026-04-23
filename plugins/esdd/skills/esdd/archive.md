@@ -11,7 +11,7 @@
    - Otherwise, run the CLI script: `node scripts/cli.mjs list --archive`
    - If no changes exist: report and stop
    - If one change exists: use it
-   - If multiple changes: use **AskUserQuestion** tool to let the user select
+   - If multiple changes: use the ask tool to let the user select
 
 2. **Get detailed status:**
    Run the CLI script: `node scripts/cli.mjs status "<name>" --archive`.
@@ -28,7 +28,7 @@
 5. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 6.
 
-   Loop through the `archive.workflow` array, using the **Task** tools to track progress. For each artifact, use **Agent** tool with this prompt:
+   Loop through the `archive.workflow` array, using the task tool to track progress. For each artifact, use the subagent tool with this prompt:
 
    > - Get instructions by running the CLI script: `node scripts/cli.mjs instructions "<name>" --archive --artifact <artifact-id>`
    > - The JSON output includes:

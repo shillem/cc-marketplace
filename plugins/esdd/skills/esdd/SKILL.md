@@ -2,15 +2,13 @@
 name: esdd
 description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, verifying changes, or archiving completed work.
 argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [...]"
-allowed-tools: Agent, Bash(node *), Bash(mkdir *), Bash(mv *), Edit, Glob, Grep, Read, TaskCreate, TaskGet, TaskList, TaskUpdate, Write
 ---
 
 # ESDD
 
-Parse `$ARGUMENTS`:
-
-1. Split arguments: first word is `$ACTION`, remainder is `$REST`
-2. If `$ACTION` is empty or does not match an action — list the available actions and suggest running `/esdd view` to see current state
+1. Treat the first word passed by the user as `$ACTION`, remainder is `$REST`.
+2. If `$ACTION` matches one of the actions, follow the action's instructions.
+3. If `$ACTION` is empty or does not match an action, list the available actions.
 
 **Available scripts:**
 

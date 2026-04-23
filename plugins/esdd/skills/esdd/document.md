@@ -12,7 +12,7 @@
 
 2. **Determine scan scopes:**
    - If `--scan` was provided, use it
-   - Otherwise, suggest a scope derived from the domain name, and project map if declared. Then use the **AskUserQuestion** tool to confirm or let the user override with a glob pattern.
+   - Otherwise, suggest a scope derived from the domain name, and project map if declared. Then use the the ask tool to confirm or let the user override with a glob pattern.
 
 3. **Get instructions:**
    Run the CLI script: `node scripts/cli.mjs document --instruction`.
@@ -25,7 +25,7 @@
    If an `error` field is present, report it and stop.
 
 4. **Per-domain loop:**
-   Loop through each domain, using the **Task** tools to track progress. For each domain, do the following:
+   Loop through each domain, using the task tool to track progress. For each domain, do the following:
 
    a. **Produce the domain spec:**
    - Read the template at `templatePath` for shape reference
