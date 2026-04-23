@@ -1,10 +1,15 @@
 # Changelog
 
-## [1.1.6] - 2026-04-23
+## [1.2.0] - 2026-04-23
+
+### Added
+
+- **yt-dlp** plugin (1.0.0) — download videos, audio, and transcripts from YouTube and 1000+ sites with yt-dlp
 
 ### Updated
 
 - **stickies** plugin bumped to 1.0.4 — simplified skill frontmatter, clarified action dispatch, and added explicit empty-state handling
+- **esdd** plugin bumped to 1.0.5 — clarified skill instructions to use generic tool names, simplified action dispatch, and removed outdated `allowed-tools` frontmatter
 
 ## [1.1.5] - 2026-04-17
 
