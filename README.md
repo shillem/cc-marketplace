@@ -10,6 +10,7 @@ A directory of [Claude Code](https://claude.ai/code) plugins.
 | [esdd](plugins/esdd/)           | Express spec-driven development — plan features with structured artifacts before implementation                                                        |
 | [scala-lsp](plugins/scala-lsp/) | Scala language server via Metals — go-to-definition, find references, error checking for `.scala`, `.sc`, and `.sbt` files                             |
 | [stickies](plugins/stickies/)   | Manage local project stickies as markdown files — create, list, read, and delete stickies stored in `.ai/stickies/`                                    |
+| [yt-dlp](plugins/yt-dlp/)       | Wraps `yt-dlp` for downloading videos, audio, and transcripts from YouTube and 1000+ supported sites                                                   |
 
 ## Usage
 
