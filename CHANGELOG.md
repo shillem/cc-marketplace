@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.6] - 2026-04-23
+
+### Updated
+
+- **stickies** plugin bumped to 1.0.4 — simplified skill frontmatter, clarified action dispatch, and added explicit empty-state handling
+
 ## [1.1.5] - 2026-04-17
 
 ### Updated

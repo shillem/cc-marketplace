@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.4 (2026-04-23)
+
+### Improved
+
+- Simplified skill frontmatter to the current plugin format
+- Clarified action dispatch and stickies folder instructions
+- Added explicit no-match and empty-state handling for read, delete, and list actions
+
 ## 1.0.3 (2026-04-07)
 
 ### Improved
