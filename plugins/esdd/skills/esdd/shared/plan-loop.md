@@ -2,7 +2,7 @@
 
 **Expects from calling action:** `<change-name>` and optional `--fast` flag.
 
-Loop through the `plan.workflow` array, using the **Task** tools to track progress.
+Loop through the `plan.workflow` array, using the task tool to track progress.
 
 a. **For each artifact with `pending` status**:
 
@@ -15,10 +15,10 @@ a. **For each artifact with `pending` status**:
   - `dependencies`: Additional context for the artifact
 - Read all dependencies for context
 - Create the artifact using the `instruction` guidance and template provided
-- If context is critically unclear, use **AskUserQuestion** tool — but prefer making reasonable decisions to keep momentum
+- If context is critically unclear, use the ask tool — but prefer making reasonable decisions to keep momentum
 - **If `review` is `true` AND `--fast` is absent**, run a review phase after generating:
   1. **Surface**: present the key decisions, assumptions, and patterns you followed while creating the artifact
-  2. **Resolve open questions**: if the artifact contains an Open Questions section, present each one and use the **AskUserQuestion** tool to get the user's input. Questions the user explicitly defers should be moved to a **Deferred Questions** section with rationale for why they don't block implementation.
+  2. **Resolve open questions**: if the artifact contains an Open Questions section, present each one and use the the ask tool to get the user's input. Questions the user explicitly defers should be moved to a **Deferred Questions** section with rationale for why they don't block implementation.
   3. **Revise**: if the user provides corrections, update the artifact accordingly
 - After creating the artifact, run the CLI script: `node scripts/cli.mjs status "<change-name>" --plan`
 - If the artifact has status `invalid`, surface the errors and offer to fix before moving on
