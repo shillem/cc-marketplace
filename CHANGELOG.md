@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2026-04-23
+
+### Updated
+
+- Marketplace README now includes the **yt-dlp** plugin in the published plugin list
+
 ## [1.2.0] - 2026-04-23
 
 ### Added
