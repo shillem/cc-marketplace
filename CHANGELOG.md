@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2026-04-24
+
+### Updated
+
+- **esdd** plugin bumped to 1.0.6 — tightened the skill description to make ESDD opt-in and exclude ordinary coding, debugging, refactoring, and small code changes
+
 ## [1.2.1] - 2026-04-23
 
 ### Updated

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.6 (2026-04-24)
+
+### Changed
+
+- Tightened the skill description so ESDD only triggers on explicit requests, ESDD-specific references, or existing ESDD changes
+- Added explicit exclusions for ordinary coding, debugging, refactoring, and small code changes
+
 ## 1.0.5 (2026-04-23)
 
 ### Changed
