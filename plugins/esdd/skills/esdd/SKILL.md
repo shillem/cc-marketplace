@@ -1,6 +1,6 @@
 ---
 name: esdd
-description: Express Spec-Driven Development. Use when planning a new feature or change, continuing work, checking status, implementing tasks, verifying changes, or archiving completed work.
+description: Express Spec-Driven Development. Use only when the user explicitly asks for ESDD, references an ESDD command or artifact, or wants to continue an existing ESDD change. Do not use for ordinary coding, debugging, refactoring, or small code changes.
 argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [...]"
 ---
 
