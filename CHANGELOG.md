@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2026-04-24
+
+### Added
+
+- **code-swiss-knife** plugin (1.0.0) — development toolbox plugin initially shipping the **code-reviewer** skill for focused reviews covering correctness, security, performance, maintainability, testing, and documentation
+
 ## [1.2.2] - 2026-04-24
 
 ### Updated
