@@ -6,6 +6,10 @@
 
 - **code-swiss-knife** plugin (1.0.0) — development toolbox plugin initially shipping the **code-reviewer** skill for focused reviews covering correctness, security, performance, maintainability, testing, and documentation
 
+### Updated
+
+- **esdd** plugin bumped to 1.0.7 — normalized skill headings and updated CLI examples to use `<skill-dir>` so commands work from any working directory
+
 ## [1.2.2] - 2026-04-24
 
 ### Updated
