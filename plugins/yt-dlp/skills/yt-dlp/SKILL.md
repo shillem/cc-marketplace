@@ -4,15 +4,13 @@ description: Download videos, audio, and transcripts from YouTube and 1000+ site
 argument-hint: "[video|audio|transcript] <url> [...]"
 ---
 
-# yt-dlp
-
 1. Treat the first word passed by the user as `$ACTION`, remainder as `$URL`.
 2. If `$ACTION` matches one of the actions, follow the action's instructions.
 3. If `$ACTION` is empty or does not match an action, list the available actions.
 
 **Important**: downloads are saved to `<cwd>/.ai/yt-dlp` (current working directory) unless the user specifies another path.
 
-**Available scripts:**
+## Available Scripts
 
 - **`scripts/strip-transcript.mjs`** — Transcript utility
 
