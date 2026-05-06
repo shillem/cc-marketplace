@@ -30,8 +30,9 @@ Useful commands for review:
 
 ```bash
 # Pull request review
-gh pr view <PR-NUMBER>
-gh pr diff <PR-NUMBER>
+gh pr view <PR-NUMBER> --json title,body,files,commits,baseRefName,headRefName
+gh pr diff <PR-NUMBER> --name-only
+gh pr diff <PR-NUMBER> --patch
 
 # Current branch against an explicit target ref
 git merge-base HEAD <TARGET-REF>
@@ -46,6 +47,9 @@ git diff
 
 # Last commit
 git show --stat --patch HEAD
+
+# Specific commit
+git show --stat --patch <COMMIT>
 ```
 
 If the review target, base branch, or expected behavior is unclear, ask before reviewing deeply. Prefer explicit review boundaries over guessing.
