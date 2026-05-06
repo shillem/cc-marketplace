@@ -24,12 +24,12 @@ Run the CLI script: `node <skill-dir>/scripts/cli.mjs init --status`
 
 When dispatching to an action, read the corresponding file and follow its instructions exactly:
 
-- **init**: [init.md](init.md)
-- **document**: [document.md](document.md)
-- **explore**: [explore.md](explore.md)
-- **new**: [new.md](new.md)
-- **continue**: [continue.md](continue.md)
-- **apply**: [apply.md](apply.md)
-- **verify**: [verify.md](verify.md)
-- **archive**: [archive.md](archive.md)
-- **view**: [view.md](view.md)
+- [init](init.md)
+- [document](document.md)
+- [explore](explore.md)
+- [new](new.md)
+- [continue](continue.md)
+- [apply](apply.md)
+- [verify](verify.md)
+- [archive](archive.md)
+- [view](view.md)
