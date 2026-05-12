@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Review pull requests, diffs, and implementation changes for correctness, security, performance, maintainability, testing, and release readiness.
+description: Review pull requests, diffs, and implementation changes for correctness, security, performance, maintainability, testing, and release readiness. Use when the user asks for review of a PR, patch, diff, commit, or code change.
 compatibility: PR review requires GitHub CLI
 ---
 
@@ -113,10 +113,6 @@ If confidence is incomplete, state what you observed and phrase the rest as a qu
 ## Questions
 
 - [optional]
-
-## Review Notes
-
-- **Local state left behind:** [None / details]
 
 ## Verdict
 

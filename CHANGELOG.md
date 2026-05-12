@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] - 2026-05-12
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.1 — removed the default `Local state left behind` review note from code review output while keeping explicit reporting when local review state is intentionally preserved
+
 ## [1.3.1] - 2026-05-12
 
 ### Updated
