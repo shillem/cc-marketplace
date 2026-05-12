@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 (2026-05-12)
+
+### Changed
+
+- `code-reviewer` no longer includes a default `Local state left behind` review note when there is nothing to report
+
 ## 1.1.0 (2026-05-12)
 
 ### Changed
