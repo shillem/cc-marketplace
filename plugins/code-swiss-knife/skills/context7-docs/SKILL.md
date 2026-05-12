@@ -4,8 +4,6 @@ description: Fetches current, version-specific documentation and code examples v
 compatibility: Requires ctx7 CLI
 ---
 
-# Context7 Docs
-
 ## Workflow
 
 Two-step process: resolve the library name to an ID, then query docs with that ID.

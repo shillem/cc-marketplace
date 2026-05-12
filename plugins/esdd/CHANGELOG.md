@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.8 (2026-05-12)
+
+### Changed
+
+- Normalized wording and sentence punctuation across the README, skill docs, and schema guidance for cleaner, more consistent instructions
+
 ## 1.0.7 (2026-04-28)
 
 ### Changed

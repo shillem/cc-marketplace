@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 (2026-05-12)
+
+### Changed
+
+- Tightened skill formatting by removing redundant sentence-ending punctuation from usage bullet lists
+
 ## 1.0.0 (2026-04-23)
 
 ### Added

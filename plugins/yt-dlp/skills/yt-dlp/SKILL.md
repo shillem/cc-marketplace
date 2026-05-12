@@ -33,9 +33,9 @@ yt-dlp --restrict-filenames -P <yt-dlp-download-folder> -o "%(title)s.%(ext)s" <
     -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 <url>
   ```
 - A specific format from the format list — first inspect with `yt-dlp -F <url>`,
-  then pick by id: `yt-dlp -f 137+140 <url>`.
-- Whole playlist: pass the playlist URL as-is. To limit, add `--playlist-items 1-5`.
-- Resume / skip already-downloaded: `--continue --no-overwrites` (default behavior is fine for most cases).
+  then pick by id: `yt-dlp -f 137+140 <url>`
+- Whole playlist: pass the playlist URL as-is. To limit, add `--playlist-items 1-5`
+- Resume / skip already-downloaded: `--continue --no-overwrites` (default behavior is fine for most cases)
 
 ### Audio
 
@@ -45,10 +45,10 @@ Extract audio only — strips the video stream.
 yt-dlp -x --audio-format mp3 --audio-quality 0 --restrict-filenames -P <yt-dlp-download-folder> -o "%(title)s.%(ext)s" <url>
 ```
 
-- `--audio-format` accepts `mp3`, `m4a`, `opus`, `flac`, `wav`, `aac`, `vorbis`.
-- `--audio-quality 0` means best VBR; use `192K` for a fixed bitrate.
-- Embed cover art and metadata: add `--embed-thumbnail --add-metadata`.
-- For a playlist as an album, add `-o "%(playlist_title)s/%(playlist_index)02d - %(title)s.%(ext)s"`.
+- `--audio-format` accepts `mp3`, `m4a`, `opus`, `flac`, `wav`, `aac`, `vorbis`
+- `--audio-quality 0` means best VBR; use `192K` for a fixed bitrate
+- Embed cover art and metadata: add `--embed-thumbnail --add-metadata`
+- For a playlist as an album, add `-o "%(playlist_title)s/%(playlist_index)02d - %(title)s.%(ext)s"`
 
 ### Transcript
 
@@ -64,10 +64,10 @@ Default to English unless the user specifies a language.
 
    - Prefer a single language code (`en`) over wildcards (`en.*`) — YouTube
      exposes `en`, `en-en`, and `en-orig` auto-caption tracks and a wildcard
-     downloads all three.
-   - To inspect what's available first: `yt-dlp --list-subs <url>`.
-   - For multiple languages: `--sub-langs "en,it,fr"`.
-   - To convert VTT → SRT for editing tools: add `--convert-subs srt`.
+     downloads all three
+   - To inspect what's available first: `yt-dlp --list-subs <url>`
+   - For multiple languages: `--sub-langs "en,it,fr"`
+   - To convert VTT → SRT for editing tools: add `--convert-subs srt`
 
 2. Find the sub and run the stripper with `--in-place`. The script writes the
    transcript alongside the source (stripping a trailing BCP-47 language tag
@@ -98,7 +98,7 @@ Default to English unless the user specifies a language.
   URL. Site-specific quirks (DRM, private URLs) are documented at
   <https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md>.
 - **Age-gated / region-locked videos**: pass `--cookies-from-browser <browser>`
-  (e.g. `safari`, `chrome`, `firefox`) to use the user's logged-in session.
-- **Rate limits / 429s**: add `--sleep-requests 1 --sleep-interval 5 --max-sleep-interval 15`.
+  (e.g. `safari`, `chrome`, `firefox`) to use the user's logged-in session
+- **Rate limits / 429s**: add `--sleep-requests 1 --sleep-interval 5 --max-sleep-interval 15`
 - **Don't shell-interpolate untrusted URLs** — always quote `"<url>"` to avoid
-  `&` query-string surprises.
+  `&` query-string surprises

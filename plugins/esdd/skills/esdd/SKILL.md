@@ -16,9 +16,9 @@ argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [
 
 Run the CLI script: `node <skill-dir>/scripts/cli.mjs init --status`
 
-- If `initialized` is `false` and `$ACTION` is not `init` — suggest running `/esdd init` and stop.
-- If `initialized` is `true` and `$ACTION` is `init` — inform already initialized and stop.
-- If `constitution.projectMap` or `constitution.techStack` is `false` — warn that CLAUDE.md is missing project context sections (non-blocking, continue with the action).
+- If `initialized` is `false` and `$ACTION` is not `init` — suggest running `/esdd init` and stop
+- If `initialized` is `true` and `$ACTION` is `init` — inform already initialized and stop
+- If `constitution.projectMap` or `constitution.techStack` is `false` — warn that CLAUDE.md is missing project context sections (non-blocking, continue with the action)
 
 ## Action Dispatch
 

@@ -12,7 +12,7 @@
    - Otherwise, run the CLI script: `node <skill-dir>/scripts/cli.mjs list --apply`
    - If no changes exist: suggest running `/esdd new`
    - If one change exists: use it
-   - If multiple changes: use the ask tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)".
+   - If multiple changes: use the ask tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)"
 
 2. **Get detailed status:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --apply`.

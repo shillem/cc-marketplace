@@ -11,7 +11,7 @@ artifacts:
         - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
         - **What Changes**: Bullet list of concrete changes. Mark breaking changes with **BREAKING**
         - **Domains**: Identify which domain specs will be created or modified:
-          - **New Domains**: Domains not yet defined. Use kebab-case names.
+          - **New Domains**: Domains not yet defined. Use kebab-case names
           - **Modified Domains**: Existing domains whose REQUIREMENTS are changing
           - Remove either subsection if not applicable
         - **Approach**: Key technical decisions with rationale (why X over Y?)
@@ -46,7 +46,7 @@ artifacts:
 
         **Important**:
         - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When a domain's description appears insufficient, use the subagent tool to evaluate which ones will be affected.
+        - When a domain's description appears insufficient, use the subagent tool to evaluate which ones will be affected
   specs:
     description: Detailed specifications for the change
     output: specs/{domain}.md
