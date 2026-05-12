@@ -43,7 +43,7 @@
     },
     {
       "name": "code-swiss-knife",
-      "description": "Development toolbox plugin currently shipping the code-reviewer skill for focused diff and pull request reviews",
+      "description": "Development toolbox plugin with code review, commit, and pull request workflow skills",
       "version": "1.0.0",
       "author": {
         "name": "Shillem Volpato",

@@ -1,43 +1,89 @@
 # code-swiss-knife
 
-Claude Code plugin with practical development skills for code review and analysis.
-It currently ships the `code-reviewer` skill for focused reviews of diffs, pull
-requests, and local changes across correctness, security, performance,
-maintainability, testing, and documentation. The skill uses a shared review
-workflow plus targeted reference files for security, performance, code
-quality, and testing.
+Claude Code plugin that bundles practical development skills. It currently ships
+with three skills:
+
+- `code-reviewer` for reviewing diffs, pull requests, and local changes
+- `gitter` for commits and pull request workflows
+- `context7-docs` for current, version-specific documentation and code examples via Context7
+
+## Included Skills
+
+| Skill           | Purpose                                                                                    | Typical commands                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| `code-reviewer` | Focused review across correctness, security, performance, maintainability, tests, and docs | `/code-reviewer review staged changes`                                                  |
+| `gitter`        | Commit current work and open or refresh pull requests                                      | `/gitter commit`, `/gitter pr`                                                          |
+| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools    | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
 
 ## Usage
 
-Invoke via slash command:
+Use the skill directly with its slash command, or ask Claude Code naturally to
+review code, create a commit, or open a pull request.
 
-```
+### `code-reviewer`
+
+Use for PRs, branches, commits, staged changes, or unstaged changes.
+
+```text
 /code-reviewer review the current branch against <target-branch>
 /code-reviewer review staged changes
 /code-reviewer review PR #123
 /code-reviewer review this diff for security and performance issues
 ```
 
-For local branch reviews, prefer an explicit target branch or ref rather than
-assuming `main`.
+For branch reviews, prefer an explicit target branch or ref instead of assuming
+`main`.
 
-Or ask Claude Code to review a pull request, diff, or recent changes to trigger
-the skill automatically.
+### `gitter`
+
+Use for commit and PR workflows.
+
+```text
+/gitter commit
+/gitter pr
+```
+
+### `context7-docs`
+
+Use for authoritative, up-to-date API, setup, configuration, integration, and migration docs.
+
+```text
+/context7-docs react useEffect cleanup with async operations
+/context7-docs nextjs app router middleware setup
+```
 
 ## Prerequisites
 
-- `git` for local diff review
-- `gh` on `PATH` when reviewing GitHub pull requests
+### `code-reviewer`
 
-## What's included
+- `git` for local diff and branch review workflows
+- `gh` on `PATH` for GitHub pull request reviews
 
-- **`skills/code-reviewer/SKILL.md`** — primary review workflow, severity model,
-  and concise output template
-- **`skills/code-reviewer/security.md`** — targeted prompts for auth, input,
-  secrets, files, networking, and data boundaries
-- **`skills/code-reviewer/performance.md`** — targeted prompts for scale, I/O,
-  memory, and concurrency
-- **`skills/code-reviewer/quality.md`** — targeted prompts for maintainability
-  and local code quality standards
-- **`skills/code-reviewer/testing.md`** — targeted prompts for coverage,
-  regressions, failure paths, and test quality
+### `gitter`
+
+- `git`
+- `gh` on `PATH` for pull request workflows
+
+### `context7-docs`
+
+- `ctx7` on `PATH`
+
+## Skill Layout
+
+### `skills/code-reviewer/`
+
+- `SKILL.md` — main review workflow and output format
+- `security.md` — security review prompts
+- `performance.md` — performance review prompts
+- `quality.md` — maintainability and code quality prompts
+- `testing.md` — testing and regression review prompts
+
+### `skills/gitter/`
+
+- `SKILL.md` — action router for git workflows
+- `commit.md` — commit workflow
+- `pr.md` — pull request workflow
+
+### `skills/context7-docs/`
+
+- `SKILL.md` — Context7 workflow for resolving library IDs and querying current docs

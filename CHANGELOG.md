@@ -4,7 +4,7 @@
 
 ### Added
 
-- **code-swiss-knife** plugin (1.0.0) — development toolbox plugin initially shipping the **code-reviewer** skill for focused reviews covering correctness, security, performance, maintainability, testing, and documentation
+- **code-swiss-knife** plugin (1.0.0) — development toolbox plugin shipping the **code-reviewer** skill for focused reviews covering correctness, security, performance, maintainability, testing, and documentation, the **gitter** skill for commit and pull request workflows, and the **context7-docs** skill for current, version-specific documentation and code examples via Context7
 
 ### Updated
 

@@ -2,6 +2,7 @@
 name: gitter
 description: Create commits and pull requests for current git work. Use when the user wants to commit changes, open a pull request, or refresh a branch PR.
 argument-hint: "[commit|pr] [...]"
+compatibility: Requires GitHub CLI
 ---
 
 1. Treat the first word passed by the user as `$ACTION`, remainder as `$REST`.

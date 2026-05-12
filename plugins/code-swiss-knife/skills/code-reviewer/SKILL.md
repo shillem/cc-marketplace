@@ -1,6 +1,7 @@
 ---
 name: code-reviewer
 description: Review pull requests, diffs, and implementation changes in application code, tests, and configuration for correctness, security, performance, maintainability, and release readiness. Use when the user asks for review of a PR, patch, diff, commit, or code change.
+compatibility: Requires GitHub CLI
 ---
 
 Perform focused, high-signal code reviews. Prioritize correctness, security, performance, maintainability, tests, and docs. Avoid re-explaining basic concepts unless the explanation is needed to justify a finding.
