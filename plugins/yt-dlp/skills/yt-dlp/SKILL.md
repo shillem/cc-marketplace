@@ -2,6 +2,7 @@
 name: yt-dlp
 description: Download videos, audio, and transcripts from YouTube and 1000+ sites with yt-dlp. Use when the user mentions "yt-dlp", "youtube-dl", wants to download a video, rip audio from a video, or extract a transcript from a URL.
 argument-hint: "[video|audio|transcript] <url> [...]"
+compatibility: Requires yt-dlp CLI
 ---
 
 1. Treat the first word passed by the user as `$ACTION`, remainder as `$URL`.
