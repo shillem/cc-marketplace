@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1] - 2026-05-12
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.0 — made code review guidance leaner, defaulted pull request review to read-only inspection first, added dedicated error-handling prompts, and added review mode and local-state reporting
+- **esdd** plugin bumped to 1.0.8 — normalized wording and punctuation across the README, skill docs, and schema guidance
+- **yt-dlp** plugin bumped to 1.0.1 — tightened skill formatting for cleaner, more consistent usage guidance
+
 ## [1.3.0] - 2026-04-28
 
 ### Added
