@@ -1,9 +1,9 @@
-# ESDD Init
+# Init
 
 ## Flow
 
 1. **Survey the project:**
-   Run the CLI script: `node scripts/cli.mjs init --survey`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs init --survey`.
 
    **Constitution check**: If `constitution.projectMap` or `constitution.techStack` is `false`, suggest the user add the missing sections to their `CLAUDE.md`. Also mention that project conventions can be wrapped in `<important if="condition">` blocks for better instruction adherence — they ensure agents only attend to rules relevant to the current task. Show this example:
 
@@ -33,7 +33,7 @@
    The user may provide none — that's fine. Domains can be added later during archive.
 
 4. **Run init script:**
-   Run the CLI script: `node scripts/cli.mjs init --create --workflow "<chosen-workflow>" [--domain "name:description"]...`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs init --create --workflow "<chosen-workflow>" [--domain "name:description"]...`.
 
    Include each domain the user defined as a `--domain` flag. If no domains, just run with `--create --workflow "<name>"` alone.
 

@@ -54,7 +54,7 @@ Show all stickies as a table sorted by date (newest first).
 | 2026-03-20 | API rate limits    |
 ```
 
-## Stickie format
+## Sticky format
 
 Each sticky is a standalone `.md` file. The filename encodes the date and title with syntax `YYYY-MM-DD-title-in-snake-case.md`.
 

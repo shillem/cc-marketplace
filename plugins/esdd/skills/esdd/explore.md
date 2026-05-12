@@ -1,4 +1,4 @@
-# ESDD Explore
+# Explore
 
 ## Arguments
 
@@ -24,7 +24,7 @@ If the user asks you to implement something, remind them to exit explore mode an
 
 ## Active Changes Awareness
 
-At the start, run the CLI script: `node scripts/cli.mjs list` to check for active changes. This tells you what the user might be working on.
+At the start, run the CLI script: `node <skill-dir>/scripts/cli.mjs list` to check for active changes. This tells you what the user might be working on.
 
 **Important**: If the script returns an initialization error, proceed without change context — explore works without init.
 

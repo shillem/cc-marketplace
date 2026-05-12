@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.7 (2026-04-28)
+
+### Changed
+
+- Replaced relative `node scripts/cli.mjs ...` examples with `node <skill-dir>/scripts/cli.mjs ...` across the ESDD skill docs so commands resolve correctly from any working directory
+- Simplified skill markdown headings by removing redundant `ESDD` prefixes and standardizing section titles
+
 ## 1.0.6 (2026-04-24)
 
 ### Changed

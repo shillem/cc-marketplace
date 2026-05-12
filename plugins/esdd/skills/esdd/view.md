@@ -1,10 +1,10 @@
-# ESDD View
+# View
 
 ## Flow
 
 1. **Get project info and active changes:**
 
-   Run the CLI script: `node scripts/cli.mjs view`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs view`.
 
 2. **Display setup:**
 

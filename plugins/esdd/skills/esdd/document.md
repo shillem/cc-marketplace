@@ -1,4 +1,4 @@
-# ESDD Document
+# Document
 
 ## Arguments
 
@@ -15,7 +15,7 @@
    - Otherwise, suggest a scope derived from the domain name, and project map if declared. Then use the the ask tool to confirm or let the user override with a glob pattern.
 
 3. **Get instructions:**
-   Run the CLI script: `node scripts/cli.mjs document --instruction`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs document --instruction`.
 
    The JSON output includes:
    - `instruction`: Specific guidance for the artifact
@@ -35,7 +35,7 @@
    - Follow the `instruction` — write the result to the output path
 
    b. **Register the domain:**
-   Run the CLI script: `node scripts/cli.mjs document --register "<name>:<description>"`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs document --register "<name>:<description>"`.
 
    The JSON output includes `{ name, description, outputPath, status }` where `status` is `"added"` (new domain) or `"updated"` (existing domain).
 
