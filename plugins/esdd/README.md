@@ -59,7 +59,7 @@ ESDD keeps the leverage while cutting the ceremony:
 - **Control flow over prompts** — instead of one mega-prompt hoping the agent
   follows every step, ESDD uses actual control flow to route agents through
   focused phases with smaller instruction sets
-- **Lean review surfaces** — a proposal or brief is ~200 lines, not 1,000.
+- **Lean review surfaces** — a proposal or brief is ~200 lines, not 1,000
   Design decisions surface before code generation, so code review is lighter
   because architectural choices are already approved
 - **Flexible workflows** — four built-in workflows scale from a quick brief to a

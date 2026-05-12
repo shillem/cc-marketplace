@@ -32,7 +32,7 @@
    **Active Changes**
    ```
 
-   - **If none exist:** Report that there are no active changes.
+   - **If none exist:** Report that there are no active changes
 
    - **Otherwise, display as a table.** Example:
 

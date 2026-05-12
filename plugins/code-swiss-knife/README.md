@@ -3,17 +3,17 @@
 Claude Code plugin that bundles practical development skills. It currently ships
 with three skills:
 
-- `code-reviewer` for reviewing diffs, pull requests, and local changes
+- `code-reviewer` for reviewing diffs, pull requests, and local changes with focused correctness, security, performance, error-handling, testing, and docs checks
 - `gitter` for commits and pull request workflows
 - `context7-docs` for current, version-specific documentation and code examples via Context7
 
 ## Included Skills
 
-| Skill           | Purpose                                                                                    | Typical commands                                                                        |
-| --------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
-| `code-reviewer` | Focused review across correctness, security, performance, maintainability, tests, and docs | `/code-reviewer review staged changes`                                                  |
-| `gitter`        | Commit current work and open or refresh pull requests                                      | `/gitter commit`, `/gitter pr`                                                          |
-| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools    | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
+| Skill           | Purpose                                                                                                    | Typical commands                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `code-reviewer` | Focused review across correctness, security, performance, error handling, maintainability, tests, and docs | `/code-reviewer review staged changes`                                                  |
+| `gitter`        | Commit current work and open or refresh pull requests                                                      | `/gitter commit`, `/gitter pr`                                                          |
+| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools                    | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
 
 ## Usage
 
@@ -22,13 +22,14 @@ review code, create a commit, or open a pull request.
 
 ### `code-reviewer`
 
-Use for PRs, branches, commits, staged changes, or unstaged changes.
+Use for PRs, branches, commits, staged changes, or unstaged changes. The default PR workflow is read-only: inspect with `gh pr view` and `gh pr diff` first, and only materialize a branch or worktree locally when needed.
 
 ```text
 /code-reviewer review the current branch against <target-branch>
 /code-reviewer review staged changes
 /code-reviewer review PR #123
 /code-reviewer review this diff for security and performance issues
+/code-reviewer review this diff for error handling and test gaps
 ```
 
 For branch reviews, prefer an explicit target branch or ref instead of assuming
@@ -77,6 +78,7 @@ Use for authoritative, up-to-date API, setup, configuration, integration, and mi
 - `performance.md` — performance review prompts
 - `quality.md` — maintainability and code quality prompts
 - `testing.md` — testing and regression review prompts
+- `error-handling.md` — silent failure, fallback, retry, and cleanup review prompts
 
 ### `skills/gitter/`
 

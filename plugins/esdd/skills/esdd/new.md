@@ -20,7 +20,7 @@
 3. **Create the change directory:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs new "<change-name>"` (add `--workflow "<workflow>"` if specified)
    - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
-   - If error says not initialized, suggest running `/esdd init`.
+   - If error says not initialized, suggest running `/esdd init`
 
 4. **Generate artifacts:**
    Follow the instructions in [plan-loop.md](shared/plan-loop.md).

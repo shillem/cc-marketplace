@@ -12,7 +12,7 @@
 
 2. **Determine scan scopes:**
    - If `--scan` was provided, use it
-   - Otherwise, suggest a scope derived from the domain name, and project map if declared. Then use the the ask tool to confirm or let the user override with a glob pattern.
+   - Otherwise, suggest a scope derived from the domain name, and project map if declared. Then use the the ask tool to confirm or let the user override with a glob pattern
 
 3. **Get instructions:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs document --instruction`.
