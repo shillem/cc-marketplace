@@ -1,4 +1,4 @@
-# CLAUDE.md
+# Project
 
 A curated marketplace of Claude Code plugins.
 
