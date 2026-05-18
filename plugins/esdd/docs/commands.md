@@ -3,9 +3,12 @@
 All commands are invoked through the `/esdd` skill followed by the action name
 and optional arguments.
 
-```
+```text
 /esdd <action> [change-name|description] [flags]
 ```
+
+If you forget a command's shape in the middle of a session, run `/esdd` without
+an action to show a compact command summary with usage and key flags.
 
 ## init
 
@@ -38,8 +41,8 @@ Surveys the project and walks you through setup:
 Document domains directly from existing code, creating or updating domain spec
 files without going through a full change workflow.
 
-```
-/esdd document --domain <name>:<description> [--domain ...] [--scan <glob>]
+```text
+/esdd document --domain <name>[:<description>] [--domain ...] [--scan <glob>]
 ```
 
 Scans your codebase and produces domain spec files at `.ai/esdd/domains/`. Use
@@ -48,20 +51,22 @@ specs independently of a change.
 
 **Flags:**
 
-| Flag                            | Effect                                    |
-| ------------------------------- | ----------------------------------------- |
-| `--domain <name>:<description>` | Domain to document (required, repeatable) |
-| `--scan <glob>`                 | Glob pattern to scope the code scan       |
+| Flag                              | Effect                                    |
+| --------------------------------- | ----------------------------------------- |
+| `--domain <name>[:<description>]` | Domain to document (required, repeatable) |
+| `--scan <glob>`                   | Glob pattern to scope the code scan       |
 
 If `--scan` is omitted, ESDD suggests a scope derived from the domain name and
-project map, then asks for confirmation.
+project map, then asks for confirmation. Domains without descriptions must
+include one unless `--scan` is provided so ESDD can infer it.
 
 **What happens:**
 
-1. For each domain, scans the code within the specified scope
+1. For each domain, resolves a description if needed, then scans the code within
+   the specified scope
 2. Produces a domain spec file at `.ai/esdd/domains/<name>.md` using the domain
    template
-3. Registers the domain in `config.yaml` if it isn't already defined
+3. Registers the domain in `config.yaml`, reusing the resolved description
 
 ## explore
 
@@ -89,13 +94,14 @@ Explore is not a workflow step — it's a mode. Use it when you need to:
 
 Create and plan a new change.
 
-```
-/esdd new [description] [--fast] [--workflow <name>]
+```text
+/esdd new [change-name] [--fast] [--workflow <name>]
 ```
 
-If no description is provided, you'll be asked for one. ESDD derives a kebab-case
-change name from your description (e.g., "Add user authentication" becomes
-`add-user-authentication`).
+If no change name is provided, ESDD derives one from the description you give
+when asked what you want to build (e.g., "Add user authentication" becomes
+`add-user-authentication`). The optional `change-name` only controls the change
+folder name — ESDD still asks for a description before planning.
 
 Walks through the plan phase artifacts sequentially. For artifacts marked as
 review points (proposal, design), ESDD surfaces key decisions and asks for your

@@ -46,7 +46,9 @@ function buildEntry(config, changeName) {
 }
 
 function outputPhases(values) {
-  return Object.keys(values).map(p => `${p} (${values[p].join(" → ")})`);
+  return Object.keys(values)
+    .map(p => `${p} (${values[p].join(" → ")})`)
+    .join(", ");
 }
 
 function relativeTime(iso) {

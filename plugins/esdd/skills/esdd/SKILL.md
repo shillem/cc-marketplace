@@ -1,12 +1,13 @@
 ---
 name: esdd
-description: Express Spec-Driven Development. Use only when the user explicitly asks for ESDD, references an ESDD command or artifact, or wants to continue an existing ESDD change. Do not use for ordinary coding, debugging, refactoring, or small code changes.
+description: Express Spec-Driven Development for setting up project-aware change workflows, documenting domains, planning and applying changes in stages, verifying outcomes, and archiving completed work. Use only when the user explicitly asks for ESDD, references an ESDD command or artifact, or wants to continue an existing ESDD change.
 argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [...]"
 ---
 
 1. Treat the first word passed by the user as `$ACTION`, remainder is `$REST`.
 2. If `$ACTION` matches one of the actions, follow the action's instructions.
-3. If `$ACTION` is empty or does not match an action, list the available actions.
+3. If `$ACTION` is empty or does not match an action, read [help.md](help.md), show the command quick reference with usage and key flags, and stop.
+4. If the user wants more detail about a specific command after seeing the quick reference, read [docs/commands.md](../../docs/commands.md).
 
 ## Available Scripts
 
