@@ -47,4 +47,4 @@
    **Workflow**: <workflow>
    ```
 
-7. **Suggest next steps:** `/esdd new <feature>` to plan a change, or `/esdd explore` to think about something first. If the workflow supports it and the project has existing code, `/esdd document --domain <name>:<description>` can bootstrap accumulated domain specs from that code.
+7. **Suggest next steps:** `/esdd new <feature>` to plan a change, or `/esdd explore` to think about something first. If the workflow supports it and the project has existing code, `/esdd document --domain <name>[:<description>] [--scan <glob>]` can bootstrap accumulated domain specs from that code.

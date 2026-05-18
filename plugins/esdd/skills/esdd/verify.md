@@ -14,7 +14,7 @@
    - If multiple changes: use the ask tool to let the user select
 
 2. **Get detailed status:**
-   Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --apply`.
+   Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.
 
 3. **Handle status:**
    - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest running `/esdd continue`

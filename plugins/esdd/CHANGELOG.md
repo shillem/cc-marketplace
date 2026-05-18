@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.9 (2026-05-18)
+
+### Changed
+
+- Added a compact `/esdd` help summary for empty or unknown actions, with inline usage and key flags across the README and commands reference
+- Clarified `/esdd document` so domain descriptions can be omitted when `--scan` is provided, and updated the document/init guidance to explain how descriptions are resolved
+- Tightened verification follow-up guidance when reconciling change artifacts after review
+
+### Fixed
+
+- Corrected `/esdd verify` to request archive-level status data before verification
+- Corrected `/esdd view` phase rendering so multi-step workflows display as a readable comma-separated list
+
 ## 1.0.8 (2026-05-12)
 
 ### Changed

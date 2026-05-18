@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3] - 2026-05-18
+
+### Updated
+
+- **esdd** plugin bumped to 1.0.9 — added a compact help summary for empty or unknown `/esdd` actions, documented inline command usage, clarified `/esdd document` description inference with `--scan`, tightened verification follow-up guidance, and fixed verify/view status rendering behavior
+- **code-swiss-knife** plugin bumped to 1.1.2 — clarified `context7-docs` guidance around authoritative official docs and code examples, the `ctx7 library` → `ctx7 docs` workflow, query and library selection, citation, and when to combine docs with code search or use the closest authoritative result
+
 ## [1.3.2] - 2026-05-12
 
 ### Updated

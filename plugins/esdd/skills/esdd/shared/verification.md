@@ -6,8 +6,7 @@ Use the subagent tool with this prompt (replace `<change-path>` with the change'
 
 > - Read all artifact files from `<change-path>` for full context
 > - Verify **Coherence:**
->   - Assess whether the implementation is consistent with the intent expressed across the change artifacts
->   - Check that domains listed in artifacts match domain folders and vice versa
+>   - Assess whether the implementation is consistent with the intent expressed across all the change artifacts
 >   - Review new code for consistency with project patterns (file naming, directory structure, coding style)
 >   - Issues: WARNING for intent/spec mismatches, SUGGESTION for pattern deviations
 > - Verify **Correctness:**
@@ -25,3 +24,5 @@ Use the subagent tool with this prompt (replace `<change-path>` with the change'
   - Update change artifacts to match code changes
   - Continue without updating
   - Stop
+- If the user chooses to update change artifacts, reconcile only files under the current change path and summarize what changed
+- If applicable, continue with the calling action

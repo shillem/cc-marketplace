@@ -69,6 +69,7 @@ ESDD keeps the leverage while cutting the ceremony:
 ## Quick Start
 
 ```
+/esdd               # Show command usage and key flags
 /esdd init          # Set up ESDD for your project
 /esdd document      # Document domains from existing code
 /esdd new           # Plan a new change
@@ -76,6 +77,9 @@ ESDD keeps the leverage while cutting the ceremony:
 /esdd verify        # Check implementation against intent
 /esdd archive       # Archive change
 ```
+
+If you forget a command's shape, run `/esdd` without an action to see a compact
+reference with usage and key flags.
 
 ## How It Works
 
@@ -134,17 +138,24 @@ See [Workflows](docs/workflows.md) for when and why to use each.
 
 ## Commands
 
-| Command    | Purpose                                   | Key Flags              |
-| ---------- | ----------------------------------------- | ---------------------- |
-| `init`     | Initialize ESDD for the project           | —                      |
-| `document` | Document domains from existing code       | `--domain`, `--scan`   |
-| `explore`  | Open-ended thinking partner (no code)     | —                      |
-| `new`      | Create and plan a new change              | `--fast`, `--workflow` |
-| `continue` | Resume planning an incomplete change      | `--fast`               |
-| `apply`    | Implement planned tasks group by group    | `--fast`               |
-| `verify`   | Verify implementation matches spec intent | —                      |
-| `archive`  | Archive change                            | `--skip-verify`        |
-| `view`     | Show project status dashboard             | —                      |
+| Command    | Usage                                                                           | Purpose                                   | Key flags              |
+| ---------- | ------------------------------------------------------------------------------- | ----------------------------------------- | ---------------------- |
+| `init`     | `/esdd init`                                                                    | Initialize ESDD for the project           | —                      |
+| `document` | `/esdd document --domain <name>[:<description>] [--domain ...] [--scan <glob>]` | Document domains from existing code       | `--domain`, `--scan`   |
+| `explore`  | `/esdd explore [topic]`                                                         | Open-ended thinking partner (no code)     | —                      |
+| `new`      | `/esdd new [change-name] [--fast] [--workflow <name>]`                          | Create and plan a new change              | `--fast`, `--workflow` |
+| `continue` | `/esdd continue [change-name] [--fast]`                                         | Resume planning an incomplete change      | `--fast`               |
+| `apply`    | `/esdd apply [change-name] [--fast]`                                            | Implement planned tasks group by group    | `--fast`               |
+| `verify`   | `/esdd verify [change-name]`                                                    | Verify implementation matches spec intent | —                      |
+| `archive`  | `/esdd archive [change-name] [--skip-verify]`                                   | Archive change                            | `--skip-verify`        |
+| `view`     | `/esdd view`                                                                    | Show project status dashboard             | —                      |
+
+`change-name` is a short kebab-case identifier like `add-oauth-support`. For
+`new`, ESDD still asks what you want to build — the optional name only controls
+where the change is stored.
+
+For `document`, you can omit `:<description>` when you also pass `--scan`.
+ESDD will infer a short description from the scanned code.
 
 See [Commands Reference](docs/commands.md) for full details.
 
