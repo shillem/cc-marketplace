@@ -1,6 +1,6 @@
 ---
 name: context7-docs
-description: Fetches current, version-specific documentation and code examples via Context7 for a named external library, framework, SDK, CLI, or cloud product. Use when the answer requires authoritative, up-to-date API, setup, configuration, integration, or migration details rather than general knowledge.
+description: Fetches authoritative, current, version-specific documentation and official code examples via Context7 for a named external library, framework, SDK, CLI, or cloud product. Use when the user needs exact API behavior, setup, configuration, integration, migration, or version-specific guidance rather than general web research or real-world repository patterns.
 compatibility: Requires ctx7 CLI
 ---
 
@@ -16,7 +16,13 @@ ctx7 library <name> <query>
 ctx7 docs <libraryId> <query>
 ```
 
-You MUST call `ctx7 library` first to obtain a valid library ID UNLESS the user explicitly provides a library ID in the format `/org/project` or `/org/project/version`. Library IDs require a `/` prefix.
+```bash
+# Example flow
+ctx7 library react "How to clean up useEffect with async operations"
+ctx7 docs /facebook/react "How to clean up useEffect with async operations"
+```
+
+You MUST call `ctx7 library` first to obtain a valid library ID UNLESS the user explicitly provides one. Valid library IDs use a leading `/`, typically `/org/project` or `/org/project/version`.
 
 ## Budget
 
@@ -30,33 +36,15 @@ Never include sensitive information (API keys, passwords, credentials, personal 
 
 Resolves a package/product name to a Context7-compatible library ID and returns matching libraries.
 
-```bash
-ctx7 library react "How to clean up useEffect with async operations"
-ctx7 library nextjs "How to set up app router with middleware"
-ctx7 library prisma "How to define one-to-many relations with cascade delete"
-```
-
 Always pass a `query` argument — it is required and directly affects result ranking. Use the user's intent to form the query, which helps disambiguate when multiple libraries share a similar name.
-
-### Result Fields
-
-Each result includes:
-
-- **Library ID** — Context7-compatible identifier (format: `/org/project`)
-- **Name** — Library or package name
-- **Description** — Short summary
-- **Code Snippets** — Number of available code examples
-- **Source Reputation** — Authority indicator (High, Medium, Low, or Unknown)
-- **Benchmark Score** — Quality indicator (100 is the highest score)
-- **Versions** — List of versions if available, in `/org/project/version` format
 
 ### Selecting a Match
 
-Prefer exact name matches, then higher Code Snippet counts and Source Reputation. If no good match exists, state that and suggest query refinements. For ambiguous queries, ask for clarification before guessing.
+Use **Name** and **Description** to disambiguate similar matches; if multiple plausible results remain, ask for clarification rather than guessing.
 
 ### Version-specific IDs
 
-If the user mentions a specific version, use the closest matching version-specific library ID from the `ctx7 library` output:
+If the user mentions a specific version, use the closest matching version-specific library ID from the `ctx7 library` output.
 
 ```bash
 # General (latest indexed)
@@ -70,15 +58,9 @@ ctx7 docs /vercel/next.js/v14.3.0-canary.87 "How to set up app router"
 
 Retrieves up-to-date documentation and code examples for the resolved library.
 
-```bash
-ctx7 docs /facebook/react "How to clean up useEffect with async operations"
-ctx7 docs /vercel/next.js "How to add authentication middleware to app router"
-ctx7 docs /prisma/prisma "How to define one-to-many relations with cascade delete"
-```
-
 ### Writing Good Queries
 
-The query directly affects the quality of results. Be specific and include relevant details. Use the user's full question as the query when possible; vague one-word queries return generic results.
+Use a specific, intent-rich query; prefer the user's full question over vague keywords.
 
 | Quality | Example                                                    |
 | ------- | ---------------------------------------------------------- |
@@ -89,9 +71,13 @@ The query directly affects the quality of results. Be specific and include relev
 
 ### Using the Output
 
-Results contain **code snippets** (titled, with language-tagged blocks) and **info snippets** (prose explanations with breadcrumb context). Prefer adapting code snippets directly into your answer over paraphrasing from memory, and cite the library and version you pulled from so the user can verify.
+Cite the library ID and version you used so the user can verify.
+
+Treat this skill as the primary source for official behavior, but not as proof of real-world adoption or common practice. If the user asks for both correctness and practical usage, combine documentation evidence with a code search source when available.
 
 ## Error Handling
+
+If the exact documentation you need is unavailable or ambiguous, state the limitation clearly and use the closest authoritative result rather than guessing.
 
 If a command fails with a quota error ("Monthly quota reached" or "quota exceeded"):
 

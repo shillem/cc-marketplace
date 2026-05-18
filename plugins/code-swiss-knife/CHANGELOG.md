@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 (2026-05-18)
+
+### Changed
+
+- `context7-docs` now emphasizes authoritative official docs and official code examples, shows a clearer `ctx7 library` → `ctx7 docs` workflow, tightens query and library selection guidance, and clarifies citation, fallback, and when to combine docs with code search
+
 ## 1.1.1 (2026-05-12)
 
 ### Changed
