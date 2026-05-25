@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 (2026-05-25)
+
+### Changed
+
+- Removed the `CLAUDE.md` constitution check from `/esdd init --status`, `/esdd init --survey`, `/esdd view`, and related skill guidance
+- Updated ESDD documentation to describe project context as existing project instructions plus accumulated domain specs instead of required `Project Map` and `Tech Stack` sections
+
 ## 1.0.9 (2026-05-18)
 
 ### Changed
