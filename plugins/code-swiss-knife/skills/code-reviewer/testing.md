@@ -2,11 +2,13 @@
 
 ## Review Prompts
 
-- Check whether new or changed behavior is covered by tests at an appropriate level
-- Verify the tests would fail without the change, not merely execute the happy path
+- Map important changed behavior to tests for happy paths, meaningful alternate branches, failure paths, and externally visible side effects
+- Do not treat line coverage as sufficient; check whether tests protect behavior and would catch meaningful regressions
+- Verify the tests would fail without the change, not merely execute the code path
 - Check edge cases, error paths, boundary conditions, and invalid inputs where relevant
 - For bug fixes, look for a regression test that reproduces the original failure mode
 - Ensure tests assert observable behavior rather than overly coupling to implementation details
+- Check whether tests restore modified global, static, or shared state during setup/teardown
 - Check whether the tests are deterministic and isolated from time, ordering, network, or shared-state flakiness
 - Review fixtures, factories, and test data for realism, clarity, and proper cleanup
 - Check negative cases, permission boundaries, and validation failures where relevant
