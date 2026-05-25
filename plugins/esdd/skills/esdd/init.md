@@ -5,21 +5,6 @@
 1. **Survey the project:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs init --survey`.
 
-   **Constitution check**: If `constitution.projectMap` or `constitution.techStack` is `false`, suggest the user add the missing sections to their `CLAUDE.md`. Also mention that project conventions can be wrapped in `<important if="condition">` blocks for better instruction adherence — they ensure agents only attend to rules relevant to the current task. Show this example:
-
-   ```markdown
-   ## Tech Stack
-
-   TypeScript, React, Node.js, PostgreSQL.
-
-   ## Project Map
-
-   - `src/api/` — Express REST API
-   - `src/web/` — React web application
-   - `src/shared/` — shared utilities and types
-   - `tests/` — test suites
-   ```
-
 2. **Present workflows:**
    Present the workflow choices to the user using their names and descriptions from the output. If only one workflow exists, use it as the default and confirm with the user.
 

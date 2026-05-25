@@ -17,40 +17,6 @@ export ESDD_PATH=.esdd/
 By default, ESDD stores everything under `.ai/esdd/` relative to your project
 root. Set `ESDD_PATH` to change this.
 
-## Constitution
-
-ESDD checks your project's `CLAUDE.md` (or `CLAUDE.local.md`) for two sections
-that provide essential context to agents during planning and implementation:
-
-### Project Map
-
-```markdown
-## Project Map
-
-- `src/api/` — REST API endpoints (Express.js)
-- `src/services/` — Business logic layer
-- `src/db/` — Database models and migrations (PostgreSQL)
-- `tests/` — Test suites (Vitest)
-```
-
-Tells agents where things live in your codebase. Without this, agents make
-assumptions about project structure that may be wrong.
-
-### Tech Stack
-
-```markdown
-## Tech Stack
-
-TypeScript, React, Node.js, PostgreSQL
-```
-
-Tells agents what technologies and patterns to use. Without this, agents default
-to generic best practices that may not match your project.
-
-**ESDD will prompt you to set these up during `init` if they're missing.** They
-aren't strictly required, but planning quality may improve when agents
-have this context.
-
 ## Project Configuration
 
 ### config.yaml
