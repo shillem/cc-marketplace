@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4] - 2026-05-25
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.3 — strengthened `code-reviewer` review-pass guidance and Review Coverage reporting, and clarified `gitter` PR titles should summarize the branch rather than duplicate an individual commit subject
+- **esdd** plugin bumped to 1.1.0 — removed `CLAUDE.md` constitution checks from init/view workflows and updated documentation to describe project context without requiring `Project Map` or `Tech Stack` sections
+
 ## [1.3.3] - 2026-05-18
 
 ### Updated

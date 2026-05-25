@@ -17,14 +17,7 @@
 
    **Default Workflow**
    <defaultWorkflow>
-
-   **Constitution**
-
-   Project Map: <yes/no>
-   Tech Stack: <yes/no>
    ```
-
-   If any `constitution` properties are `false`, note that adding the missing section to `CLAUDE.md` improves agent context during apply.
 
 3. **Display active changes:**
 

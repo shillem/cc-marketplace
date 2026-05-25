@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3 (2026-05-25)
+
+### Changed
+
+- `code-reviewer` now requires explicit behavior, state/lifecycle, testing, error/edge, dead-code/consistency, and docs/release review passes before reporting findings
+- `code-reviewer` review output now includes a Review Coverage section so unreviewed or partially reviewed areas are visible
+- `gitter` pull request guidance now asks for a branch-level PR title that does not exactly duplicate an individual commit subject
+
 ## 1.1.2 (2026-05-18)
 
 ### Changed

@@ -20,10 +20,9 @@ Initialize ESDD for the current project.
 
 Surveys the project and walks you through setup:
 
-1. Checks your constitution (`CLAUDE.md`) for Project Map and Tech Stack sections
-2. Presents available workflows and asks you to choose a default
-3. Asks you to define domains — named areas of your project (e.g., `auth`, `billing`)
-4. Creates the `.ai/esdd/` directory structure
+1. Presents available workflows and asks you to choose a default
+2. Asks you to define domains — named areas of your project (e.g., `auth`, `billing`)
+3. Creates the `.ai/esdd/` directory structure
 
 **What gets created:**
 
@@ -232,7 +231,7 @@ Display a project status dashboard.
 
 Shows:
 
-- **Setup** — ESDD path, configured domains, default workflow, constitution status
+- **Setup** — ESDD path, configured domains, default workflow
 - **Active changes** — Table with change name, workflow, plan completion + last
   modified, apply completion + last modified
 - **Archived changes** — Count of completed changes

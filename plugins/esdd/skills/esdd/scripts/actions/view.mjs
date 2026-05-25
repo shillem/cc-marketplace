@@ -1,6 +1,6 @@
 import { relative, resolve } from "path";
 import { esddPath, listDirs, output } from "../lib/fs-utils.mjs";
-import { checkConstitution, Config } from "../lib/config.mjs";
+import { Config } from "../lib/config.mjs";
 import { computeChange } from "../lib/status.mjs";
 
 export function run() {
@@ -14,7 +14,6 @@ export function run() {
     workflows: config.workflows.map(w => w.name).join(", "),
     defaultWorkflow: `${defaultSchema.workflow} = ${outputPhases(defaultSchema.phases)}`,
     domains: config.domains.map(d => d.name).join(", "),
-    constitution: checkConstitution(),
     activeChanges: listDirs(changesDir).map(name => buildEntry(config, name)),
     archivedChangesCount: listDirs(archiveDir).length
   });

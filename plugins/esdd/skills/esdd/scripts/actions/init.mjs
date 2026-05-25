@@ -1,23 +1,20 @@
 import { relative, resolve } from "path";
 import { esddPath, exists, ensureDir, writeYaml, output, outputError } from "../lib/fs-utils.mjs";
-import { checkConstitution, Config, getConfigPath } from "../lib/config.mjs";
+import { Config, getConfigPath } from "../lib/config.mjs";
 import { parseDomain } from "../lib/init.mjs";
 
 export function run(args) {
   if (args.includes("--status")) {
     const initialized = exists(getConfigPath());
 
-    output({
-      initialized,
-      ...(initialized && { constitution: checkConstitution() })
-    });
+    output({ initialized });
 
     process.exit(0);
   }
 
   if (args.includes("--survey")) {
     const config = new Config();
-    output({ workflows: config.workflows, constitution: checkConstitution() });
+    output({ workflows: config.workflows });
     process.exit(0);
   }
 

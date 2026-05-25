@@ -34,9 +34,9 @@ ESDD narrows the encoding/decoding gap by addressing each limit directly:
 - **Enforced decomposition** — complex work becomes a pipeline of small, scoped
   artifacts. Tasks are organized as vertical slices that cut through the stack
   end-to-end, with testable checkpoints between each group.
-- **Project context** — ESDD reads your `CLAUDE.md` sections (Project Map, Tech
-  Stack) as project DNA, preventing agents from generating generic code based on
-  training data rather than your actual conventions.
+- **Project context** — ESDD works with your existing project instructions and
+  accumulated domain specs, preventing agents from generating generic code based
+  on training data rather than your actual conventions.
 - **Domain-scoped specifications** — requirements are organized by domain (named
   areas of functionality like `auth`, `billing`, `notifications`), not by ticket
   or branch. Domain specs accumulate over time, giving agents persistent
@@ -163,12 +163,6 @@ See [Commands Reference](docs/commands.md) for full details.
 
 **Environment variables**  
 `ESDD_PATH` — Override the default `.ai/esdd` directory location
-
-**Project context (recommended)**  
-ESDD reads your `CLAUDE.md` for `## Project Map` and `## Tech Stack` sections.
-These act as project DNA — they give agents essential context about where things
-live and what technologies to use, preventing generic code that doesn't match
-your actual conventions.
 
 **Project files**  
 `.ai/esdd/config.yaml` — Project workflow and domain definitions  

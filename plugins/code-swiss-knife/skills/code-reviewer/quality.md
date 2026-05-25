@@ -7,8 +7,11 @@
 - Check naming for clarity and intent
 - Review control flow for unnecessary complexity or hidden coupling
 - Check invariants, API contracts, and whether invalid states are too easy to represent
+- Review state or lifecycle changes for valid transitions, stale persisted state, unknown/future states, and reliable cleanup/reset paths
 - Prefer constants or config over scattered hardcoded values
 - Check whether the file or module is taking on multiple responsibilities
+- When behavior is removed or replaced, check for stale helpers, flags, branches, docs, tests, or names that could mislead future maintenance
+- When comments or docs change, verify they accurately describe current behavior and explain non-obvious intent rather than restating code
 - Confirm tests and docs support long-term maintainability when the change is non-trivial
 
 ## Review Guidance

@@ -19,8 +19,7 @@ describe("init", () => {
     const { json, exitCode } = await run("init", ["--status"], { esddPath });
 
     expect(exitCode).toBe(0);
-    expect(json.initialized).toBe(true);
-    expect(json.constitution).toBeDefined();
+    expect(json).toEqual({ initialized: true });
   });
 
   test("--survey returns available workflows", async () => {

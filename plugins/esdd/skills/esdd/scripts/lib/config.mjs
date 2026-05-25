@@ -1,17 +1,5 @@
 import { resolve } from "path";
-import {
-  changePath,
-  exists,
-  esddPath,
-  readText,
-  readYaml,
-  assetsPath,
-  writeYaml
-} from "./fs-utils.mjs";
-
-const CONSTITUTION_FILES = ["CLAUDE.md", "CLAUDE.local.md"];
-const PROJECT_MAP_RE = /^##\s+project\s+map/im;
-const TECH_STACK_RE = /^##\s+tech\s+stack/im;
+import { changePath, exists, esddPath, readYaml, assetsPath, writeYaml } from "./fs-utils.mjs";
 
 export class Config {
   #baseSchema;
@@ -132,28 +120,6 @@ export class ConfigError extends Error {
     super(Array.isArray(messages) ? messages.join("; ") : messages);
     this.name = "ConfigError";
   }
-}
-
-export function checkConstitution() {
-  const cwd = process.cwd();
-
-  const checks = {
-    projectMap: false,
-    techStack: false
-  };
-
-  for (const file of CONSTITUTION_FILES) {
-    const filePath = resolve(cwd, file);
-
-    if (!exists(filePath)) continue;
-
-    const content = readText(filePath);
-
-    if (PROJECT_MAP_RE.test(content)) checks.projectMap = true;
-    if (TECH_STACK_RE.test(content)) checks.techStack = true;
-  }
-
-  return checks;
 }
 
 export function getConfigPath() {

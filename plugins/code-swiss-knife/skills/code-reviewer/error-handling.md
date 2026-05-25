@@ -9,6 +9,7 @@
 - Check cleanup, rollback, and transaction boundaries on partial failure
 - Verify user-facing failures are actionable when the operation is user initiated
 - Check logs and error returns for enough debugging context without leaking secrets or sensitive data
+- Check null, empty, boundary, and default paths for unintended no-ops or masked failures
 - Watch default values, optional chaining, null coalescing, and empty handlers that can hide important failures
 
 ## Review Guidance
