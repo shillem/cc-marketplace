@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2 (2026-05-27)
+
+### Changed
+
+- Added explicit “Show verification report” choices to `/esdd verify` and `/esdd archive` discrepancy handling
+- Kept shared verification instructions focused on producing priority-grouped issue reports while command flows decide when to display them
+
 ## 1.1.1 (2026-05-27)
 
 ### Changed

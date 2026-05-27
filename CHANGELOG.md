@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.6] - 2026-05-27
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.2 — added explicit verification report display choices to discrepancy handling and kept shared verification instructions focused on priority-grouped reports
+
 ## [1.3.5] - 2026-05-27
 
 ### Updated
