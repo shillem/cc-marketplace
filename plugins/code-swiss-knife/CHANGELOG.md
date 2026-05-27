@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5 (2026-05-27)
+
+### Changed
+
+- Refined `gitter` pull request body guidance to use Summary and Changes sections by default and avoid adding testing or verification sections unless requested or required by a repository template
+
 ## 1.1.4 (2026-05-27)
 
 ### Changed
