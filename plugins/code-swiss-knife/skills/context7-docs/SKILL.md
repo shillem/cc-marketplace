@@ -4,7 +4,7 @@ description: Fetches authoritative, current, version-specific documentation and 
 compatibility: Requires ctx7 CLI
 ---
 
-## Workflow
+## Flow
 
 Two-step process: resolve the library name to an ID, then query docs with that ID.
 

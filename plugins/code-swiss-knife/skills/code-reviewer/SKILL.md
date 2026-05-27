@@ -6,7 +6,7 @@ compatibility: Requires GitHub CLI
 
 Perform focused, high-signal code reviews. Prefer a few strong findings over many weak nits.
 
-## Workflow
+## Flow
 
 1. Understand the change and its intent.
 2. Identify the review target: PR, branch vs target ref, staged changes, unstaged changes, or commit range.
