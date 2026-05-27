@@ -23,8 +23,6 @@
 4. **Verify the change:**
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
 
-   **If discrepancies were found:**
-   - Use the ask tool to present these choices:
-     - Reconcile change artifacts to match code changes
-     - Reconcile code changes to match change artifact
-     - Show verification report
+   Output verification report.
+
+   If discrepancies were found, ask the user how they would like to proceed.
