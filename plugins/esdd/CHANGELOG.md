@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 (2026-05-27)
+
+### Changed
+
+- Clarified verification reports so discrepancies must identify relevant artifact/code paths, line references when available, the mismatch, and an actionable recommendation
+- Moved discrepancy reconciliation choices into `/esdd verify` and `/esdd archive`, including explicit options to reconcile artifacts, reconcile code, continue archiving, or stop as appropriate
+
 ## 1.1.0 (2026-05-25)
 
 ### Changed

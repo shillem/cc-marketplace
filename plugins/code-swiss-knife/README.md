@@ -37,7 +37,9 @@ For branch reviews, prefer an explicit target branch or ref instead of assuming
 
 ### `gitter`
 
-Use for commit and PR workflows.
+Use for commit and PR workflows. PR creation inspects the branch against its base,
+refreshes an existing open PR for the branch when present, and drafts
+reviewer-facing titles and bodies from the full branch diff.
 
 ```text
 /gitter commit
