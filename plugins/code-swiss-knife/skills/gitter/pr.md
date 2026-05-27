@@ -12,7 +12,10 @@ Use `gh`.
    - Use `origin/<base-branch>` for git comparisons
 
 2. Inspect the branch before drafting anything:
-   - Check status, uncommitted changes, commits since base, and the full diff
+   - Run `git status --short --branch` to see branch state and untracked files
+   - Run `git diff` and `git diff --cached` to review uncommitted changes
+   - Run `git log --oneline $(git merge-base HEAD origin/<base-branch>)..HEAD` to review commits that will land
+   - Run `git diff origin/<base-branch>...HEAD --stat` and `git diff origin/<base-branch>...HEAD` to review the full PR diff
    - Stop if on the default branch or if there are no commits ahead of the base
    - Ask before proceeding if there are uncommitted or unrelated changes
 
