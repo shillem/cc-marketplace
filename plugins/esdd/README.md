@@ -150,13 +150,6 @@ See [Workflows](docs/workflows.md) for when and why to use each.
 | `archive`  | `/esdd archive [change-name] [--skip-verify]`                                   | Archive change                            | `--skip-verify`        |
 | `view`     | `/esdd view`                                                                    | Show project status dashboard             | —                      |
 
-`change-name` is a short kebab-case identifier like `add-oauth-support`. For
-`new`, ESDD still asks what you want to build — the optional name only controls
-where the change is stored.
-
-For `document`, you can omit `:<description>` when you also pass `--scan`.
-ESDD will infer a short description from the scanned code.
-
 See [Commands Reference](docs/commands.md) for full details.
 
 ## Configuration

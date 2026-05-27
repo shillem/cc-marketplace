@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.4 (2026-05-27)
+
+### Changed
+
+- Streamlined `gitter` pull request instructions while preserving branch inspection, existing PR refresh, template-aware body drafting, and draft PR guidance
+- Standardized skill section headings from `Workflow` to `Flow` across `code-reviewer` and `context7-docs`
+
 ## 1.1.3 (2026-05-25)
 
 ### Changed

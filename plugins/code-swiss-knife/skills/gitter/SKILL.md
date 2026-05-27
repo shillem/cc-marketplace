@@ -1,6 +1,6 @@
 ---
 name: gitter
-description: Create commits and pull requests for current git work. Use when the user wants to commit changes, open a pull request, or refresh a branch PR.
+description: Create commits and pull requests for current git work. Use when the user wants to commit changes, open or refresh a pull request.
 argument-hint: "[commit|pr] [...]"
 compatibility: Requires GitHub CLI
 ---
@@ -11,5 +11,5 @@ compatibility: Requires GitHub CLI
 
 ## Actions
 
-- [commit](commit.md): stage and commit changes with a message
+- [commit](commit.md): stage and commit changes
 - [pr](pr.md): open or refresh a pull request

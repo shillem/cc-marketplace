@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5] - 2026-05-27
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.4 — streamlined `gitter` pull request instructions and standardized skill section headings
+- **esdd** plugin bumped to 1.1.1 — clarified verification discrepancy reporting and moved reconciliation choices into `/esdd verify` and `/esdd archive`
+
 ## [1.3.4] - 2026-05-25
 
 ### Updated

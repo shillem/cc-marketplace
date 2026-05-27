@@ -19,10 +19,5 @@ Use the subagent tool with this prompt (replace `<change-path>` with the change'
 
 **Handle result:**
 
-- Show the verification report with issues grouped by priority (CRITICAL / WARNING / SUGGESTION)
-- If discrepancies between change artifacts and code changes were found, use the ask tool to let the user choose:
-  - Update change artifacts to match code changes
-  - Continue without updating
-  - Stop
-- If the user chooses to update change artifacts, reconcile only files under the current change path and summarize what changed
-- If applicable, continue with the calling action
+- Show the verification report before any prompt, grouping issues by priority (CRITICAL / WARNING / SUGGESTION)
+- Each issue must identify the relevant artifact/code path, line reference when available, discrepancy, and actionable recommendation
