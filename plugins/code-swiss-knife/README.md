@@ -39,7 +39,8 @@ For branch reviews, prefer an explicit target branch or ref instead of assuming
 
 Use for commit and PR workflows. PR creation inspects the branch against its base,
 refreshes an existing open PR for the branch when present, and drafts
-reviewer-facing titles and bodies from the full branch diff.
+reviewer-facing titles and concise Summary/Changes bodies from the full branch
+diff.
 
 ```text
 /gitter commit

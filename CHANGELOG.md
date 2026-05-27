@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.8] - 2026-05-27
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.5 — refined `gitter` pull request body guidance to use Summary and Changes sections by default and avoid adding testing or verification sections unless requested or required by a repository template
+
 ## [1.3.7] - 2026-05-27
 
 ### Updated
