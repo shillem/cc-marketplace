@@ -32,8 +32,6 @@
      - Continue archiving without reconciling
      - Show verification report
      - Stop
-   - If the user chooses to reconcile artifacts, update only files under the current change path and summarize what changed
-   - If the user chooses to reconcile code, update the implementation/tests to match the artifacts and summarize what changed
    - If the user chooses to stop, stop before processing artifacts
 
 5. **Process artifacts:**

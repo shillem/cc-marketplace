@@ -28,5 +28,3 @@
      - Reconcile change artifacts to match code changes
      - Reconcile code changes to match change artifact
      - Show verification report
-   - If the user chooses to reconcile artifacts, update only files under the current change path and summarize what changed
-   - If the user chooses to reconcile code, update the implementation/tests to match the artifacts and summarize what changed

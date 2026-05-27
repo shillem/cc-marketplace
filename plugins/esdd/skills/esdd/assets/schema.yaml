@@ -160,10 +160,10 @@ artifacts:
         - Group related tasks under ## numbered headings
         - Each task MUST be a checkbox: `- [ ] X.Y Task description`
         - Task groups should be small enough to complete in one session
+        - Include test-writing or focused test-running only when tied to an implementation slice
+        - Tasks are an implementation checklist, not a verification or release checklist. Do not add tasks for artifact verification, readiness review, archiving, or summaries
 
         Reference specs for what needs to be built, design for how to build it.
-
-        When listing tasks, consider whether the project's tests should be run as a verification step and include it if appropriate.
     apply:
       instruction: |
         Assigned Task Group:
