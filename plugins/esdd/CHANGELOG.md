@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3 (2026-05-27)
+
+### Changed
+
+- Simplified `/esdd verify` and `/esdd archive` discrepancy handling so commands always output the verification report, then ask how to proceed without prescriptive reconciliation choices
+- Tightened task artifact guidance so tasks stay focused on implementation slices and avoid standalone verification, readiness review, archiving, or summary checklist items
+- Clarified verification recommendations must reference existing files and must not suggest creating new artifact files
+
 ## 1.1.2 (2026-05-27)
 
 ### Changed

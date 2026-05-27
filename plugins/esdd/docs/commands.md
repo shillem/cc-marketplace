@@ -194,8 +194,7 @@ Runs after `apply` to check coherence and correctness:
   consistent with the project?
 - **Correctness** — Are requirements actually implemented? Is test coverage adequate?
 
-Issues are grouped by priority: **CRITICAL**, **WARNING**, **SUGGESTION**, with
-actionable recommendations including file and line references.
+The command always outputs the verification report. Issues are grouped by priority: **CRITICAL**, **WARNING**, **SUGGESTION**, with actionable recommendations including file and line references. If discrepancies are found, ESDD asks how you want to proceed.
 
 ## archive
 
@@ -205,7 +204,7 @@ Archive a completed change and merge domain knowledge.
 /esdd archive [change-name] [--skip-verify]
 ```
 
-Runs verification (unless skipped), then:
+Runs verification (unless skipped). If discrepancies are found, ESDD outputs the report and asks how to proceed before archiving. Then it:
 
 1. Merges delta specs into accumulated domain specifications
 2. Moves the change from `changes/` to `archive/` with a date prefix

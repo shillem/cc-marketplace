@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.7] - 2026-05-27
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.3 — simplified verification discrepancy handling, prevented verification/release-only checklist tasks, and clarified verification recommendations should not create new artifact files
+
 ## [1.3.6] - 2026-05-27
 
 ### Updated
