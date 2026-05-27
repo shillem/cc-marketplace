@@ -125,6 +125,8 @@ The implementation checklist. Organizes work into sequential groups of checkboxe
 - Each group runs in a fresh agent context for clean, focused implementation
 - Task IDs (e.g., `1.1`) are extracted and tracked for progress reporting
 - Checkboxes (`- [ ]` / `- [x]`) are the source of truth for completion status
+- Tests belong in tasks only when tied to an implementation slice
+- Do not add standalone verification, readiness review, archiving, or summary tasks
 
 ## Artifact Dependencies
 

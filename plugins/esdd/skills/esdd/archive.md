@@ -25,16 +25,9 @@
 
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
 
-   **If discrepancies were found:**
-   - Use the ask tool to present these choices:
-     - Reconcile change artifacts to match code changes
-     - Reconcile code changes to match change artifacts
-     - Continue archiving without reconciling
-     - Show verification report
-     - Stop
-   - If the user chooses to reconcile artifacts, update only files under the current change path and summarize what changed
-   - If the user chooses to reconcile code, update the implementation/tests to match the artifacts and summarize what changed
-   - If the user chooses to stop, stop before processing artifacts
+   Output verification report.
+
+   If discrepancies were found, do not continue to processing artifacts but ask the user how they would like to proceed.
 
 5. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 6.
