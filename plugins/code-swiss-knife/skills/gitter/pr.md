@@ -20,7 +20,7 @@ Use `gh`.
    - Ask before proceeding if there are uncommitted or unrelated changes
 
 3. Check for an existing open PR for the current branch:
-   - Use `gh pr list --head "$(git branch --show-current)" --state open --json number,title,url,baseRefName`
+   - Run `gh pr list --head "$(git branch --show-current)" --state open --json number,title,url,baseRefName`
    - If one exists, inspect it and refresh it unless the user explicitly wants a new PR
    - When refreshing, rewrite the title and body from the current branch diff; do not append a changelog
 
