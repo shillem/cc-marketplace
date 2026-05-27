@@ -23,10 +23,10 @@
 4. **Verify the change:**
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
 
-   If discrepancies were found, use the ask tool with a brief discrepancy summary and these choices:
-   - Reconcile change artifacts to match code changes
-   - Reconcile code changes to match change artifacts
-   - Stop
-
-   If the user chooses to reconcile artifacts, update only files under the current change path and summarize what changed.
-   If the user chooses to reconcile code, update the implementation/tests to match the artifacts and summarize what changed.
+   **If discrepancies were found:**
+   - Use the ask tool to present these choices:
+     - Reconcile change artifacts to match code changes
+     - Reconcile code changes to match change artifact
+     - Show verification report
+   - If the user chooses to reconcile artifacts, update only files under the current change path and summarize what changed
+   - If the user chooses to reconcile code, update the implementation/tests to match the artifacts and summarize what changed

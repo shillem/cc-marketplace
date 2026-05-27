@@ -16,8 +16,4 @@ Use the subagent tool with this prompt (replace `<change-path>` with the change'
 >   - For each scenario (`#### Scenario:`), check if covered in code/tests
 >     - Uncovered: WARNING
 > - Each issue must have a specific, actionable recommendation with file/line references
-
-**Handle result:**
-
-- Show the verification report before any prompt, grouping issues by priority (CRITICAL / WARNING / SUGGESTION)
-- Each issue must identify the relevant artifact/code path, line reference when available, discrepancy, and actionable recommendation
+> - Output report listing issues by priority (CRITICAL / WARNING / SUGGESTION)
