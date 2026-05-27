@@ -26,18 +26,22 @@ Use `gh`.
 
 4. Draft reviewer-facing title and body:
    - Summarize the overall branch, not a single commit
-   - Keep the title under 70 characters. Use plain imperative style unless the repo clearly uses conventional-commit-style PR titles.
-   - For the body, follow `.github/pull_request_template.md` convention, otherwise:
+   - **Title:** under 70 characters. Use plain imperative style.
+   - **Body:**
+
+     Follow `.github/pull_request_template.md` convention, otherwise:
 
      ```markdown
-     #### Summary
+     ## Summary
 
-     - <1-5 bullet points summarizing what changed and why>
+     <briefly explain the purpose of the PR and the outcome it enables>
 
-     #### Testing
+     ## Changes
 
-     - <what you ran, or did not run>
+     - <1-5 bullets summarizing the main changes>
      ```
+
+     Do not add testing or verification sections unless the repository template requires them or the user explicitly asks for them
 
 5. Create or refresh the PR:
    - Push with `-u` if the branch has no upstream
