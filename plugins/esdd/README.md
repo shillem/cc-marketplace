@@ -71,7 +71,7 @@ ESDD keeps the leverage while cutting the ceremony:
 ```
 /esdd               # Show command usage and key flags
 /esdd init          # Set up ESDD for your project
-/esdd document      # Document domains from existing code
+/esdd document --domain auth --scan "src/**"  # Document domains from existing code
 /esdd new           # Plan a new change
 /esdd apply         # Implement the planned tasks
 /esdd verify        # Check implementation against intent
@@ -138,17 +138,17 @@ See [Workflows](docs/workflows.md) for when and why to use each.
 
 ## Commands
 
-| Command    | Usage                                                                           | Purpose                                   | Key flags              |
-| ---------- | ------------------------------------------------------------------------------- | ----------------------------------------- | ---------------------- |
-| `init`     | `/esdd init`                                                                    | Initialize ESDD for the project           | —                      |
-| `document` | `/esdd document --domain <name>[:<description>] [--domain ...] [--scan <glob>]` | Document domains from existing code       | `--domain`, `--scan`   |
-| `explore`  | `/esdd explore [topic]`                                                         | Open-ended thinking partner (no code)     | —                      |
-| `new`      | `/esdd new [change-name] [--fast] [--workflow <name>]`                          | Create and plan a new change              | `--fast`, `--workflow` |
-| `continue` | `/esdd continue [change-name] [--fast]`                                         | Resume planning an incomplete change      | `--fast`               |
-| `apply`    | `/esdd apply [change-name] [--fast]`                                            | Implement planned tasks group by group    | `--fast`               |
-| `verify`   | `/esdd verify [change-name]`                                                    | Verify implementation matches spec intent | —                      |
-| `archive`  | `/esdd archive [change-name] [--skip-verify]`                                   | Archive change                            | `--skip-verify`        |
-| `view`     | `/esdd view`                                                                    | Show project status dashboard             | —                      |
+| Command    | Usage                                                                         | Purpose                                   | Key flags              |
+| ---------- | ----------------------------------------------------------------------------- | ----------------------------------------- | ---------------------- |
+| `init`     | `/esdd init`                                                                  | Initialize ESDD for the project           | —                      |
+| `document` | `/esdd document --domain <name>[:<description>] [--domain ...] --scan <glob>` | Document domains from existing code       | `--domain`, `--scan`   |
+| `explore`  | `/esdd explore [topic]`                                                       | Open-ended thinking partner (no code)     | —                      |
+| `new`      | `/esdd new [change-name] [--fast] [--workflow <name>]`                        | Create and plan a new change              | `--fast`, `--workflow` |
+| `continue` | `/esdd continue [change-name] [--fast]`                                       | Resume planning an incomplete change      | `--fast`               |
+| `apply`    | `/esdd apply [change-name] [--fast]`                                          | Implement planned tasks group by group    | `--fast`               |
+| `verify`   | `/esdd verify [change-name]`                                                  | Verify implementation matches spec intent | —                      |
+| `archive`  | `/esdd archive [change-name] [--skip-verify]`                                 | Archive change                            | `--skip-verify`        |
+| `view`     | `/esdd view`                                                                  | Show project status dashboard             | —                      |
 
 See [Commands Reference](docs/commands.md) for full details.
 

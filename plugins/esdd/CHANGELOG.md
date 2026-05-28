@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.4 (2026-05-28)
+
+### Changed
+
+- Made `/esdd document --scan <glob>` required and shared across all requested domains
+- Clarified that `/esdd document` explores the shared scan scope per domain using the domain name and resolved description
+- Removed project map fallback guidance from document bootstrap instructions
+
 ## 1.1.3 (2026-05-27)
 
 ### Changed
