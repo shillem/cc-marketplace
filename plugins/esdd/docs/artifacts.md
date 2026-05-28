@@ -5,13 +5,13 @@ has a specific purpose and builds on the ones before it.
 
 ## Overview
 
-| Artifact | Purpose                                        | Review | Used In         |
-| -------- | ---------------------------------------------- | :----: | --------------- |
-| Brief    | Combined proposal + design for smaller changes |   No   | quick workflows |
-| Proposal | Why this change matters and what it changes    |  Yes   | full workflows  |
-| Specs    | Domain-scoped requirements with scenarios      |   No   | all workflows   |
-| Design   | Technical approach, decisions, trade-offs      |  Yes   | full workflows  |
-| Tasks    | Implementation checklist grouped into steps    |   No   | all workflows   |
+| Artifact | Purpose                                                                   | Review | Used In         |
+| -------- | ------------------------------------------------------------------------- | :----: | --------------- |
+| Brief    | Combined proposal + design for smaller changes                            |   No   | quick workflows |
+| Proposal | Why this change matters and what it changes                               |  Yes   | full workflows  |
+| Specs    | Domain-scoped requirements with scenarios                                 |   No   | all workflows   |
+| Design   | Technical approach, decisions, trade-offs                                 |  Yes   | full workflows  |
+| Tasks    | Implementation checklist grouped into deliverable-focused vertical slices |   No   | all workflows   |
 
 **Review artifacts** trigger an interactive review during planning (unless
 `--fast` is used). ESDD surfaces key decisions, assumptions, and scope questions
@@ -101,22 +101,22 @@ The _how_ document. Captures technical approach, trade-offs, and decisions.
 
 ## Tasks
 
-The implementation checklist. Organizes work into sequential groups of checkboxes.
+The implementation checklist. Organizes work into sequential, deliverable-focused groups of checkboxes.
 
 **Format:**
 
 ```markdown
-## 1. Database Schema
+## 1. User Registration
 
-- [ ] 1.1 Create users table with email, password_hash, created_at columns
-- [ ] 1.2 Add unique index on email column
-- [ ] 1.3 Create migration script
+- [ ] 1.1 Create user storage needed for registration
+- [ ] 1.2 Implement the registration endpoint with validation
+- [ ] 1.3 Add focused tests for successful registration and duplicate email handling
 
-## 2. Authentication Service
+## 2. User Login
 
-- [ ] 2.1 Implement password hashing with bcrypt
-- [ ] 2.2 Create login endpoint with credential validation
-- [ ] 2.3 Generate JWT tokens on successful login
+- [ ] 2.1 Implement credential lookup and password verification
+- [ ] 2.2 Return JWT tokens on successful login
+- [ ] 2.3 Add focused tests for valid credentials, invalid credentials, and missing users
 ```
 
 **Rules:**
@@ -125,8 +125,9 @@ The implementation checklist. Organizes work into sequential groups of checkboxe
 - Each group runs in a fresh agent context for clean, focused implementation
 - Task IDs (e.g., `1.1`) are extracted and tracked for progress reporting
 - Checkboxes (`- [ ]` / `- [x]`) are the source of truth for completion status
-- Tests belong in tasks only when tied to an implementation slice
-- Do not add standalone verification, readiness review, archiving, or summary tasks
+- Use concise group titles that describe the deliverable; avoid generic suffixes like “Slice”, “Phase”, or “Workstream”
+- Tests belong in tasks only when tied to the relevant implementation slice
+- Do not add standalone testing, regression, verification, readiness review, cleanup, archiving, or summary tasks
 
 ## Artifact Dependencies
 

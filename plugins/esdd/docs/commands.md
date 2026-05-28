@@ -164,18 +164,20 @@ for you to review what was implemented.
 
 **How task groups work:**
 
-The tasks artifact organizes work into numbered groups:
+The tasks artifact organizes work into numbered, deliverable-focused groups:
 
 ```markdown
-## 1. Database Schema
+## 1. User Registration
 
-- [ ] 1.1 Create users table migration
-- [ ] 1.2 Add indexes for email lookup
+- [ ] 1.1 Create user storage needed for registration
+- [ ] 1.2 Implement the registration endpoint with validation
+- [ ] 1.3 Add focused tests for successful registration and duplicate email handling
 
-## 2. API Endpoints
+## 2. User Login
 
-- [ ] 2.1 Implement POST /users
-- [ ] 2.2 Implement GET /users/:id
+- [ ] 2.1 Implement credential lookup and password verification
+- [ ] 2.2 Return JWT tokens on successful login
+- [ ] 2.3 Add focused tests for valid credentials, invalid credentials, and missing users
 ```
 
 Each group becomes a discrete implementation step. The agent receives the group's

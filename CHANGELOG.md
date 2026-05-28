@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.10] - 2026-05-28
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.5 — tightened task artifact guidance so task groups use concise deliverable titles, avoid generic suffixes like “Slice”, and keep testing or regression work inside the relevant implementation slice
+
+## [1.3.9] - 2026-05-28
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.4 — made `/esdd document --scan <glob>` required and shared across all requested domains, clarified shared scan exploration, and removed project map fallback guidance from document bootstrap instructions
+
 ## [1.3.8] - 2026-05-27
 
 ### Updated

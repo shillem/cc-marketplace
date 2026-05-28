@@ -32,8 +32,8 @@ reviews catch big problems before thousands of lines of code are generated.
 ESDD narrows the encoding/decoding gap by addressing each limit directly:
 
 - **Enforced decomposition** — complex work becomes a pipeline of small, scoped
-  artifacts. Tasks are organized as vertical slices that cut through the stack
-  end-to-end, with testable checkpoints between each group.
+  artifacts. Tasks are organized as deliverable-focused vertical slices that cut
+  through the stack end-to-end, with testable checkpoints between each group.
 - **Project context** — ESDD works with your existing project instructions and
   accumulated domain specs, preventing agents from generating generic code based
   on training data rather than your actual conventions.
@@ -88,13 +88,13 @@ reference with usage and key flags.
 ESDD produces structured documents during planning. Each artifact has a specific
 purpose and builds on the ones before it.
 
-| Artifact     | Purpose                                               | Review |
-| ------------ | ----------------------------------------------------- | :----: |
-| **Brief**    | Combined proposal + design for smaller changes        |   No   |
-| **Proposal** | Why this change matters and what it changes           |  Yes   |
-| **Specs**    | Domain-scoped requirements with testable scenarios    |   No   |
-| **Design**   | Technical approach, decisions, trade-offs             |  Yes   |
-| **Tasks**    | Implementation checklist grouped into vertical slices |   No   |
+| Artifact     | Purpose                                                                   | Review |
+| ------------ | ------------------------------------------------------------------------- | :----: |
+| **Brief**    | Combined proposal + design for smaller changes                            |   No   |
+| **Proposal** | Why this change matters and what it changes                               |  Yes   |
+| **Specs**    | Domain-scoped requirements with testable scenarios                        |   No   |
+| **Design**   | Technical approach, decisions, trade-offs                                 |  Yes   |
+| **Tasks**    | Implementation checklist grouped into deliverable-focused vertical slices |   No   |
 
 Artifacts marked with interactive review are **review artifacts** — ESDD pauses
 to surface decisions and ask for your input before moving on (unless `--fast` is
