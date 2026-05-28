@@ -152,15 +152,16 @@ artifacts:
       instruction: |
         Create the task list that breaks down the implementation work.
 
-        IMPORTANT: Follow the template exactly. The apply phase parses checkbox format to track progress. Tasks not using `- [ ]` won't be tracked.
+        IMPORTANT: Follow the template exactly. The apply phase parses only tasks formatted as `- [ ] X.Y Task description`.
 
         Guidelines:
-        - Structure task groups as vertical slices, not horizontal layers. Each group should cut through the stack end-to-end and produce a testable checkpoint. Avoid grouping by technical layer (all DB, then all services, then all API). Instead, group by thin slices that build on each other.
-        - Group related tasks under ## numbered headings
-        - Each task MUST be a checkbox: `- [ ] X.Y Task description`
-        - Task groups should be small enough to complete in one session
-        - Include test-writing or focused test-running only when tied to an implementation slice
-        - Tasks are an implementation checklist, not a verification or release checklist. Do not add tasks for artifact verification, readiness review, archiving, or summaries
+        - Structure task groups as vertical slices, not horizontal layers (all database changes, then all services, then all controllers):
+          - Each group should produce an end-to-end, testable checkpoint
+          - Groups should build on each other
+          - Groups should be small enough to complete and validate in one focused session
+        - Group related tasks under `##` numbered headings. Use concise titles that describe the deliverable; do not append generic words like "Slice", "Phase", or "Workstream".
+        - Include test-writing or focused test-running within the relevant implementation slice; do not create standalone testing, regression, verification, or cleanup groups.
+        - Tasks are an implementation checklist, not a verification or release checklist. Do not add tasks for artifact verification, readiness review, archiving, or summaries.
 
         Reference specs for what needs to be built, design for how to build it.
     apply:

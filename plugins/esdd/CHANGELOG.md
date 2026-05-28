@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5 (2026-05-28)
+
+### Changed
+
+- Tightened task artifact guidance so task groups use concise deliverable titles, avoid generic suffixes like “Slice”, and keep testing or regression work inside the relevant implementation slice
+
 ## 1.1.4 (2026-05-28)
 
 ### Changed
