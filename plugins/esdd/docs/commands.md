@@ -41,7 +41,7 @@ Document domains directly from existing code, creating or updating domain spec
 files without going through a full change workflow.
 
 ```text
-/esdd document --domain <name>[:<description>] [--domain ...] [--scan <glob>]
+/esdd document --domain <name>[:<description>] [--domain ...] --scan <glob>
 ```
 
 Scans your codebase and produces domain spec files at `.ai/esdd/domains/`. Use
@@ -50,19 +50,20 @@ specs independently of a change.
 
 **Flags:**
 
-| Flag                              | Effect                                    |
-| --------------------------------- | ----------------------------------------- |
-| `--domain <name>[:<description>]` | Domain to document (required, repeatable) |
-| `--scan <glob>`                   | Glob pattern to scope the code scan       |
+| Flag                              | Effect                                                |
+| --------------------------------- | ----------------------------------------------------- |
+| `--domain <name>[:<description>]` | Domain to document (required, repeatable)             |
+| `--scan <glob>`                   | Shared glob pattern to scope the code scan (required) |
 
-If `--scan` is omitted, ESDD suggests a scope derived from the domain name and
-project map, then asks for confirmation. Domains without descriptions must
-include one unless `--scan` is provided so ESDD can infer it.
+`--scan` is required and is shared by all requested domains. For each domain,
+ESDD explores the scoped files based on the domain name and description when
+provided. Domains without descriptions have one inferred from the relevant code
+found in that scope.
 
 **What happens:**
 
-1. For each domain, resolves a description if needed, then scans the code within
-   the specified scope
+1. For each domain, explores the specified scope and resolves a description if
+   needed from the relevant code
 2. Produces a domain spec file at `.ai/esdd/domains/<name>.md` using the domain
    template
 3. Registers the domain in `config.yaml`, reusing the resolved description

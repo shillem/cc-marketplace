@@ -109,8 +109,7 @@ artifacts:
     document:
       template: domain.md
       instruction: |
-        Analyze the code within the scope and produce an accumulated domain spec.
-        If the scope is empty, infer relevant paths from the domain name, its description, and project map if defined.
+        Given the explored files, compile an accumulated domain spec based on the domain name and resolved description.
 
         Format requirements:
         - Each requirement: `### Requirement: <name>` followed by description
