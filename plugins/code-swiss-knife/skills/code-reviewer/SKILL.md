@@ -1,109 +1,125 @@
 ---
 name: code-reviewer
-description: Review pull requests, diffs, and implementation changes for correctness, security, performance, maintainability, testing, and release readiness. Use when the user asks for review of a PR, patch, diff, commit, or code change.
-compatibility: Requires GitHub CLI
+description: Review pull requests, diffs, and code changes across behavior, contracts, tests, maintainability, and documentation. Use when the user asks for review of a PR, patch, diff, commit, or code change.
+compatibility: Requires GitHub CLI for PR reviews
 ---
 
-Perform focused, high-signal code reviews. Prefer a few strong findings over many weak nits.
+Perform high-signal code reviews. Default to all scopes unless the user asks for a narrower review.
 
-## Flow
+Review as focused specialists. Require evidence from the diff and nearby code before reporting a concern. A finding needs a concrete failure mode, missing control, regression gap, release risk, or maintenance trap.
 
-1. Understand the change and its intent.
-2. Identify the review target: PR, branch vs target ref, staged changes, unstaged changes, or commit range.
-3. Default to read-only inspection first.
-4. For branch reviews, use an explicit target ref or PR base branch. Do not assume `main`.
-5. Review the diff first, then nearby code for context.
-6. Build an internal behavior map before reporting findings:
-   - What behavior was added, removed, or changed?
-   - What new branches, states, modes, status values, flags, boundaries, or error paths exist?
-   - What side effects were introduced or changed: writes, external calls, async/background work, persisted state, logs, notifications, cache/config changes, or user/operator-visible outcomes?
-7. Perform focused review passes against the behavior map:
-   - **State/lifecycle pass:** check changed states, transitions, persisted state, cleanup, and unknown/future states
-   - **Testing pass:** map important changed behavior, branches, failure paths, and side effects to meaningful tests
-   - **Error/edge pass:** check boundary cases, hidden failures, fallback behavior, partial failure, and cleanup
-   - **Dead-code/consistency pass:** check whether removed or replaced behavior left misleading stale code, tests, docs, names, or branches behind
-   - **Docs/release pass:** check whether user-facing, operational, migration, config, or troubleshooting changes are documented
-8. Promote important coverage gaps to findings. If the review coverage section says a meaningful changed branch, state, side effect, or failure path is untested or only partially checked, include a finding unless the gap is low-risk or explicitly justified.
-9. Load only the relevant supplements based on the change.
-10. Verify each finding before reporting it.
-11. Produce a concise markdown review.
+## Scopes
 
-If the review target, base branch, or expected behavior is unclear, ask before reviewing deeply.
+Classify findings by primary failure mode. Canonical scope names select their matching scope.
 
-## Focus Areas
+| Scope           | Primary failure mode                                      | User request aliases                                                                                                                                                      |
+| --------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `behavior`      | Wrong observable runtime result                           | correctness, failure/error handling, error paths, state/lifecycle, side effects, async/background work, cleanup, retries, fallbacks, edge cases, performance/resource use |
+| `contract`      | Boundary allows invalid, insecure, or incompatible state  | APIs/public interfaces, types, schemas, validation, permissions, auth/authz, compatibility, storage, config, integrations, boundary security, security controls           |
+| `test`          | Missing proof a meaningful regression would fail          | testing, tests, coverage, regression protection, test quality                                                                                                             |
+| `simplicity`    | Current structure creates a maintenance trap              | quality, maintainability, complexity, duplication, stale/dead code, wrong-layer logic                                                                                     |
+| `documentation` | Written guidance misleads or omits release-critical truth | docs, comments, changelogs, release notes, migrations, examples, operator notes                                                                                           |
 
-Look for:
+If a problem spans scopes, report it once and mention secondary impacts only when they affect severity or the fix.
 
-- Bugs and incorrect behavior
-- Security risks
-- Performance regressions
-- Error-handling gaps and silent failures
-- State/lifecycle inconsistencies, hidden coupling, stale persisted state, and unreliable cleanup
-- Maintainability issues with meaningful long-term cost, especially misleading dead code left by changed behavior
-- Missing or weak tests for important changed behavior, branches, edge cases, or side effects
-- Brittle or non-isolated tests that can hide failures, leak state, or become misleading after future changes
-- Missing or misleading docs, changelog entries, release notes, config notes, or migrations
+For a broad `security` request, select both `contract` and `behavior`: use `contract` for boundary controls such as authz, validation, injection, unsafe construction, insecure defaults, storage/transport/third-party handling; use `behavior` for runtime disclosure such as secrets or sensitive data in logs, errors, telemetry, or user-visible output. If the user names a narrower security area, select only the matching scope.
 
-## Review Mode
+## Review Setup
 
-- Prefer read-only diff and metadata commands when sufficient
-- Only materialize a PR locally when needed to verify a high-impact concern
-- Clean up any temp worktree before finishing unless asked to keep it
-- If you switch branches, restore the previous branch before finishing unless asked to stay there
+1. Identify the target: PR, branch vs target ref, staged changes, unstaged tracked changes, untracked/current working tree, commit, range, or pasted diff.
+2. Determine the base explicitly. For branches, ask if the target ref is unclear. For staged/unstaged/current-tree/commit/range/pasted-diff reviews, do not infer a base ref.
+3. Inspect changed files, file types, stats, and PR title/body when applicable.
+4. Verify findings against nearby unchanged context: key callers, tests, schemas, docs, config, migrations, generated sources, or state owners.
+5. Include untracked files explicitly; ordinary `git diff` misses them.
+
+## Review Safety
+
+- Prefer read-only diff and metadata commands when they are enough
+- Only switch branches, materialize PRs, or create worktrees when needed to verify a concrete high-impact concern or when the user asks
+- Restore the previous branch and clean up temporary worktrees before finishing unless the user asks to keep them
 - If cleanup would disturb local work, stop and ask
-- If any local state is left behind, report exactly what and why
+- Report any local state left behind and why
 
-## Useful Commands
+Command cues, used only as needed to establish the target and inspect the patch:
 
 ```bash
-# Pull request review
-gh pr view <PR-NUMBER> --json title,body,files,commits,baseRefName,headRefName
-gh pr diff <PR-NUMBER> --name-only
-gh pr diff <PR-NUMBER> --patch
+# PR metadata and patch
+gh pr view <PR> --json title,body,files,commits,baseRefName,headRefName
+gh pr diff <PR> --patch
 
-# Current branch against explicit target ref
-git merge-base HEAD <TARGET-REF>
-git diff $(git merge-base HEAD <TARGET-REF>)..HEAD
-git diff --name-only $(git merge-base HEAD <TARGET-REF>)..HEAD
-
-# Staged changes
+# Working tree: staged, unstaged, and untracked files
+git status --short
 git diff --cached
-
-# Unstaged changes
 git diff
+git ls-files --others --exclude-standard
 
-# Last commit
-git show --stat --patch HEAD
-
-# Specific commit
+# Explicit branch, commit, and range targets
+git diff $(git merge-base HEAD <TARGET-REF>)..HEAD
 git show --stat --patch <COMMIT>
+git diff --stat <BASE>..<HEAD>
+git diff <BASE>..<HEAD>
 ```
+
+## Review Flow
+
+These files define the scope instructions:
+
+- [Behavior](behavior.md)
+- [Contract](contract.md)
+- [Test](test.md)
+- [Simplicity](simplicity.md)
+- [Documentation](documentation.md)
+
+### Delegated Review
+
+Use delegation when subagent tool is available, you are not already delegated, and more than one scope is selected. Do not load all scope files in the aggregator just to delegate. For trivial diffs (a single file, a few lines, or one obvious scope), prefer linear review even when multiple scopes nominally apply, rather than fanning out a delegate per scope.
+
+1. Run one delegate per selected scope in parallel.
+2. Give each delegate only its assigned scope, target/base, changed files, user constraints, and pasted diff if applicable.
+
+   ```text
+   You are a delegate reviewer for the code-reviewer skill.
+   Run only the `[scope]` scope.
+
+   Review target: [target]
+   Base/ref: [base, range, or none]
+   Changed files: [known list]
+   User constraints: [constraints]
+
+   [pasted diff, only when applicable]
+
+   Output findings and unresolved review questions only. For findings, include severity, confidence, location, why it matters, and recommendation. For questions, include the likely severity if the risk is confirmed and the evidence needed to resolve it. If there are no findings or questions, say none and name the risk surface checked.
+   ```
+
+3. Aggregate findings and unresolved review questions, deduplicate by root cause, and verify each retained finding against the diff and nearby code. Keep questions only when the uncertainty is evidenced by the diff/context and could change the assessment; carry them into the final `## Questions`, not `## Findings`. Delegates only see their own scope and cannot dedup across scopes, so the "report a cross-scope issue once" rule is enforced here: collapse the same root cause raised by multiple delegates into one finding under its primary scope. Reclassify valid findings into the right selected scope instead of dropping them. Preserve distinct Critical/Important findings and distinct Minor root causes; group related Minor instances when needed.
+
+### Linear Review
+
+When delegation is unavailable or only one scope is selected, load only the selected scope instruction files and apply them yourself. For each scope, identify the changed risk surface and suspicious locations before deciding whether findings exist.
 
 ## Findings Bar
 
-Only include a finding when there is a plausible failure mode, missing control, or concrete maintenance risk.
+Report findings only with concrete evidence.
 
-For each finding, be able to answer:
+For each finding, be able to answer: what could go wrong, under what condition, who is affected, why it matters, what should change, and how confident the evidence is.
 
-- What could go wrong?
-- Under what condition?
-- Why does it matter?
-- What should change?
+Confidence:
 
-If confidence is incomplete, state what you observed and phrase the rest as a question.
+- **High** — directly evidenced by the diff and verified nearby context
+- **Medium** — plausible and important, but expected behavior or runtime context is partly uncertain
 
-Treat review-pass gaps as findings only when they create realistic regression, maintainability, operational, or user risk.
+Low-confidence concerns belong in `## Questions`, not `## Findings`. Do not drop potentially severe low-confidence concerns; ask the blocking question and state the likely severity if confirmed.
 
-Do not bury meaningful gaps only in `Review Coverage`; promote them to findings with concrete recommendations.
+Suggestions are optional improvements with clear upside.
 
-Only return “No findings” after completing the behavior, testing, error/edge, state/lifecycle, dead-code/consistency, and docs/release passes. If a pass is not applicable, say so in the review coverage section.
+## Severity and Assessment
 
-## Severity
+- **Critical**: security issue, data loss, crash, broken production behavior → normally **Request Changes**
+- **Important**: likely bug, missing validation/control, serious performance issue, missing critical-path test → normally **Request Changes**
+- **Minor**: concrete maintainability, test, docs, or edge-case issue with lower immediate risk → normally **Comment**, or **Request Changes** if central, repeated, or compounding
+- **Suggestion**: optional improvement with clear upside → **Approve** or **Comment** depending on release risk
 
-- **Critical**: security issue, data loss, crash, broken production behavior
-- **Important**: likely bug, missing validation, serious performance issue, missing critical-path tests
-- **Minor**: maintainability issue with low immediate risk
-- **Suggestion**: optional improvement
+No findings after all selected scopes have run means **Approve** or explicitly say no findings if approval is not appropriate for the context.
 
 ## Output Template
 
@@ -113,26 +129,25 @@ Only return “No findings” after completing the behavior, testing, error/edge
 ## Summary
 
 - **Assessment:** [Approve / Request Changes / Comment]
-- **Scope:** [files reviewed or diff summary]
-- **Review mode:** [Read-only diff / local branch / temp worktree]
+- **Scope:** [target and files reviewed]
 - **Main risks:** [short list or "None identified"]
 
-## Review Coverage
+## Pass Results
 
-- **Behavior branches checked:** [yes/no + brief note]
-- **Tests mapped to changed behavior:** [yes/no/not applicable + brief note]
-- **Error/failure paths checked:** [yes/no + brief note]
-- **State/lifecycle impacts checked:** [yes/no/not applicable + brief note]
-- **Dead-code/consistency checked:** [yes/no/not applicable + brief note]
-- **Docs/release impact checked:** [yes/no/not applicable + brief note]
+- **Behavior:** [findings / no findings / N.A. + one-line note]
+- **Contract:** [findings / no findings / N.A. + one-line note]
+- **Test:** [findings / no findings / N.A. + one-line note]
+- **Simplicity:** [findings / no findings / N.A. + one-line note]
+- **Documentation:** [findings / no findings / N.A. + one-line note]
 
 ## Findings
 
 ### [Critical|Important|Minor|Suggestion] Short title
 
+- **Confidence:** [High|Medium]
 - **Location:** `path/to/file.ext:line`
-- **Why it matters:** [impact]
-- **Recommendation:** [specific fix or question]
+- **Why it matters:** [impact and condition]
+- **Recommendation:** [specific fix]
 
 ## Positives
 
@@ -147,12 +162,4 @@ Only return “No findings” after completing the behavior, testing, error/edge
 - [concise closing recommendation]
 ```
 
-## Reference Files
-
-Load only when relevant:
-
-- [Security Checklist](security.md)
-- [Performance Review Points](performance.md)
-- [Code Quality Standards](quality.md)
-- [Testing Review Points](testing.md)
-- [Error Handling Review Points](error-handling.md)
+List one Pass Results line per selected scope; omit scopes the user excluded. Every selected scope must be represented as findings, no findings, or not applicable. A scope is not applicable only when the diff contains no meaningful surface for it.

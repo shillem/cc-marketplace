@@ -3,17 +3,17 @@
 Claude Code plugin that bundles practical development skills. It currently ships
 with three skills:
 
-- `code-reviewer` for reviewing diffs, pull requests, and local changes with focused correctness, security, performance, error-handling, testing, and docs checks
+- `code-reviewer` for reviewing diffs, pull requests, and local changes across behavior, contracts, tests, maintainability, and documentation
 - `gitter` for commits and pull request workflows
 - `context7-docs` for current, version-specific documentation and code examples via Context7
 
 ## Included Skills
 
-| Skill           | Purpose                                                                                                    | Typical commands                                                                        |
-| --------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `code-reviewer` | Focused review across correctness, security, performance, error handling, maintainability, tests, and docs | `/code-reviewer review staged changes`                                                  |
-| `gitter`        | Commit current work and open or refresh pull requests                                                      | `/gitter commit`, `/gitter pr`                                                          |
-| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools                    | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
+| Skill           | Purpose                                                                                 | Example request                                                                         |
+| --------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `code-reviewer` | Focused reviews for behavior, contracts, tests, maintainability, and docs               | `/code-reviewer review staged changes`                                                  |
+| `gitter`        | Commit current work and open or refresh pull requests                                   | `/gitter commit`, `/gitter pr`                                                          |
+| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
 
 ## Usage
 
@@ -22,18 +22,26 @@ review code, create a commit, or open a pull request.
 
 ### `code-reviewer`
 
-Use for PRs, branches, commits, staged changes, or unstaged changes. The default PR workflow is read-only: inspect with `gh pr view` and `gh pr diff` first, and only materialize a branch or worktree locally when needed.
+Use for PRs, branches, commits, staged changes, unstaged changes, or pasted diffs. By default it looks for real review findings across behavior, contracts, tests, maintainability, and documentation. You can also ask for only the areas you care about. Targeted requests use these aliases:
+
+- `behavior`: correctness, failure/error handling, error paths, state/lifecycle, side effects, performance, and resource use
+- `contract`: APIs/public interfaces, types, schemas, validation, permissions, auth/authz, compatibility, storage, config, integrations, boundary security, and security controls
+- `test`: testing, tests, coverage, regression protection, and test quality
+- `simplicity`: quality, maintainability, complexity, duplication, stale/dead code, and wrong-layer logic
+- `documentation`: docs, comments, changelogs, release notes, migrations, examples, and operator notes
+
+A broad `security` request reviews both `contract` and `behavior`: boundary controls stay in `contract`, while runtime disclosures such as secrets in logs, errors, telemetry, or user-visible output stay in `behavior`.
 
 ```text
 /code-reviewer review the current branch against <target-branch>
 /code-reviewer review staged changes
 /code-reviewer review PR #123
-/code-reviewer review this diff for security and performance issues
-/code-reviewer review this diff for error handling and test gaps
+/code-reviewer review this diff for behavior and test issues
+/code-reviewer review this diff with only behavior and contract scopes
 ```
 
 For branch reviews, prefer an explicit target branch or ref instead of assuming
-`main`.
+`main`. PR reviews require `gh`.
 
 ### `gitter`
 
@@ -71,24 +79,3 @@ Use for authoritative, up-to-date API, setup, configuration, integration, and mi
 ### `context7-docs`
 
 - `ctx7` on `PATH`
-
-## Skill Layout
-
-### `skills/code-reviewer/`
-
-- `SKILL.md` — main review workflow and output format
-- `security.md` — security review prompts
-- `performance.md` — performance review prompts
-- `quality.md` — maintainability and code quality prompts
-- `testing.md` — testing and regression review prompts
-- `error-handling.md` — silent failure, fallback, retry, and cleanup review prompts
-
-### `skills/gitter/`
-
-- `SKILL.md` — action router for git workflows
-- `commit.md` — commit workflow
-- `pr.md` — pull request workflow
-
-### `skills/context7-docs/`
-
-- `SKILL.md` — Context7 workflow for resolving library IDs and querying current docs
