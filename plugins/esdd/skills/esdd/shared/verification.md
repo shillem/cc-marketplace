@@ -15,5 +15,5 @@ Use the subagent tool with this prompt (replace `<change-path>` with the change'
 >     - Divergent from intent: WARNING
 >   - For each scenario (`#### Scenario:`), check if covered in code/tests
 >     - Uncovered: WARNING
-> - Each issue must have a specific, actionable recommendation with file/line references. Never recommend creating new artifact files.
+> - Each issue must have a specific, actionable recommendation with file/line references. The recommendation must state whether to update artifacts, update implementation, or update both. Never recommend creating new artifact files.
 > - Output report listing issues by priority (CRITICAL / WARNING / SUGGESTION)
