@@ -1,10 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.1.6 (2026-06-03)
 
 ### Changed
 
-- Clarified verification discrepancy follow-up so reports name whether to update artifacts, implementation, or both before asking the user how to proceed
+- Clarified verification discrepancy follow-up so reports name whether to update artifacts or implementation before asking the user how to proceed
 
 ## 1.1.5 (2026-05-28)
 
