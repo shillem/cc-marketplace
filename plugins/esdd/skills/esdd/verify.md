@@ -23,6 +23,13 @@
 4. **Verify the change:**
    Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
 
-   Output verification report.
+   Output the verification report. If discrepancies were found, append the following text to the report:
 
-   If discrepancies were found, ask the user how they would like to proceed.
+   ```
+   ## NEXT STEP
+
+   How would you like to proceed?
+
+   - Update artifacts
+   - Update implementation
+   ```

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.6 (2026-06-03)
+
+### Changed
+
+- Reworked `code-reviewer` around five focused scopes: behavior, contract, test, simplicity, and documentation
+- Folded correctness, failure handling, error paths, and performance into the behavior scope while adding explicit alias mapping for targeted scope requests
+- Added optional parallel subagent review guidance with a linear fallback for harnesses without subagent support
+- Tightened delegation guidance and restored explicit security and performance review cues in the contract and behavior scopes
+- Restored read-only/local-state review safeguards and explicit commit-range command cues
+- Replaced the previous review supplements with compact scope instruction files
+- Strengthened simplicity guidance around structural regressions, avoidable complexity, ownership boundaries, and unhealthy file growth
+- Replaced the single pass-results line with an itemized per-scope coverage ledger in the review output
+- Clarified that cross-scope deduplication happens during aggregation, since delegates cannot see other scopes
+- Tightened the skill description to the five canonical scopes
+- Clarified security routing so broad security reviews run behavior and contract, runtime disclosures land in behavior, and boundary controls/storage/transport handling land in contract
+- Added a delegation cost guard to prefer linear review for trivial diffs
+
 ## 1.1.5 (2026-05-27)
 
 ### Changed
