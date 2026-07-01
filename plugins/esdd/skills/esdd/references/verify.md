@@ -21,7 +21,7 @@
    - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
 
 4. **Verify the change:**
-   Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
+   Follow the instructions in [verification.md](shared-verification.md), using the change's `path`.
 
    Output the verification report. If discrepancies were found, append the following text to the report:
 

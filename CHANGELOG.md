@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.12] - 2026-07-01
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.7 — moved skill reference docs into local `references` directories and updated skill entrypoint links
+- **esdd** plugin bumped to 1.1.7 — moved action and documentation references into the skill-local `references` directory and updated nested links
+
+## [1.3.11] - 2026-06-03
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.1.6 — reworked `code-reviewer` around behavior, contract, test, simplicity, and documentation scopes with updated delegation and review coverage guidance
+- **esdd** plugin bumped to 1.1.6 — clarified verification discrepancy follow-up so reports name whether to update artifacts or implementation before asking how to proceed
+
 ## [1.3.10] - 2026-05-28
 
 ### Updated

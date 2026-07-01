@@ -64,11 +64,11 @@ git diff <BASE>..<HEAD>
 
 These files define the scope instructions:
 
-- [Behavior](behavior.md)
-- [Contract](contract.md)
-- [Test](test.md)
-- [Simplicity](simplicity.md)
-- [Documentation](documentation.md)
+- [Behavior](references/behavior.md)
+- [Contract](references/contract.md)
+- [Test](references/test.md)
+- [Simplicity](references/simplicity.md)
+- [Documentation](references/documentation.md)
 
 ### Delegated Review
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.7 (2026-07-01)
+
+### Changed
+
+- Moved `code-reviewer` and `gitter` reference docs into skill-local `references` directories
+- Updated skill entrypoint links to resolve the relocated reference docs
+
 ## 1.1.6 (2026-06-03)
 
 ### Changed

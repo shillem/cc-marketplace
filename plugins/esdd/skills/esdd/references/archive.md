@@ -23,7 +23,7 @@
 4. **Verify the change:**
    If `--skip-verify` flag is present, skip to step 5.
 
-   Follow the instructions in [verification.md](shared/verification.md), using the change's `path`.
+   Follow the instructions in [verification.md](shared-verification.md), using the change's `path`.
 
    Output the verification report. If discrepancies were found, append the following text to the report:
 
