@@ -11,5 +11,5 @@ compatibility: Requires GitHub CLI
 
 ## Actions
 
-- [commit](commit.md): stage and commit changes
-- [pr](pr.md): open or refresh a pull request
+- [commit](references/commit.md): stage and commit changes
+- [pr](references/pr.md): open or refresh a pull request

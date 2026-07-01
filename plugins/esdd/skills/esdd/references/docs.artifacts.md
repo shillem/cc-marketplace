@@ -148,5 +148,5 @@ specific task group being implemented.
 
 You can customize artifact behavior — toggle interactive review, replace or
 extend planning instructions, use project-specific templates — through overrides
-in `config.yaml`. See [Artifact Overrides](configuration.md#artifact-overrides)
-and [Custom Templates](configuration.md#custom-templates) for details.
+in `config.yaml`. See [Artifact Overrides](docs.configuration.md#artifact-overrides)
+and [Custom Templates](docs.configuration.md#custom-templates) for details.

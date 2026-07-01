@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.7 (2026-07-01)
+
+### Changed
+
+- Moved ESDD action and documentation references into the skill-local `references` directory
+- Updated skill entrypoint and nested reference links to resolve the relocated files
+
 ## 1.1.6 (2026-06-03)
 
 ### Changed

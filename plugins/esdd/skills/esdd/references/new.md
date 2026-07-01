@@ -23,7 +23,7 @@
    - If error says not initialized, suggest running `/esdd init`
 
 4. **Generate artifacts:**
-   Follow the instructions in [plan-loop.md](shared/plan-loop.md).
+   Follow the instructions in [plan-loop.md](shared-plan-loop.md).
 
 5. **Show final status.**
    After completing all artifacts, summarize:
