@@ -26,8 +26,10 @@ Created during `init` at `.ai/esdd/config.yaml`:
 ```yaml
 workflow: spec-anchored
 domains:
-  auth: Authentication and session management
-  billing: Payment processing and invoicing
+  - name: auth
+    description: Authentication and session management
+  - name: billing
+    description: Payment processing and invoicing
 ```
 
 **Fields:**
@@ -59,9 +61,12 @@ requirements:
 
 ```yaml
 domains:
-  auth: Authentication, authorization, and session management
-  billing: Subscriptions, invoicing, and payment processing
-  notifications: Email, push, and in-app notification delivery
+  - name: auth
+    description: Authentication, authorization, and session management
+  - name: billing
+    description: Subscriptions, invoicing, and payment processing
+  - name: notifications
+    description: Email, push, and in-app notification delivery
 ```
 
 ### How domains are used
@@ -178,14 +183,12 @@ workflow: my-default
 workflows:
   my-default:
     plan:
-      workflow:
-        - brief
-        - tasks
+      - brief
+      - tasks
     apply:
-      workflow:
-        - tasks
+      - tasks
 ```
 
 Available artifact types for custom workflows: `brief`, `proposal`, `specs`,
-`design`, `tasks`. The order in the `plan.workflow` array determines the
-generation sequence and dependency chain.
+`design`, `tasks`. The order in the `plan` array determines the generation
+sequence and dependency chain.

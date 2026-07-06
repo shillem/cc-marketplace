@@ -34,7 +34,7 @@
    >   - `instruction`: Specific guidance for the artifact
    >   - `outputPath`: Where to find and update the artifact
    >   - `dependencies`: Additional context for the artifact
-   > - Read all dependencies for context
+   > - Read all dependencies for context. They are ordered from earliest to latest planning stage; if they conflict, later artifacts supersede earlier ones.
    > - Follow the `instruction`
 
    c. **Evaluate the agent's result:**

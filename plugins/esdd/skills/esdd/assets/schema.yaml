@@ -5,7 +5,7 @@ artifacts:
     plan:
       template: brief.md
       instruction: |
-        Create a brief document that captures WHY this change is needed and HOW you plan to approach it.
+        Create a brief document that captures WHY this change is needed and HOW you plan to approach it. Keep it concise.
 
         Sections:
         - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
@@ -20,7 +20,7 @@ artifacts:
         Existing domains (for context):
         {{DOMAINS}}
 
-        Keep it to half a page.
+        Before drafting, investigate the code areas this change touches so `What Changes` and `Approach` reference concrete files, modules, or APIs — not assumptions.
   proposal:
     description: Initial proposal document outlining the change
     output: proposal.md
@@ -28,7 +28,7 @@ artifacts:
       template: proposal.md
       review: true
       instruction: |
-        Create the proposal document that establishes WHY this change is needed.
+        Create the proposal document that establishes WHY this change is needed. Focus on the "why" not the "how". Keep it concise.
 
         Existing domains (for context):
         {{DOMAINS}}
@@ -41,26 +41,26 @@ artifacts:
           - **Modified Domains**: Existing domains whose REQUIREMENTS are changing. Only include if spec-level behavior changes (not just implementation details).
           - Remove either subsection if not applicable
         - **Impact**: Affected code, APIs, dependencies, or systems
+        - **Open Questions**: Unresolved decisions that need user input during review (omit section if none)
 
-        Keep it concise (1-2 pages). Focus on the "why" not the "how".
+        Before drafting, investigate the code areas this change touches so What Changes and Impact reference concrete files, modules, or APIs — not assumptions.
 
         **Important**:
         - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When a domain's description appears insufficient, use the subagent tool to evaluate which ones will be affected
+        - When existing domain descriptions are too thin to judge which domains this change affects, use the subagent tool to read the domain spec files and report which of them the change touches
   specs:
     description: Detailed specifications for the change
     output: specs/{domain}.md
     plan:
       template: spec.md
       instruction: |
-        Create specification files that define WHAT the system should do.  
-        One spec file per domain listed in the proposal's Domains section.
+        Create one spec file for each domain listed in the preceding artifact's `Domains` section. The spec file defines WHAT the system should do.
 
         Existing domains (for context):
         {{DOMAINS}}
 
-        For each domain in the proposal's Domains section:
-        - **New Domains**: use the exact kebab-case name from the proposal. In the frontmatter description field, write the initial description of the domain's responsibility.
+        For each domain:
+        - **New Domains**: use the exact kebab-case name from the proposal or brief. In the frontmatter description field, write the initial description of the domain's responsibility.
         - **Modified Domains**: use the existing domain name when creating the delta domain spec. In the frontmatter description field, write the current domain's description, or update it if the domain's scope has changed. Include ONLY requirements that are actually changing — do not restate the full domain.
 
         Delta operations (use ## headers):
@@ -88,6 +88,9 @@ artifacts:
 
         Testability:
         - Consider whether the domain has performance targets, security constraints, or compliance requirements. Express these as regular requirements with measurable GIVEN/WHEN/THEN scenarios (e.g., "GIVEN a system under normal load, WHEN 1000 concurrent requests arrive, THEN p95 latency < 200ms").
+
+        **Important**:
+        - Before finishing, verify that every domain listed in the preceding artifact's `Domains` section has a corresponding spec file.
     archive:
       instruction: |
         Merge delta domain specs into the accumulated domain spec files.
@@ -134,15 +137,16 @@ artifacts:
       template: design.md
       review: true
       instruction: |
-        Create the design document that explains HOW to implement the change.
-        If the change is straightforward, keep design content minimal.
+        Create the design document that explains HOW to implement the change. If the change is straightforward, keep design content minimal.
 
         Sections:
         - **Context**: Background, current state, constraints
         - **Goals / Non-Goals**: What this design achieves and explicitly excludes
         - **Decisions**: Key technical choices with rationale (why X over Y?) and alternatives considered
         - **Risks / Trade-offs**: Known limitations, what could go wrong. Format: [Risk] → Mitigation
+        - **Open Questions**: Unresolved decisions that need user input during review (omit section if none)
 
+        Before drafting, read the code the change touches so Context and Decisions reflect the actual current state — not assumptions.
         Reference requirements from specs. Focus on architecture and the "why" behind decisions, not line-by-line implementation.
   tasks:
     description: Implementation checklist with trackable tasks
@@ -162,6 +166,7 @@ artifacts:
         - Group related tasks under `##` numbered headings. Use concise titles that describe the deliverable; do not append generic words like "Slice", "Phase", or "Workstream".
         - Include test-writing or focused test-running within the relevant implementation slice; do not create standalone testing, regression, verification, or cleanup groups.
         - Tasks are an implementation checklist, not a verification or release checklist. Do not add tasks for artifact verification, readiness review, archiving, or summaries.
+        - When a task implements a specific spec requirement, reference the requirement name in the task description for traceability.
 
         Reference specs for what needs to be built, design for how to build it.
     apply:

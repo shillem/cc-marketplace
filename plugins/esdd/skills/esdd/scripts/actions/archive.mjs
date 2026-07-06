@@ -29,11 +29,8 @@ export function run(args) {
   }
 
   const srcPath = changePath(changeName);
-
-  if (!exists(srcPath)) {
-    outputError(`Change '${changeName}' not found`);
-    process.exit(1);
-  }
+  const config = new Config();
+  const schema = config.schema({ changeName });
 
   const cwd = process.cwd();
   const today = new Date().toISOString().slice(0, 10);
@@ -45,11 +42,7 @@ export function run(args) {
     process.exit(1);
   }
 
-  const config = new Config();
-
   const domains = [];
-
-  const schema = config.schema({ changeName });
   const archive = schema.phases.archive || [];
 
   for (const id of archive) {

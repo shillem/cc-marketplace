@@ -180,8 +180,10 @@ The tasks artifact organizes work into numbered, deliverable-focused groups:
 - [ ] 2.3 Add focused tests for valid credentials, invalid credentials, and missing users
 ```
 
-Each group becomes a discrete implementation step. The agent receives the group's
-tasks along with all plan artifacts for context.
+Each group becomes a discrete implementation step. The agent receives the group
+title, the `tasks.md` path, and all non-task plan artifacts for context; it reads
+`tasks.md` to work through only the assigned group. Context artifacts are listed
+in planning order — on conflict, later artifacts supersede earlier ones.
 
 ## verify
 
