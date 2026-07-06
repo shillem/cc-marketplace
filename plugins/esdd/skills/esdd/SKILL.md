@@ -5,9 +5,10 @@ argument-hint: "[init|document|explore|new|continue|apply|verify|archive|view] [
 ---
 
 1. Treat the first word passed by the user as `$ACTION`, remainder is `$REST`.
-2. If `$ACTION` matches one of the actions, follow the action's instructions.
-3. If `$ACTION` is empty or does not match an action, read [help](references/help.md), show the command quick reference with usage and key flags, and stop.
-4. If the user wants more detail about a specific command after seeing the quick reference, read [commands](references/docs.commands.md).
+2. If `$ACTION` is empty or does not match an action, read [help](references/help.md), show the command quick reference with usage and key flags, and stop.
+3. If the user wants more detail about a specific command after seeing the quick reference, read [commands](references/docs.commands.md).
+4. For valid actions, run the init gate below before dispatching, except for `explore`.
+5. If the gate passes, follow the action's instructions exactly.
 
 ## Available Scripts
 

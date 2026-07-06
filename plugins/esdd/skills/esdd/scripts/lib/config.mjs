@@ -34,6 +34,10 @@ export class Config {
       throw new ConfigError("ESDD not initialized. Run /esdd init first.");
     }
 
+    if (changeName != null && !exists(changePath(changeName))) {
+      throw new ConfigError(`Change '${changeName}' not found`);
+    }
+
     const resolved = this.#resolveAny({ changeName, workflowName });
 
     if (resolved.errors) {

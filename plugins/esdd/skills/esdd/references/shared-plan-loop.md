@@ -18,12 +18,13 @@ a. **For each artifact with `pending` status**:
 - If context is critically unclear, use the ask tool — but prefer making reasonable decisions to keep momentum
 - **If `review` is `true` AND `--fast` is absent**, run a review phase after generating:
   1. **Surface**: present the key decisions, assumptions, and patterns you followed while creating the artifact
-  2. **Resolve open questions**: if the artifact contains an Open Questions section, present each one and use the the ask tool to get the user's input. Questions the user explicitly defers should be moved to a **Deferred Questions** section with rationale for why they don't block implementation.
+  2. **Resolve open questions**: if the artifact contains an Open Questions section, present each one and use the ask tool to get the user's input. Questions the user explicitly defers should be moved to a **Deferred Questions** section with rationale for why they don't block implementation.
   3. **Revise**: if the user provides corrections, update the artifact accordingly
+- **If `review` is `true` AND `--fast` is present**, do not pause: resolve any Open Questions yourself with reasonable decisions, record each decision and its rationale in the artifact, and move anything you cannot resolve to a **Deferred Questions** section with rationale for why it doesn't block implementation
 - After creating the artifact, run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<change-name>" --plan`
 - If the artifact has status `invalid`, surface the errors and offer to fix before moving on
 
 b. **Continue with the next artifact, if any**
 
-- If `--fast` flag is absent, stop and ask if the user is ready to work on the next artifact
-- Continue with the next artifact and stop when all artifacts are in `ready` status
+- If `--fast` flag is absent, use the ask tool to confirm the user is ready before starting the next artifact
+- Repeat until all artifacts are in `ready` status, then end the loop

@@ -27,3 +27,7 @@
 ## Approach
 
 <!-- Key technical decisions and rationale -->
+
+## Risks
+
+<!-- Known risks or trade-offs. Remove this section if none. -->

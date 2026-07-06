@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.8 (2026-07-06)
+
+### Changed
+
+- Added init gating before ESDD action dispatch while leaving help and explore flows available without initialization
+- Tightened planning guidance to require code investigation, concise artifacts, open-question handling, task traceability, and clearer dependency ordering
+- Updated workflow and configuration documentation to show the current custom workflow and domain list shapes
+
+### Fixed
+
+- Report missing changes through shared config validation during archive/status resolution
+- Require a valid integer group id for apply instructions
+- Route CLI errors through action-level handling so configuration and unexpected failures are reported consistently
+
 ## 1.1.7 (2026-07-01)
 
 ### Changed

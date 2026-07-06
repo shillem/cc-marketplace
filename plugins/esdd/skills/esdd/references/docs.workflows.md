@@ -97,12 +97,10 @@ is a named combination of artifact sequences for each phase:
 workflows:
   my-workflow:
     plan:
-      workflow:
-        - brief
-        - tasks
+      - brief
+      - tasks
     apply:
-      workflow:
-        - tasks
+      - tasks
 ```
 
 Custom workflows can use any combination of the available artifact types: `brief`,
@@ -113,17 +111,14 @@ spec merging into domain knowledge), add an `archive` section:
 workflows:
   my-workflow:
     plan:
-      workflow:
-        - proposal
-        - specs
-        - design
-        - tasks
+      - proposal
+      - specs
+      - design
+      - tasks
     apply:
-      workflow:
-        - tasks
+      - tasks
     archive:
-      workflow:
-        - specs
+      - specs
 ```
 
 Without an `archive` section, the workflow behaves like spec-first — specs guide

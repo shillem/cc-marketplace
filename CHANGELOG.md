@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.13] - 2026-07-06
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.8 — added init gating for action dispatch, tightened planning and review guidance, updated workflow/domain documentation, and improved CLI/config error handling
+
 ## [1.3.12] - 2026-07-01
 
 ### Updated

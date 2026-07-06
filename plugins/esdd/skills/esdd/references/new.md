@@ -9,8 +9,8 @@
 
 ## Flow
 
-1. **Ask the user what they want to build:**
-   Always ask the user to describe what they want to plan. The change name argument (if provided) is just an identifier — do NOT treat it as a description of the work.
+1. **Establish what the user wants to build:**
+   If the user has not already described the work in this conversation, ask them to describe it. The change name argument (if provided) is just an identifier — do NOT treat it as a description of the work or infer scope from it.
 
    **Important**: Do NOT explore the codebase or proceed to later steps until the user has explicitly described what they want to build.
 

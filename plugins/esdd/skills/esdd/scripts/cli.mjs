@@ -14,15 +14,6 @@ const ACTIONS = {
   view: () => import("./actions/view.mjs")
 };
 
-process.on("uncaughtException", err => {
-  if (err instanceof ConfigError) {
-    outputError(err.message);
-    process.exit(1);
-  }
-  console.error(err);
-  process.exit(1);
-});
-
 const [action, ...args] = process.argv.slice(2);
 
 if (!action || !ACTIONS[action]) {
@@ -30,5 +21,10 @@ if (!action || !ACTIONS[action]) {
   process.exit(1);
 }
 
-const mod = await ACTIONS[action]();
-await mod.run(args);
+try {
+  const mod = await ACTIONS[action]();
+  await mod.run(args);
+} catch (err) {
+  outputError(err instanceof ConfigError ? err.message : err?.stack || String(err));
+  process.exit(1);
+}

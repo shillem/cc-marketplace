@@ -26,7 +26,7 @@ export function run(args) {
     process.exit(1);
   }
 
-  if (phase === "apply" && (artifact == null || groupId == null)) {
+  if (phase === "apply" && (artifact == null || !Number.isInteger(groupId))) {
     outputError("--apply requires both --artifact <artifact> and --group <group-id>");
     process.exit(1);
   }

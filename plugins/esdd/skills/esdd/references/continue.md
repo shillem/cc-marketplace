@@ -19,8 +19,8 @@
 
 3. **Handle status:**
    If any artifact has status `invalid`:
-   - Surface the errors: "proposal.md has issues: Missing content under '## Impact'"
-   - Offer to fix: read the artifact, fill in missing sections
+   - Surface the errors: "tasks.md has issues: No checkbox tasks found (expected `- [ ]` format)"
+   - Offer to fix: read the artifact and repair the reported problems
    - Fix before moving to new artifacts
 
 4. **If all artifacts status is `ready`:** Report completion, suggest running `/esdd apply`

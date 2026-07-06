@@ -39,6 +39,7 @@ describe("instructions", () => {
   test("returns plan instruction for proposal", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json, exitCode } = await run(
       "instructions",
@@ -57,6 +58,7 @@ describe("instructions", () => {
   test("plan instruction for design includes review flag", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "design"], {
       esddPath
@@ -68,6 +70,7 @@ describe("instructions", () => {
   test("plan instruction for non-review artifact returns review false", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "tasks"], {
       esddPath
@@ -108,6 +111,7 @@ describe("instructions", () => {
   test("plan instruction replaces {{DOMAINS}} with domain list", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath, { domains: [{ name: "auth", description: "Authentication" }] });
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "proposal"], {
       esddPath
@@ -121,6 +125,7 @@ describe("instructions", () => {
   test("plan instruction shows 'No domains defined yet.' when no domains", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run("instructions", ["add-auth", "--plan", "--artifact", "proposal"], {
       esddPath
@@ -132,6 +137,7 @@ describe("instructions", () => {
   test("returns error for unknown plan artifact", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run(
       "instructions",
@@ -263,6 +269,7 @@ describe("instructions", () => {
   test("archive returns error for non-archive artifact", async () => {
     const esddPath = createTmpDir();
     initFixture(esddPath);
+    writeFixture(esddPath, "changes/add-auth/.keep", "");
 
     const { json } = await run(
       "instructions",
