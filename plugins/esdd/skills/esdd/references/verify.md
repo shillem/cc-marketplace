@@ -11,7 +11,7 @@
    - Otherwise, run the CLI script: `node <skill-dir>/scripts/cli.mjs list`
    - If no changes exist: report and stop
    - If one change exists: use it
-   - If multiple changes: use the ask tool to let the user select
+   - If multiple changes: ask the user to select
 
 2. **Get detailed status:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.

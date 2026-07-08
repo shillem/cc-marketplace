@@ -2,7 +2,7 @@
 
 **Expects from calling action:** change's `path` from status output.
 
-Use the subagent tool with this prompt (replace `<change-path>` with the change's `path`):
+Use an isolated subagent or fresh agent context if available, with this prompt (replace `<change-path>` with the change's `path`). If isolation is unavailable, perform the review inline after rereading the change artifacts:
 
 > - Read all artifact files from `<change-path>` for full context
 > - Verify **Coherence:**

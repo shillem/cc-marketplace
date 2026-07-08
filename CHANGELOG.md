@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2026-07-08
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.2.0 — added a `gitter` review action for pending GitHub pull request review comments and explicit review submission guidance
+- **esdd** plugin bumped to 1.1.9 — generalized tool-specific references so workflows can use available ask, progress-tracking, and isolated review capabilities without depending on exact tool names
+
 ## [1.3.13] - 2026-07-06
 
 ### Updated
