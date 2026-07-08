@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.9 (2026-07-08)
+
+### Changed
+
+- Generalized tool-specific references for user prompts, progress tracking, isolated review, and subagent fallback behavior across ESDD workflows
+
 ## 1.1.8 (2026-07-06)
 
 ### Changed

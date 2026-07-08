@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 (2026-07-08)
+
+### Added
+
+- Added a `gitter` review action for pending GitHub pull request review comments
+- Documented pending review creation, inline review threads, pending comment edits/removal, and explicit review submission through GitHub GraphQL
+
 ## 1.1.7 (2026-07-01)
 
 ### Changed
