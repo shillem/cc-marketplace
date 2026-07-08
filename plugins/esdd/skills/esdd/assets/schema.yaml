@@ -47,7 +47,7 @@ artifacts:
 
         **Important**:
         - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When existing domain descriptions are too thin to judge which domains this change affects, use the subagent tool to read the domain spec files and report which of them the change touches
+        - When existing domain descriptions are too thin to judge which domains this change affects, use an isolated subagent or fresh agent context if available to read the domain spec files and report which of them the change touches. If isolation is unavailable, read the specs inline before deciding.
   specs:
     description: Detailed specifications for the change
     output: specs/{domain}.md

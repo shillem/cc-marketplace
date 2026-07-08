@@ -12,7 +12,7 @@
    - Otherwise, run the CLI script: `node <skill-dir>/scripts/cli.mjs list --apply`
    - If no changes exist: suggest running `/esdd new`
    - If one change exists: use it
-   - If multiple changes: use the ask tool to let the user select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)"
+   - If multiple changes: ask the user to select, presenting each change with its apply group status. Mark the one with most pending groups as "(Recommended)"
 
 2. **Get detailed status:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --apply`.
@@ -23,11 +23,11 @@
    - Otherwise: proceed to step 4
 
 4. **Process artifacts:**
-   Loop through the `apply.workflow` array, using the task tool to track progress. For each artifact, iterate its `groups`:
+   Loop through the `apply.workflow` array, tracking progress clearly as you go. For each artifact, iterate its `groups`:
 
    a. **Skip completed groups** (status: `"done"`)
 
-   b. **For each pending group**, use the subagent tool with this prompt:
+   b. **For each pending group**, use an isolated subagent or fresh agent context if available, with this prompt. If isolation is unavailable, perform the steps inline after rereading the group instructions and dependencies:
 
    > - Get instructions by running the CLI script: `node <skill-dir>/scripts/cli.mjs instructions "<name>" --apply --artifact <artifact> --group <group-id>`
    > - The JSON output includes:
