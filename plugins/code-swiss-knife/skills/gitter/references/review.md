@@ -65,7 +65,7 @@ Do not use these commands or fields while only adding comments:
 5. Add inline comments with `addPullRequestReviewThread`:
 
    ```bash
-   comment_id=$(gh api graphql \
+   gh api graphql \
      -f query='mutation($reviewId:ID!,$path:String!,$line:Int!,$side:DiffSide!,$body:String!){ addPullRequestReviewThread(input:{pullRequestReviewId:$reviewId,path:$path,line:$line,side:$side,body:$body}){ thread { id comments(first:1){ nodes { id } } } } }' \
      -f reviewId="$review_id" \
      -f path='path/to/file.ts' \
@@ -73,12 +73,11 @@ Do not use these commands or fields while only adding comments:
      -f side=RIGHT \
      -F body=@- \
      --jq '.data.addPullRequestReviewThread.thread.comments.nodes[0].id' <<'REVIEW_BODY_EOF'
-   Arbitrary markdown with `backticks`, "quotes", backslashes like \n, and multiple lines.
+   Arbitrary markdown with `backticks`, "quotes", contractions like "isn't", backslashes like \n, and multiple lines.
    REVIEW_BODY_EOF
-   )
    ```
 
-   Write free-text Markdown bodies with a quoted heredoc. Use `-F` when values need interpretation, including integers and `@-` stdin reads; use `-f` for literal strings.
+   Write free-text Markdown bodies with a quoted heredoc. Do not wrap a heredoc-fed command in `$(...)`: apostrophes or unmatched quotes in the body can break parsing. Let `gh` print the comment ID instead. Use `-F` when values need interpretation, including integers and `@-` stdin reads; use `-f` for literal strings.
 
 6. Stop after comments are added unless the core invariant allows submission. Report the comment count and file:line locations. Mention that pending review comments are not visible to others until submitted.
 
