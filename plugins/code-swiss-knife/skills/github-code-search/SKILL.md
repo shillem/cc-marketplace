@@ -1,6 +1,6 @@
 ---
 name: github-code-search
-description: Finds real-world code usage and implementation examples across public GitHub repositories and private repositories accessible to the authenticated user. Use when practical repository patterns are needed rather than official documentation or local code search.
+description: Searches GitHub repositories for real-world code usage and implementation patterns, including private repositories accessible to the authenticated user. Use when the user asks how other projects use an API or library, wants examples from actual repositories, or explicitly requests GitHub code search rather than authoritative or version-specific documentation.
 compatibility: Requires GitHub CLI
 ---
 
