@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2026-08-05
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.2.1 — fixed `gitter` inline review comment examples to safely handle heredoc bodies containing apostrophes or unmatched quotes
+
 ## [1.4.0] - 2026-07-08
 
 ### Updated

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 (2026-08-05)
+
+### Fixed
+
+- Fixed `gitter` inline review comment examples so heredoc bodies containing apostrophes or unmatched quotes are not parsed inside command substitution
+- Changed inline review comment creation to print the GitHub comment ID directly instead of capturing it in a shell variable
+
 ## 1.2.0 (2026-07-08)
 
 ### Added
