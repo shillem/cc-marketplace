@@ -1,24 +1,26 @@
 # code-swiss-knife
 
 Claude Code plugin that bundles practical development skills. It currently ships
-with three skills:
+with four skills:
 
 - `code-reviewer` for reviewing diffs, pull requests, and local changes across behavior, contracts, tests, maintainability, and documentation
 - `gitter` for commits and pull request workflows
 - `context7-docs` for current, version-specific documentation and code examples via Context7
+- `github-code-search` for real-world usage and implementation examples across GitHub code
 
 ## Included Skills
 
-| Skill           | Purpose                                                                                 | Example request                                                                         |
-| --------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `code-reviewer` | Focused reviews for behavior, contracts, tests, maintainability, and docs               | `/code-reviewer review staged changes`                                                  |
-| `gitter`        | Commit current work and open or refresh pull requests                                   | `/gitter commit`, `/gitter pr`                                                          |
-| `context7-docs` | Fetch current, version-specific docs and code examples for external libraries and tools | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
+| Skill                | Purpose                                                                                 | Example request                                                                         |
+| -------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `code-reviewer`      | Focused reviews for behavior, contracts, tests, maintainability, and docs               | `/code-reviewer review staged changes`                                                  |
+| `gitter`             | Commit current work and open or refresh pull requests                                   | `/gitter commit`, `/gitter pr`                                                          |
+| `context7-docs`      | Fetch current, version-specific docs and code examples for external libraries and tools | `/context7-docs react useEffect cleanup`, `/context7-docs nextjs app router middleware` |
+| `github-code-search` | Find practical usage and implementation examples across GitHub code                     | `/github-code-search AbortSignal.any TypeScript`                                        |
 
 ## Usage
 
 Use the skill directly with its slash command, or ask Claude Code naturally to
-review code, create a commit, or open a pull request.
+review code, create a commit, open a pull request, or find real-world code examples.
 
 ### `code-reviewer`
 
@@ -64,6 +66,15 @@ Use for authoritative, up-to-date API, setup, configuration, integration, and mi
 /context7-docs nextjs app router middleware setup
 ```
 
+### `github-code-search`
+
+Use for practical API usage, library integration, and implementation examples in public or accessible private GitHub repositories.
+
+```text
+/github-code-search AbortSignal.any TypeScript
+/github-code-search createContext in facebook/react
+```
+
 ## Prerequisites
 
 ### `code-reviewer`
@@ -79,3 +90,7 @@ Use for authoritative, up-to-date API, setup, configuration, integration, and mi
 ### `context7-docs`
 
 - `ctx7` on `PATH`
+
+### `github-code-search`
+
+- Authenticated `gh` on `PATH`

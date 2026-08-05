@@ -16,6 +16,7 @@ Start where real regressions usually hide:
 - Partial writes, multi-step updates, generated files, indexes, migrations, and persisted or derived state
 - Performance/resource regressions with observable impact: unbounded loops, N+1 queries/calls, over-fetching, missing indexes or pagination, repeated work, chatty or blocking I/O, unbounded buffering, leaked memory/listeners/timers, lock contention, retry storms, and missing limits
 - Accepted inputs and state combinations that can produce wrong behavior: empty, duplicated, repeated, maximum/minimum, out-of-order, stale, or future status values
+- User-facing regressions where relevant: accessibility, keyboard and assistive-technology interaction, localization, text direction, responsive behavior, and supported browser/platform differences
 - Resource lifecycles: transactions, locks, file handles, temp files, listeners, timers, subscriptions, and rollback paths
 
 ## Review Questions
@@ -31,6 +32,7 @@ Ask these before accepting the behavior:
 - Could a handler swallow an unexpected bug that should fail loudly?
 - Are errors surfaced with enough context for users or operators to act without leaking secrets?
 - Does the changed path scale with realistic input size and dependency latency, or does it add repeated database/network/disk work?
+- For user-facing changes, does the result remain usable with supported input methods, assistive technologies, locales, layouts, browsers, and platforms?
 
 ## Inspect
 

@@ -1,6 +1,6 @@
 # Test Scope
 
-Own proof that meaningful regressions would fail tests. Do not chase coverage percentages or one-test-per-branch completeness. A test gap matters when realistic behavior, contract, permission, data, or release risk can ship unnoticed.
+Own reliable detection of meaningful regressions. Prefer deterministic pre-release checks, and do not chase coverage percentages or one-test-per-branch completeness. A protection gap matters when realistic behavior, contract, permission, data, or release risk can ship unnoticed.
 
 ## High-Yield Targets
 
@@ -27,27 +27,30 @@ Ask these before accepting the tests:
 - Does the test assert the user/caller-visible result, persisted state, emitted event, error, or side effect that matters?
 - Could a mock or fixture mirror the implementation mistake and let the test pass?
 - Is the test deterministic with respect to time, ordering, network, environment, caches, globals, and shared state?
+- Is a unit or integration test reliable for this property, or does it require another deterministic pre-release check such as a benchmark, load test, or deployment check?
 - Is existing integration coverage direct enough to catch this regression, or only assumed?
 
 ## Inspect
 
 1. List meaningful changed behaviors and contracts from the diff.
-2. For each important risk, identify the test that would fail if it regressed.
+2. For each important risk, identify the control that would detect a regression.
 3. Check at least one negative or boundary path for important validation, parsing, permission, async, migration, and error-handling changes.
-4. Recommend the right test level: integration for cross-boundary behavior, unit for isolated logic, and mocks only at clear system boundaries.
+4. Recommend the earliest reliable control: integration tests for cross-boundary behavior, unit tests for isolated logic, and mocks only at clear system boundaries.
 5. Review new/changed tests for behavior assertions instead of implementation coupling.
 6. Check fixtures and determinism against production-like failure modes.
 
 ## Report
 
-Promote a test gap only when it protects against a plausible regression with real user, business, operational, security, data, or release risk.
+Promote a protection gap only when it covers a plausible regression with real user, business, operational, security, data, or release risk.
+
+Before prescribing a test, confirm the asserted behavior is stable, representative, and deterministic enough for the check to survive benign dependency and runtime changes. Prefer the earliest reliable control: use a benchmark, load test, or deployment check when a unit or integration test is unsuitable. Name a canary or production monitoring only as a last resort when no reliable pre-release check is practical, and state why. If operational coverage cannot be verified from the repository or available context, ask about it instead of reporting it as missing. Keep severity based on the unprotected risk, and never waive protection without naming the substitute.
 
 For each finding, state:
 
 - the changed behavior or contract at risk,
 - the realistic regression that could ship,
-- why current tests would not catch it,
-- the test scenario that should be added or strengthened, and
+- why current tests or other controls would not catch it,
+- the test or other control that should be added or strengthened, and
 - the appropriate severity using the top-level severity labels.
 
-Do not request tests for trivial getters, mechanical wiring, or behavior already covered by a meaningful test that would actually fail on the regression.
+Do not request protection for trivial getters, mechanical wiring, or behavior already covered by a meaningful control that would catch the regression.

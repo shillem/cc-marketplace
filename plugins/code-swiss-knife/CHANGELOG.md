@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.0 (2026-08-05)
+
+### Added
+
+- Added `github-code-search` for real-world usage and implementation examples across public and accessible private GitHub repositories
+
+### Changed
+
+- Added coordinator-owned targeted verification to `code-reviewer`
+- Added explicit partial-review coverage reporting for large or incompletely inspected changes
+- Improved delegated review context with change intent, inspectable target roots, uninspected-surface reporting, and read-only execution
+- Added user-facing accessibility, localization, responsive, browser, and platform checks to the behavior scope
+- Simplified review output and tightened prioritization of lower-severity findings
+- Distinguished missing tests from missing reliable regression protection and added guidance for alternative verification controls
+
 ## 1.2.1 (2026-08-05)
 
 ### Fixed
