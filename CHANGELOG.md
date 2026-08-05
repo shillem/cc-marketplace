@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0] - 2026-08-05
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.3.0 — added the `github-code-search` skill for real-world GitHub examples and strengthened `code-reviewer` coverage and verification guidance
+
 ## [1.4.1] - 2026-08-05
 
 ### Updated
