@@ -21,6 +21,8 @@ artifacts:
         {{DOMAINS}}
 
         Before drafting, investigate the code areas this change touches so `What Changes` and `Approach` reference concrete files, modules, or APIs — not assumptions.
+
+        When the change involves persisted state, background or scheduled work, retries, time-dependent behavior, configuration consumed by external tooling, or other external systems, cover the applicable robustness concerns in Approach or Risks: partial failure and repeated execution, concurrent actors and stale state, behavior at and after time boundaries, and compatibility with pinned consumer versions. Omit concerns that do not apply.
   proposal:
     description: Initial proposal document outlining the change
     output: proposal.md
@@ -88,6 +90,7 @@ artifacts:
 
         Testability:
         - Consider whether the domain has performance targets, security constraints, or compliance requirements. Express these as regular requirements with measurable GIVEN/WHEN/THEN scenarios (e.g., "GIVEN a system under normal load, WHEN 1000 concurrent requests arrive, THEN p95 latency < 200ms").
+        - When relevant to a requirement, include concrete scenarios for repeated or concurrent triggers, partial failure, state changing concurrently after it is read, behavior at and after time boundaries, and malformed input producing a defined error instead of a crash. Include only applicable scenarios; do not add cases merely to satisfy categories.
 
         **Important**:
         - Before finishing, verify that every domain listed in the preceding artifact's `Domains` section has a corresponding spec file.
@@ -148,6 +151,7 @@ artifacts:
 
         Before drafting, read the code the change touches so Context and Decisions reflect the actual current state — not assumptions.
         Reference requirements from specs. Focus on architecture and the "why" behind decisions, not line-by-line implementation.
+        When the change involves persisted state, background or scheduled work, retries, time-dependent behavior, configuration consumed by external tooling, or other external systems, address the applicable robustness concerns in Decisions or Risks: partial failure and repeated execution, concurrent actors and stale state, behavior at and after time boundaries, and compatibility with pinned consumer versions. Omit concerns that do not apply.
   tasks:
     description: Implementation checklist with trackable tasks
     output: tasks.md

@@ -32,7 +32,7 @@ Use for PRs, branches, commits, staged changes, unstaged changes, or pasted diff
 - `simplicity`: quality, maintainability, complexity, duplication, stale/dead code, and wrong-layer logic
 - `documentation`: docs, comments, changelogs, release notes, migrations, examples, and operator notes
 
-A broad `security` request reviews both `contract` and `behavior`: boundary controls stay in `contract`, while runtime disclosures such as secrets in logs, errors, telemetry, or user-visible output stay in `behavior`.
+A broad `security` request reviews both `contract` and `behavior`: boundary controls stay in `contract`, while runtime disclosures such as secrets in logs, errors, telemetry, or user-visible output stay in `behavior`. When reviews use multiple delegated scopes, the coordinator verifies and deduplicates findings, reconciles conflicting recommendations, and synthesizes the dominant risks across the change.
 
 ```text
 /code-reviewer review the current branch against <target-branch>

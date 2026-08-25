@@ -15,5 +15,6 @@ Use an isolated subagent or fresh agent context if available, with this prompt (
 >     - Divergent from intent: WARNING
 >   - For each scenario (`#### Scenario:`), check if covered in code/tests
 >     - Uncovered: WARNING
+> - Verify **Robustness:** For requirements involving shared state, batch processing, retries, external side effects, configuration consumed by versioned tooling, or time-based behavior, check the implementation against applicable failure scenarios in the specs, such as repeated execution, partial failure, concurrent modification, stale state, boundary times, and unsupported configuration. A material failure mode with neither specified behavior nor implementation handling is a WARNING.
 > - Each issue must have a specific, actionable recommendation with file/line references. The recommendation must state whether to update artifacts or update implementation. Never recommend creating new artifact files.
 > - Output report listing issues by priority (CRITICAL / WARNING / SUGGESTION)

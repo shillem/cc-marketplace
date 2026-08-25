@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1 (2026-08-25)
+
+### Changed
+
+- Strengthened `code-reviewer` aggregation so conflicting delegate recommendations are reconciled, severity and confidence are independently verified, and overall risks account for interactions between findings
+- Clarified that the review summary synthesizes the dominant risks across all selected scopes
+
 ## 1.3.0 (2026-08-05)
 
 ### Added

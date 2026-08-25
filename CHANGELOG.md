@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1] - 2026-08-25
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.3.1 — improved `code-reviewer` aggregation, recommendation reconciliation, and cross-scope risk synthesis
+- **esdd** plugin bumped to 1.1.10 — added robustness guidance and verification for failure, concurrency, time-boundary, and compatibility scenarios
+
 ## [1.5.0] - 2026-08-05
 
 ### Updated
