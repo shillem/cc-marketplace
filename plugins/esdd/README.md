@@ -101,6 +101,12 @@ to surface decisions and ask for your input before moving on (unless `--fast` is
 used). This is where you steer: reviewing a 200-line proposal is faster and
 higher-leverage than reviewing 2,000 lines of generated code.
 
+For changes involving persisted state, background work, retries, external
+systems, time-dependent behavior, or versioned configuration, planning and
+verification also cover applicable failure modes such as repeated execution,
+partial failure, concurrent modification, stale state, boundary times, and
+compatibility.
+
 See [Artifacts Reference](docs/artifacts.md) for full details.
 
 ### Domains

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.10 (2026-08-25)
+
+### Changed
+
+- Added applicable robustness guidance for persisted state, background work, retries, time boundaries, external systems, and versioned configuration across proposals, specs, and designs
+- Extended verification to flag material failure modes that are neither specified nor handled by the implementation
+
 ## 1.1.9 (2026-07-08)
 
 ### Changed
