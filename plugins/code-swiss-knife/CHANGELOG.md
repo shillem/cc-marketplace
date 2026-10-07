@@ -10,7 +10,7 @@
 - Simplified review output to lead with concrete scenarios, evidence, and focused fixes instead of per-scope pass results
 - Made explicit commit scope authoritative, including relevant inspected untracked files while excluding secrets, generated artifacts, and scratch files
 - Clarified when commit workflows must ask about staged changes, untracked files, or splitting unrelated changes
-- Updated PR guidance to explain the problem, approach, and how changes fit together rather than listing edits, using familiar language and enough detail to guide review without reproducing skill instructions
+- Updated PR guidance to explain what changes and why in plain language, using a Summary-only default template and adding sections only when needed for review
 - Required explicit authorization before force-pushing, using `--force-with-lease` when approved
 
 ## 1.3.1 (2026-08-25)

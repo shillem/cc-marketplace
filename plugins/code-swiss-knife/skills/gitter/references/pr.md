@@ -27,23 +27,19 @@ Use `gh`.
 4. Draft reviewer-facing title and body:
    - Summarize the overall branch, not a single commit
    - **Title:** under 70 characters. Use plain imperative style.
-   - **Body:** write so a reviewer understands why the change exists, what it changes, and how the main pieces fit together before opening the diff. Explain ideas, not individual edits, and group them by behavior or responsibility rather than by file. Let the complexity of the change set the length, and make each point once.
+   - **Body:** explain what changes, why it is needed, and the intended result. Use plain language and briefly explain unfamiliar project-specific terms. Explain important decisions rather than listing individual edits, and group related changes by behavior or responsibility rather than by file. Use short paragraphs for connected explanations and bullets for independent points. For a large diff, identify where to start reading and which parts are mechanical. When relevant, link useful context, note known limitations or risks, and say what feedback you want. Let the complexity of the change set the length, and make each point once.
 
-     Describe the main changes in terms of what users or maintainers will do differently. Explain unfamiliar role or workflow names when needed; do not assume the reader has read the skills. Give enough detail to guide the review, not reproduce the instructions. Use separate bullets for changes that do not depend on each other.
-
-     When an idea is hard to follow in prose, show it in the smallest form that works, such as a before/after snippet, call flow, or diagram. Place it next to the explanation it supports.
+     When an idea is hard to follow in prose, show it in the smallest form that works, such as a before/after snippet, call flow, or Mermaid diagram. Place it next to the explanation it supports.
 
      Follow `.github/pull_request_template.md` when present, filling its sections with this kind of explanation. Otherwise use:
 
      ```markdown
      ## Summary
 
-     <explain the problem and what this PR does about it>
-
-     ## How it works
-
-     <explain the approach, why the main changes take this shape, and how they interact. For a large diff, identify where to start reading and which parts are mechanical. Use short paragraphs for connected explanations and bullets for independent points. Omit this section when the summary already explains the change>
+     <explain what changes, why it is needed, and the intended result>
      ```
+
+     Add sections only when the summary is not enough, with headings that describe their purpose, such as `Design decisions`, `Review guidance`, or `Compatibility`.
 
      Do not add testing or verification sections unless the repository template requires them or the user explicitly asks for them
 
