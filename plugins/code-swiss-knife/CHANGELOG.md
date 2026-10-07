@@ -12,6 +12,7 @@
 - Clarified when commit workflows must ask about staged changes, untracked files, or splitting unrelated changes
 - Updated PR guidance to explain what changes and why in plain language, using a Summary-only default template and adding sections only when needed for review
 - Required explicit authorization before force-pushing, using `--force-with-lease` when approved
+- Made review comments relaxed and conversational by default, while keeping concerns and their impact clear
 
 ## 1.3.1 (2026-08-25)
 

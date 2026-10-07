@@ -4,6 +4,8 @@ Use `gh` and the GitHub GraphQL API for pending pull request review comments and
 
 **Important:** do not pass filesystem paths to `gh` repo selectors.
 
+Write review comments in a relaxed, conversational tone unless instructed otherwise. Keep concerns and their impact clear; a casual tone should not downplay a serious issue.
+
 ## Core invariant
 
 Adding review comments and submitting a review are separate operations. Adding comments must leave the review pending; it must not submit, approve, request changes, dismiss, or delete a review.
