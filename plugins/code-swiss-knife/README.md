@@ -24,22 +24,23 @@ review code, create a commit, open a pull request, or find real-world code examp
 
 ### `code-reviewer`
 
-Use for PRs, branches, commits, staged changes, unstaged changes, or pasted diffs. By default it looks for real review findings across behavior, contracts, tests, maintainability, and documentation. You can also ask for only the areas you care about. Targeted requests use these aliases:
+Use for PRs, branches, commits, staged changes, unstaged changes, or pasted diffs. By default it looks for real review findings across behavior, contracts, tests, maintainability, and documentation. You can also ask for only the areas you care about. Targeted requests use these focuses:
 
-- `behavior`: correctness, failure/error handling, error paths, state/lifecycle, side effects, performance, and resource use
-- `contract`: APIs/public interfaces, types, schemas, validation, permissions, auth/authz, compatibility, storage, config, integrations, boundary security, and security controls
-- `test`: testing, tests, coverage, regression protection, and test quality
-- `simplicity`: quality, maintainability, complexity, duplication, stale/dead code, and wrong-layer logic
-- `documentation`: docs, comments, changelogs, release notes, migrations, examples, and operator notes
+- `behavior`: correctness, failure handling, state and resource lifecycles, side effects, async work, performance, accessibility, localization, and platform behavior
+- `contract`: APIs, types, schemas, validation, auth/authz, compatibility, storage, configuration, integrations, and boundary security
+- `test`: reliable detection of meaningful regressions and test quality
+- `simplicity`: concrete maintenance traps caused by complexity, duplication, weak ownership, or stale code
+- `documentation`: misleading or missing release-critical docs, comments, examples, migrations, and operator guidance
 
-A broad `security` request reviews both `contract` and `behavior`: boundary controls stay in `contract`, while runtime disclosures such as secrets in logs, errors, telemetry, or user-visible output stay in `behavior`. When reviews use multiple delegated scopes, the coordinator verifies and deduplicates findings, reconciles conflicting recommendations, and synthesizes the dominant risks across the change.
+A broad `security` request reviews both boundary controls and runtime disclosures such as secrets in logs, errors, telemetry, or user-visible output. Review focuses filter what the reviewer investigates; they do not split the review into isolated passes. The reviewer first maps the complete change, hunts for concrete failure scenarios, and then tries to disprove each candidate before reporting it. Standard reviews prefer a fresh investigator when available and use coherent file or subsystem clusters for larger changes; single-context fallback is disclosed. Adversarial reviews require an explicitly identified independent reviewer capability, run blind investigations in separate contexts, and synthesize verified candidates into one report.
 
 ```text
 /code-reviewer review the current branch against <target-branch>
 /code-reviewer review staged changes
 /code-reviewer review PR #123
 /code-reviewer review this diff for behavior and test issues
-/code-reviewer review this diff with only behavior and contract scopes
+/code-reviewer review this diff with only behavior and contract focuses
+/code-reviewer run an adversarial review of the current branch against <target-branch> using <independent-review-capability>
 ```
 
 For branch reviews, prefer an explicit target branch or ref instead of assuming

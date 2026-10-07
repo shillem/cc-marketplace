@@ -27,24 +27,25 @@ Use `gh`.
 4. Draft reviewer-facing title and body:
    - Summarize the overall branch, not a single commit
    - **Title:** under 70 characters. Use plain imperative style.
-   - **Body:**
+   - **Body:** explain what changes, why it is needed, and the intended result. Use plain language and briefly explain unfamiliar project-specific terms. Explain important decisions rather than listing individual edits, and group related changes by behavior or responsibility rather than by file. Use short paragraphs for connected explanations and bullets for independent points. For a large diff, identify where to start reading and which parts are mechanical. When relevant, link useful context, note known limitations or risks, and say what feedback you want. Let the complexity of the change set the length, and make each point once.
 
-     Follow `.github/pull_request_template.md` convention, otherwise:
+     When an idea is hard to follow in prose, show it in the smallest form that works, such as a before/after snippet, call flow, or Mermaid diagram. Place it next to the explanation it supports.
+
+     Follow `.github/pull_request_template.md` when present, filling its sections with this kind of explanation. Otherwise use:
 
      ```markdown
      ## Summary
 
-     <briefly explain the purpose of the PR and the outcome it enables>
-
-     ## Changes
-
-     - <1-5 bullets summarizing the main changes>
+     <explain what changes, why it is needed, and the intended result>
      ```
+
+     Add sections only when the summary is not enough, with headings that describe their purpose, such as `Design decisions`, `Review guidance`, or `Compatibility`.
 
      Do not add testing or verification sections unless the repository template requires them or the user explicitly asks for them
 
 5. Create or refresh the PR:
    - Push with `-u` if the branch has no upstream
+   - Do not force push without explicit user authorization; ask first if it has not been given. Creating or refreshing a PR does not authorize a force push. When authorized, use `--force-with-lease`, not `--force`.
    - Use `--draft` when work is incomplete, not review-ready, or the user asks for a draft
 
    **Create/open with:**

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.0 (2026-10-07)
+
+### Changed
+
+- Reworked `code-reviewer` around a change-map, failure-hunt, and adversarial-verification workflow
+- Prefer fresh standard investigators, with disclosed single-context fallback; adversarial reviews use blind independent investigations and one coordinator-synthesized report
+- Move role-specific dispatch and investigation guidance into on-demand references, with concise cues replacing the five scope checklists
+- Simplified review output to lead with concrete scenarios, evidence, and focused fixes instead of per-scope pass results
+- Made explicit commit scope authoritative, including relevant inspected untracked files while excluding secrets, generated artifacts, and scratch files
+- Clarified when commit workflows must ask about staged changes, untracked files, or splitting unrelated changes
+- Updated PR guidance to explain what changes and why in plain language, using a Summary-only default template and adding sections only when needed for review
+- Required explicit authorization before force-pushing, using `--force-with-lease` when approved
+- Made review comments relaxed and conversational by default, while keeping concerns and their impact clear
+
 ## 1.3.1 (2026-08-25)
 
 ### Changed

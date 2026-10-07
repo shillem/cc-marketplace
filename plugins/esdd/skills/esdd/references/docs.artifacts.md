@@ -82,15 +82,33 @@ Generate a secure session token upon successful login.
 - **REMOVED** — With reason and migration guidance
 - **RENAMED** — FROM:/TO: format for traceability
 
-Every requirement must have at least one scenario. Scenarios use exactly four
-hashtags (`####`).
+Requirements describe outcomes and boundary constraints, including security and
+resource release, rather than implementation mechanisms or verification procedures.
+Check preservation claims against the affected code and tests. Resolve behavior
+choices before writing requirements that depend on them. Do not turn unresolved
+technical questions, unverified external facts, or unstated preferences into
+requirements. State approved conditional behavior once; add detail when
+investigation confirms it applies.
 
-During the archive phase of spec-anchored workflows, delta specs are merged into
-the accumulated domain specs under `.ai/esdd/domains/<domain>.md`.
+Every requirement must have at least one concrete scenario. Add separate scenarios
+for distinct outcomes or contracts, such as success, distinct failure results, or
+edge conditions with different behavior, not merely different triggers. Group triggers
+with the same required outcome unless their differences establish an important
+contract, such as different side effects or cleanup obligations. State shared
+constraints once in the requirement text. Scenarios are representative acceptance
+cases, not an exhaustive test inventory, and use exactly four hashtags (`####`).
+
+When renaming and modifying the same requirement, list the rename under RENAMED
+and the full updated requirement under MODIFIED using the new name. During the
+archive phase of spec-anchored workflows, renames are applied before modifications
+and delta specs are merged into `.ai/esdd/domains/<domain>.md`.
 
 ## Design
 
 The _how_ document. Captures technical approach, trade-offs, and decisions.
+Investigation can resolve technical unknowns or confirm conditional scope. Update
+affected specs when those findings change expected behavior or require additional
+scenarios. Record material behavior changes and their rationale in Decisions.
 
 **Sections:**
 

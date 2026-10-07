@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.2] - 2026-10-07
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.4.0 — redesigned code reviews, clarified commit scope and staging rules, improved PR explanations, and required explicit force-push approval
+- **esdd** plugin bumped to 1.1.11 — grounded requirements in code, focused acceptance scenarios on distinct contracts, tightened open-question and design-issue handling, and corrected rename-before-modify ordering
+- Synchronized `package.json` with the marketplace version and extended release checks to require both versions to be bumped and match
+
+### Added
+
+- Repository code-index settings covering source, documentation, and configuration while excluding ESDD artifacts and vendored scripts
+
 ## [1.5.1] - 2026-08-25
 
 ### Updated

@@ -51,6 +51,6 @@
 
 ## Guardrails
 
-- If agent reports a design issue, suggest updating artifacts with `/esdd continue`
+- If an agent reports a design issue, stop and explain it to the user. With the user's approval, update the affected planning artifacts directly and reconcile specs, design or brief, and tasks. Then suggest that the user run `/esdd apply` to resume implementation. If planning artifacts remain pending, suggest `/esdd continue` instead.
 - Each group runs in a fresh agent for clean context
-- Groups are processed sequentially — never in parallel
+- Groups are processed sequentially, never in parallel

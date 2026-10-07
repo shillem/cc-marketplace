@@ -189,6 +189,14 @@ workflows:
       - tasks
 ```
 
-Available artifact types for custom workflows: `brief`, `proposal`, `specs`,
-`design`, `tasks`. The order in the `plan` array determines the generation
-sequence and dependency chain.
+Built-in artifact types for custom workflows: `brief`, `proposal`, `specs`,
+`design`, `tasks`. You can also define new artifact types in `artifacts`. The order
+in the `plan` array determines the generation sequence and dependency chain.
+
+Each planning artifact receives the existing files from all preceding artifacts.
+Changing a workflow does not adapt the inherited instructions, and overriding a
+template does not replace its instructions. If you remove or replace a step, change
+its order, or change the sections in a template, check whether the affected
+instructions still match the files and content they receive. Override instructions
+where those contracts have changed. The CLI validates configuration structure,
+not compatibility between artifact contents.
