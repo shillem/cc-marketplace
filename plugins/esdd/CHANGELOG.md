@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.11 (2026-10-07)
+
+### Changed
+
+- Ground requirements in affected code and tests, describe outcomes and boundary constraints, and avoid unverified assumptions or invented performance targets
+- Keep scenarios focused on distinct outcomes and contracts rather than an exhaustive list of triggers
+- Resolve material behavior and scope choices before drafting dependent content, including under `--fast` when a safe decision is not possible
+- Keep deferred questions in the artifact's configured format and identify which work depends on their answers
+- Update specs when design investigation changes expected behavior, and reconcile planning artifacts with user approval when implementation reveals a design issue
+- Clarified custom artifact support and the need to adapt inherited instructions when workflow steps or templates change
+
+### Fixed
+
+- Apply requirement renames before modifications during archive, using the new name when a requirement is both renamed and modified
+
 ## 1.1.10 (2026-08-25)
 
 ### Changed
