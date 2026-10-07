@@ -27,24 +27,27 @@ Use `gh`.
 4. Draft reviewer-facing title and body:
    - Summarize the overall branch, not a single commit
    - **Title:** under 70 characters. Use plain imperative style.
-   - **Body:**
+   - **Body:** write so a reviewer understands why the change exists, what it changes, and how the main pieces fit together before opening the diff. Explain ideas, not individual edits, and group them by behavior or responsibility rather than by file. Let the complexity of the change set the length, and make each point once.
 
-     Follow `.github/pull_request_template.md` convention, otherwise:
+     When an idea is hard to follow in prose, show it in the smallest form that works, such as a before/after snippet, call flow, or diagram. Place it next to the explanation it supports.
+
+     Follow `.github/pull_request_template.md` when present, filling its sections with this kind of explanation. Otherwise use:
 
      ```markdown
      ## Summary
 
-     <briefly explain the purpose of the PR and the outcome it enables>
+     <explain the problem and what this PR does about it>
 
-     ## Changes
+     ## How it works
 
-     - <1-5 bullets summarizing the main changes>
+     <explain the approach, why the main changes take this shape, and how they interact. For a large diff, identify where to start reading and which parts are mechanical. Use short paragraphs for connected explanations and bullets for independent points. Omit this section when the summary already explains the change>
      ```
 
      Do not add testing or verification sections unless the repository template requires them or the user explicitly asks for them
 
 5. Create or refresh the PR:
    - Push with `-u` if the branch has no upstream
+   - Do not force push without explicit user authorization; ask first if it has not been given. Creating or refreshing a PR does not authorize a force push. When authorized, use `--force-with-lease`, not `--force`.
    - Use `--draft` when work is incomplete, not review-ready, or the user asks for a draft
 
    **Create/open with:**

@@ -1,176 +1,105 @@
 ---
 name: code-reviewer
-description: Review pull requests, diffs, and code changes across behavior, contracts, tests, maintainability, and documentation. Use when the user asks for review of a PR, patch, diff, commit, or code change.
+description: Review pull requests, diffs, and code changes for concrete behavior, contract, security, test, maintainability, and documentation defects. Use when the user asks for review of a PR, patch, diff, commit, or code change.
 compatibility: Requires GitHub CLI for PR reviews
 ---
 
-Perform high-signal code reviews. Default to all scopes unless the user asks for a narrower review.
+Review changes for concrete failures, not style preferences. Default to a broad review unless the user narrows the focus.
 
-Review as focused specialists. Require evidence from the diff and nearby code before reporting a concern. A finding needs a concrete failure mode, missing control, regression gap, release risk, or maintenance trap.
+## Roles and Modes
 
-## Scopes
+The **coordinator** is the main agent: it establishes the target, dispatches investigators when available, verifies candidates, and reports one assessment. An **investigator** is a separately dispatched reviewer; its task assignment takes precedence over coordinator instructions in this skill, even if it loads this file independently. An investigator returns evidence to the coordinator and must not dispatch, synthesize, or issue a final verdict. A **primary investigator** follows [Investigation](references/investigation.md) and its review cues; an **independent investigator** uses its own method and does not read or apply those cues. These are prompt-level role and method boundaries, not filesystem access controls.
 
-Classify findings by primary failure mode. Canonical scope names select their matching scope.
+Use [Standard Review](references/standard-review.md) for ordinary reviews, including requests for a focused review. Use [Adversarial Review](references/adversarial-review.md) only when the user explicitly asks for adversarial, independent, competing, external, or additional independent review. Read the applicable mode reference before dispatch. Explicit adversarial review requires two separate investigations; never label a single-context review adversarial.
 
-| Scope           | Primary failure mode                                      | User request aliases                                                                                                                                                                                                                   |
-| --------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `behavior`      | Wrong observable runtime result                           | correctness, failure/error handling, error paths, state/lifecycle, side effects, async/background work, cleanup, retries, fallbacks, edge cases, performance/resource use, accessibility, localization, browser/platform compatibility |
-| `contract`      | Boundary allows invalid, insecure, or incompatible state  | APIs/public interfaces, types, schemas, validation, permissions, auth/authz, compatibility, storage, config, integrations, boundary security, security controls                                                                        |
-| `test`          | Meaningful regression can ship without reliable detection | testing, tests, coverage, regression protection, test quality                                                                                                                                                                          |
-| `simplicity`    | Current structure creates a maintenance trap              | quality, maintainability, complexity, duplication, stale/dead code, wrong-layer logic                                                                                                                                                  |
-| `documentation` | Written guidance misleads or omits release-critical truth | docs, comments, changelogs, release notes, migrations, examples, operator notes                                                                                                                                                        |
+| Focus           | Includes                                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `behavior`      | Correctness, failure handling, state and resource lifecycles, side effects, async work, performance, accessibility, localization, and platform behavior |
+| `contract`      | APIs, types, schemas, validation, auth/authz, compatibility, storage, configuration, integrations, and boundary security                                |
+| `test`          | Reliable detection of meaningful regressions and test quality                                                                                           |
+| `simplicity`    | Concrete maintenance traps caused by complexity, duplication, weak ownership, or stale code                                                             |
+| `documentation` | Misleading or missing release-critical docs, comments, examples, migrations, and operator guidance                                                      |
 
-If a problem spans scopes, report it once and mention secondary impacts only when they affect severity or the fix.
+Focuses filter investigation, not delegation units. A broad `security` request includes boundary controls and runtime disclosure.
 
-For a broad `security` request, select both `contract` and `behavior`: use `contract` for boundary controls such as authz, validation, injection, unsafe construction, insecure defaults, storage/transport/third-party handling; use `behavior` for runtime disclosure such as secrets or sensitive data in logs, errors, telemetry, or user-visible output. If the user names a narrower security area, select only the matching scope.
+## Establish the Target
 
-## Review Setup
+1. Identify the exact target: PR, branch against a target ref, staged changes, unstaged tracked changes, the complete current working tree, commit, range, or pasted diff.
+2. Determine the base explicitly. Ask when a branch target is ambiguous; commits, ranges, staged changes, and pasted diffs already define their comparison.
+3. Inspect the change intent, changed files, file types, and diff statistics. For PRs, read the title and body without treating them as proof of correctness.
+4. Include untracked files when reviewing the working tree; ordinary `git diff` omits them.
+5. Ensure nearby code can be read from the target revision. For staged-only reviews, the target is the index, not the checkout: read changed files and relevant callers from the index (`git show :path`, when present) rather than trusting checkout contents that may include unstaged edits. Use `HEAD:path` to inspect staged deletions. If a committed checkout does not represent the target and remote inspection is insufficient, materialize a temporary review worktree pinned to the target before analysis. If checks for a committed target would run in a dirty checkout, use a clean target worktree instead.
 
-1. Identify the target: PR, branch vs target ref, staged changes, unstaged tracked changes, untracked/current working tree, commit, range, or pasted diff.
-2. Determine the base explicitly. For branches, ask if the target ref is unclear. For staged/unstaged/current-tree/commit/range/pasted-diff reviews, do not infer a base ref.
-3. Inspect changed files, file types, stats, and PR title/body when applicable.
-4. Include untracked files explicitly; ordinary `git diff` misses them.
-
-Command cues, used only as needed to establish the target and inspect the patch:
+Keep the review read-only: do not edit the code being reviewed. Fetching the target ref, creating temporary worktrees to inspect it, and non-destructive verification are the only permitted write-capable operations. The coordinator owns worktree creation, assignment, and cleanup, including after failed investigations. Distinct worktrees can represent a pinned committed PR head; they do not reproduce unstaged or untracked working-tree changes. Check that commands will not interfere through shared caches, services, databases, or the checkout before running them concurrently. Working-tree investigators inspect only; the coordinator runs non-destructive checks serially after they finish. If cleanup would disturb local work, stop and ask. Report any local state intentionally left behind.
 
 ```bash
-# PR metadata and patch
+# Pull request
 gh pr view <PR> --json title,body,files,commits,baseRefName,headRefName
 gh pr diff <PR> --patch
 
-# Working tree: staged, unstaged, and untracked files
+# Working tree
 git status --short
 git diff --cached
 git diff
 git ls-files --others --exclude-standard
 
-# Explicit branch, commit, and range targets
+# Branch, commit, or range
 git diff <TARGET-REF>...HEAD
 git show --stat --patch <COMMIT>
 git diff --stat <BASE>..<HEAD>
 git diff <BASE>..<HEAD>
 ```
 
-## Review Safety
+## Coordinator Responsibilities
 
-- Prefer read-only diff and metadata commands when they are enough
-- Only switch branches, materialize PRs, or create worktrees when needed to provide an inspectable delegated target, verify a concrete high-impact concern, or satisfy a user request
-- In delegated reviews, only the aggregator may switch branches, create worktrees, or run verification commands; delegates remain read-only
-- Restore the previous branch and clean up temporary worktrees before finishing unless the user asks to keep them
-- If cleanup would disturb local work, stop and ask
-- Report any local state left behind and why
+Before dispatch, prepare neutral target facts: target and base, pinned revision when available, review root or retrievable patch, changed files, observable change scope, user focus, and constraints. Do not pass suspected defects, severity, or another investigator's findings. Build a top-level change map when splitting the target into coherent clusters; avoid preemptively hunting defects. If the independent capability lacks repository access, provide sufficient patch and surrounding context for meaningful investigation or stop and explain the limitation.
 
-## Review Coverage
-
-Prioritize security boundaries, public contracts, state changes, failure paths, data integrity, and other high-impact surfaces. If the target is too large to inspect fully, identify the unreviewed files or risk surfaces and mark the affected scopes **Partial**. Do not present a partial review as complete.
-
-## Review Flow
-
-These files define the scope instructions:
-
-- [Behavior](references/behavior.md)
-- [Contract](references/contract.md)
-- [Test](references/test.md)
-- [Simplicity](references/simplicity.md)
-- [Documentation](references/documentation.md)
-
-### Delegated Review
-
-Use delegation when subagent tool is available, you are not already delegated, and more than one scope is selected. Do not load all scope files in the aggregator just to delegate. For trivial diffs (a single file, a few lines, or one obvious scope), prefer linear review even when multiple scopes nominally apply, rather than fanning out a delegate per scope.
-
-1. Ensure delegates can inspect the target and relevant nearby code. If the current checkout or remote inspection is insufficient, the aggregator materializes a dedicated review worktree and passes its path to every delegate.
-2. Run one delegate per selected scope in parallel.
-3. Give each delegate only its assigned scope, target/base, review root, changed files, change intent, user constraints, and pasted diff if applicable.
-
-   ```text
-   You are a delegate reviewer for the code-reviewer skill.
-   Run only the `[scope]` scope.
-
-   Review target: [target]
-   Base/ref: [base, range, or none]
-   Review root: [path containing the target tree, or none when remote inspection is sufficient]
-   Changed files: [known list]
-   Change intent: [PR title/body or other known intent]
-   User constraints: [constraints]
-
-   [pasted diff, only when applicable]
-
-   Use read-only inspection. Do not switch branches, create worktrees, or run tests, builds, linters, type checks, or reproduction commands. Recommend a focused verification command when it would materially confirm or reject a concern.
-
-   Output findings, unresolved review questions, material surfaces you could not inspect, and recommended verification commands. For findings, include severity, confidence, location, why it matters, and recommendation. For questions, include the likely severity if the risk is confirmed and the evidence needed to resolve it. If there are no findings or questions, say none and name the risk surface checked.
-   ```
-
-4. Aggregate findings, unresolved review questions, uninspected surfaces, and recommended verification commands. Deduplicate findings by root cause and verify each retained finding against the diff and nearby code. Mark affected scopes partial and include their uninspected surfaces in the final coverage summary. Keep questions only when the uncertainty is evidenced by the diff/context and could change the assessment; carry them into the final `## Questions`, not `## Findings`. Delegates only see their own scope and cannot dedup across scopes, so the "report a cross-scope issue once" rule is enforced here: collapse the same root cause raised by multiple delegates into one finding under its primary scope. Reclassify valid findings into the right selected scope instead of dropping them. Preserve distinct Critical/Important findings and distinct Minor root causes; group related Minor instances when needed. Resolve conflicting delegate recommendations into a coherent fix direction rather than reporting incompatible recommendations side by side. Consider interactions between distinct findings when determining the overall assessment and main risks. Re-derive each retained finding's severity and confidence from the aggregator's verification; delegate labels are inputs, not the final verdict.
-
-### Linear Review
-
-When delegation is unavailable, only one scope is selected, or a trivial diff does not justify fan-out, load only the selected scope instruction files and apply them yourself. For each scope, identify the changed risk surface and suspicious locations before deciding whether findings exist.
-
-### Verification
-
-The aggregator in a delegated review, or the reviewer in a linear review, owns verification. Before reporting, verify retained findings against nearby unchanged context such as key callers, tests, schemas, docs, config, migrations, generated sources, or state owners. Run targeted, non-destructive tests, builds, type checks, linters, or reproduction commands when they can materially confirm or reject a concern. Prefer focused commands over broad or expensive suites, and report what ran and any relevant failures.
-
-## Findings Bar
-
-Report findings only with concrete evidence.
-
-For each finding, be able to answer: what could go wrong, under what condition, who is affected, why it matters, what should change, and how confident the evidence is.
-
-Confidence:
-
-- **High** — directly evidenced by the diff and verified nearby context
-- **Medium** — plausible and important, but expected behavior or runtime context is partly uncertain
-
-Low-confidence concerns belong in `## Questions`, not `## Findings`. Do not drop potentially severe low-confidence concerns; ask the blocking question and state the likely severity if confirmed.
-
-Prioritize findings by impact, omit low-value observations, and group related Minor findings so they do not obscure higher-severity issues.
+After investigations, audit coverage against the target, especially when the only investigator reports no candidates; redispatch for material gaps. Verify each candidate against complete code paths and relevant callers, tests, schemas, config, docs, migrations, and state owners. Run a focused non-destructive test, type check, build, linter, or reproduction when it can materially confirm or reject a candidate. For staged-only reviews, do not treat a check on a checkout containing unstaged edits as verification of the index; run it against the exact target or disclose the limitation. Deduplicate by root cause, check cross-cluster interactions, and resolve conflicting severities and recommendations. Do not run a third systematic candidate hunt; investigate and report concrete defects found incidentally during verification. The coordinator owns final severity and assessment. In a disclosed single-context review, it instead follows [Investigation](references/investigation.md) itself before verification and reporting.
 
 ## Severity and Assessment
 
-- **Critical**: security issue, data loss, crash, broken production behavior → normally **Request Changes**
-- **Important**: likely bug, missing validation/control, serious performance issue, or critical path lacking feasible, reliable regression protection → normally **Request Changes**
-- **Minor**: concrete maintainability, test, docs, or edge-case issue with lower immediate risk → normally **Comment**, or **Request Changes** if central, repeated, or compounding
-- **Suggestion**: optional improvement with clear upside → normally **Approve** or **Comment**
+- **Critical:** exploitable security issue, data loss, crash, or broken production-critical behavior
+- **Important:** likely functional defect, missing boundary control, serious performance issue, or critical regression that can ship undetected
+- **Minor:** concrete lower-impact edge case, regression gap, documentation defect, or maintenance trap
 
-No findings after all selected scopes have run means **Approve** only when the review is complete. For a partial review, state that no findings were identified in the inspected surface without implying approval.
+Use **Request Changes** for Critical findings and normally for Important findings. Use **Comment** when findings are non-blocking. An unresolved likely-Critical risk requires **Request Changes**; other material unresolved risks require at least **Comment**. Use **Approve** only when the requested review is complete and no findings or material unresolved risks remain.
 
-## Output Template
+Report only findings with a concrete failure mode, missing control, regression gap, release risk, or maintenance trap. Each finding must identify the condition, concrete outcome or risk, affected party, supporting evidence, and focused fix. Ask a question only after repository inspection cannot resolve a material uncertainty. Omit optional style preferences and speculative improvements unless requested; put them in a separate `Suggestions` section without affecting the assessment.
+
+## Output
+
+Lead with actionable information. Omit empty optional sections.
 
 ```markdown
-# Code Review: [title]
-
-## Summary
+# Review: [title]
 
 - **Assessment:** [Approve / Request Changes / Comment]
-- **Scope:** [target and files reviewed]
-- **Main risks:** [short list or "None identified"]
-- **Coverage:** [Complete / Partial + material surfaces not inspected]
-- **Verification:** [commands run and results, or "Not run" + reason]
+- **Review mode:** [Single-context standard / Delegated standard / Adversarial; name the independent capabilities for adversarial]
 
-## Pass Results
-
-- **Behavior:** [findings / no findings / partial / N.A. + one-line note]
-- **Contract:** [findings / no findings / partial / N.A. + one-line note]
-- **Test:** [findings / no findings / partial / N.A. + one-line note]
-- **Simplicity:** [findings / no findings / partial / N.A. + one-line note]
-- **Documentation:** [findings / no findings / partial / N.A. + one-line note]
+[Target, base, scope or focus, and dominant risk or absence of defects.]
 
 ## Findings
 
-### [Critical|Important|Minor|Suggestion] Short title
+### 1. [Critical|Important|Minor] · Short title
 
-- **Confidence:** [High|Medium]
-- **Location:** `path/to/file.ext:line`
-- **Why it matters:** [impact and condition]
-- **Recommendation:** [specific fix]
+`path/to/file.ext:line`
 
-## Positives
+- **Scenario:** [condition] creates [wrong result or concrete risk] for [affected party].
+- **Evidence:** [code path, caller, test, or verification result].
+- **Fix:** [specific correction].
 
-- [optional]
+## Unresolved Risks
 
-## Questions
+- **[Likely severity]** [assumption, impact, and what would resolve it]
 
-- [optional]
+## Coverage
+
+- **Inspected:** [important files and risk surfaces]
+- **Not inspected:** [material surface and reason]
+
+## Checks Run
+
+- `[command]` — [result]
 ```
 
-List one Pass Results line per selected scope; omit scopes the user excluded. Every selected scope must be represented as findings, no findings, partial, or not applicable. A scope is partial when material surface could not be inspected. A scope is not applicable only when the diff contains no meaningful surface for it. "Main risks" describes the dominant risks of the change as a whole, synthesized across scopes, rather than restating individual findings.
+When there are no findings, omit `## Findings`. Use **Comment**, not **Approve**, for a partial review with no findings. State a requested focus in the summary. Include `Coverage` for every partial review and when boundaries are otherwise unclear; disclose single-context fallback even with no findings. Include `Checks Run` only when commands ran or an omitted expected check limits the conclusion.
