@@ -1,0 +1,12 @@
+include_patterns:
+  - "**/*.mjs"
+  - "**/*.md"
+  - "**/*.json"
+  - "**/*.yaml"
+  - "**/*.yml"
+
+# .gitignore already excludes node_modules/ and .vscode/
+exclude_patterns:
+  - ".ai/**"
+  - ".cocoindex_code/**"
+  - "plugins/esdd/skills/esdd/scripts/vendor/**"
