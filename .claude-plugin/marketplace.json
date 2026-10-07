@@ -44,7 +44,7 @@
     {
       "name": "code-swiss-knife",
       "description": "Development toolbox plugin with code review, GitHub code search, commit, and pull request workflow skills",
-      "version": "1.3.2",
+      "version": "1.4.0",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
