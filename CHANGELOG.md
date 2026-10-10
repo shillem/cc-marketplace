@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6.0] - 2026-10-10
+
+### Added
+
+- **transcript** plugin (1.0.0) — extract transcripts from URLs or local media, preferring existing subtitles with local MLX Whisper fallback; subtitle cleanup preserves genuine repetition and numeric dialogue, with opt-in rolling-caption deduplication
+
+### Updated
+
+- **yt-dlp** plugin bumped to 2.0.0 — now supports only video/audio downloads; install the separate transcript plugin and replace `/yt-dlp transcript <input>` with `/transcript <input>`; transcript outputs now use `.ai/transcript`
+- **code-swiss-knife** plugin bumped to 1.4.1 — weigh review risks against mitigation costs and keep review submissions free of unsolicited summaries or comments
+
 ## [1.5.2] - 2026-10-07
 
 ### Updated
