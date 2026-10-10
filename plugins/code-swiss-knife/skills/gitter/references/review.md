@@ -119,16 +119,23 @@ gh api graphql \
 
 Submit only when the core invariant allows it. First identify the PR and pending review as in Flow steps 1 and 3. If no pending review exists, create one as in Flow step 4 before submitting. If the requested event is not explicit, ask for one of `APPROVE`, `REQUEST_CHANGES`, or `COMMENT`. Never infer the event from a prior code-review verdict.
 
+A request to submit authorizes publishing the existing pending review, not adding new comments or a summary. Omit the submission body unless the user explicitly asks for a summary or supplies text to include. Do not ask whether they want an optional summary, or turn findings discussed in chat into published text on your own.
+
+- **APPROVE:** submit without a body by default, with or without pending comments.
+- **COMMENT or REQUEST_CHANGES:** submit existing pending comments without a body by default. If there are no pending comments and no supplied or requested body, ask what the user wants to say before submitting an otherwise empty review.
+- If GitHub rejects submission because a body is required, ask for text or permission to draft it; do not invent a body or retry with unsolicited text.
+
+Submit without new text by default:
+
 ```bash
 event='<APPROVE|REQUEST_CHANGES|COMMENT>'
 
 gh api graphql \
-  -f query='mutation($reviewId:ID!,$event:PullRequestReviewEvent!,$body:String){ submitPullRequestReview(input:{pullRequestReviewId:$reviewId,event:$event,body:$body}){ pullRequestReview { id state } } }' \
+  -f query='mutation($reviewId:ID!,$event:PullRequestReviewEvent!){ submitPullRequestReview(input:{pullRequestReviewId:$reviewId,event:$event}){ pullRequestReview { id state } } }' \
   -f reviewId="$review_id" \
-  -f event="$event" \
-  -F body=@- <<'REVIEW_SUMMARY_EOF'
-Review summary.
-REVIEW_SUMMARY_EOF
+  -f event="$event"
 ```
+
+When a body is requested or supplied, add a `$body:String` variable, pass `body:$body` in the mutation input, and read the text with `-F body=@-` using a quoted heredoc.
 
 Submission is not safely reversible. If a review was submitted accidentally, do not dismiss it automatically; explain the state and ask the user how to proceed.

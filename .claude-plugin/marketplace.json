@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Directory of Claude Code plugins",
-    "version": "1.5.2"
+    "version": "1.6.0"
   },
   "plugins": [
     {
@@ -44,7 +44,7 @@
     {
       "name": "code-swiss-knife",
       "description": "Development toolbox plugin with code review, GitHub code search, commit, and pull request workflow skills",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"
@@ -100,9 +100,21 @@
       "strict": false
     },
     {
+      "name": "transcript",
+      "description": "Extract transcripts from URLs or local media, preferring subtitles with local MLX Whisper fallback",
+      "version": "1.0.0",
+      "author": {
+        "name": "Shillem Volpato",
+        "email": "volpato.sh@gmail.com"
+      },
+      "source": "./plugins/transcript",
+      "category": "productivity",
+      "strict": false
+    },
+    {
       "name": "yt-dlp",
-      "description": "Download videos, audio, and transcripts from YouTube and 1000+ sites with yt-dlp",
-      "version": "1.0.1",
+      "description": "Download videos and audio from YouTube and 1000+ sites with yt-dlp",
+      "version": "2.0.0",
       "author": {
         "name": "Shillem Volpato",
         "email": "volpato.sh@gmail.com"

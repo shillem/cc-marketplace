@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0 (2026-10-10)
+
+### Breaking changes
+
+- Move transcript extraction and its cleanup script into the standalone
+  `transcript` plugin; `yt-dlp` now supports only URL video/audio downloads
+- Replace `/yt-dlp transcript <input>` with `/transcript <input>` after installing
+  the new plugin; transcript outputs now use `.ai/transcript`
+
+### Changed
+
+- Infer video/audio actions from natural-language requests
+- Clarified ffmpeg requirements, quoted command paths and URLs, and simplified
+  access-problem guidance
+
 ## 1.0.1 (2026-05-12)
 
 ### Changed
