@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1 (2026-10-10)
+
+### Changed
+
+- Assess review findings using affected users, impact, recovery, and mitigation costs; recommend proportionate fixes or explicit risk acceptance
+- Submit pending GitHub reviews without adding unsolicited summaries or comments; ask for text when an otherwise empty review or GitHub requires a body
+
 ## 1.4.0 (2026-10-07)
 
 ### Changed
