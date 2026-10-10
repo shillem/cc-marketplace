@@ -31,12 +31,10 @@ const ABBREVIATIONS = new Set([
   "u.n"
 ]);
 
-const TIMESTAMP_LINE = /\d{1,2}:\d{2}:\d{2}[.,]\d{3}\s*-->/;
-const INLINE_TIMING = /<\d{1,2}:\d{2}:\d{2}[.,]\d{3}>/g;
+const TIMESTAMP_LINE = /^(?:\d{1,2}:)?\d{2}:\d{2}[.,]\d{3}\s*-->/;
+const INLINE_TIMING = /<(?:\d{1,2}:)?\d{2}:\d{2}[.,]\d{3}>/g;
 const HTML_TAG = /<\/?[^>]+>/g;
-const VTT_HEADER = /^(WEBVTT|Kind:|Language:)/;
 const VTT_BLOCK_START = /^(NOTE\b|STYLE\b|REGION\b)/;
-const CUE_INDEX = /^\d+$/;
 
 // YouTube auto-captions produce overlapping cues where each cue repeats the
 // tail of the previous one. Drop a line if it's a prefix/suffix overlap of
@@ -71,6 +69,7 @@ function clean(line) {
   return line
     .replace(INLINE_TIMING, "")
     .replace(HTML_TAG, "")
+    .replace(/\{\\an[1-9]\}/g, "")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -88,15 +87,6 @@ function derivePath(file) {
   const tag = extname(name).slice(1);
   const stem = tag && LANG_TAG.test(tag) ? name.slice(0, -(tag.length + 1)) : name;
   return join(dir, `${stem}.txt`);
-}
-
-function isMetadataLine(line, ext) {
-  const t = line.trim();
-  if (!t) return true;
-  if (TIMESTAMP_LINE.test(t)) return true;
-  if (ext === "vtt" && VTT_HEADER.test(t)) return true;
-  if (ext === "srt" && CUE_INDEX.test(t)) return true;
-  return false;
 }
 
 async function main() {
@@ -140,7 +130,7 @@ async function main() {
     process.exit(2);
   }
 
-  const transcript = strip(content, ext);
+  const transcript = strip(content, ext, args.dedup);
 
   if (args.inPlace) {
     const out = derivePath(args.file);
@@ -166,7 +156,7 @@ async function main() {
 }
 
 function parseArgs(argv) {
-  const args = { file: null, format: null, inPlace: false, help: false };
+  const args = { file: null, format: null, inPlace: false, dedup: false, help: false };
   const rest = argv.slice(2);
   for (let i = 0; i < rest.length; i++) {
     const a = rest[i];
@@ -178,6 +168,7 @@ function parseArgs(argv) {
       }
       args.format = format;
     } else if (a === "--in-place" || a === "-i") args.inPlace = true;
+    else if (a === "--dedup") args.dedup = true;
     else if (a.startsWith("-")) throw new Error(`Unknown option: ${a}`);
     else if (!args.file) args.file = a;
     else throw new Error(`Unexpected argument: ${a}`);
@@ -191,27 +182,21 @@ async function readStdin() {
   return Buffer.concat(chunks).toString("utf8");
 }
 
-function strip(content, ext) {
-  const lines = content.split(/\r?\n/);
+function strip(content, ext, dedup) {
+  const blocks = content.trim().split(/\r?\n\r?\n/);
   const out = [];
-  let inVttBlock = false;
 
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (ext === "vtt") {
-      if (inVttBlock) {
-        if (!line) inVttBlock = false;
-        continue;
-      }
-      if (VTT_BLOCK_START.test(line)) {
-        inVttBlock = true;
-        continue;
-      }
+  for (const block of blocks) {
+    const lines = block.split(/\r?\n/).map(line => line.trim());
+    if (ext === "vtt" && VTT_BLOCK_START.test(lines[0])) continue;
+    const timing = lines.findIndex(line => TIMESTAMP_LINE.test(line));
+    if (timing === -1) continue;
+    for (const line of lines.slice(timing + 1)) {
+      const text = clean(line);
+      if (!text) continue;
+      if (dedup) appendDedup(out, text);
+      else out.push(text);
     }
-    if (isMetadataLine(raw, ext)) continue;
-    const text = clean(raw);
-    if (!text) continue;
-    appendDedup(out, text);
   }
 
   const joined = out.join(" ").replace(/  +/g, " ");
@@ -237,6 +222,7 @@ function usage() {
       "       cat file.vtt | strip-transcript.mjs [--format vtt|srt]\n" +
       "\n" +
       "Writes plain text to stdout. Defaults to vtt when reading stdin.\n" +
+      "--dedup : remove overlapping rolling auto-caption text.\n" +
       "--in-place / -i : write transcript alongside source (stripping a\n" +
       "                  trailing BCP-47 language tag if present), delete\n" +
       "                  the source, and print the new path to stdout.\n"

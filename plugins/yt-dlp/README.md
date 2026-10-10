@@ -1,35 +1,31 @@
 # yt-dlp
 
-Claude Code plugin that wraps the [`yt-dlp`](https://github.com/yt-dlp/yt-dlp)
-CLI for downloading videos, audio, and transcripts from YouTube and the
-1000+ other sites yt-dlp supports.
+Claude Code plugin for downloading videos and audio from YouTube and the 1000+
+other sites supported by the [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) CLI.
 
 ## Usage
 
-Invoke via slash command:
-
-```
+```text
 /yt-dlp video <url>
 /yt-dlp audio <url>
-/yt-dlp transcript <url>
 ```
 
-Or mention `yt-dlp`, "download a video", "rip audio", or "transcript of <url>"
-in conversation to trigger the skill automatically.
+For namespaced plugin commands, use `/yt-dlp:yt-dlp`. Natural requests such as
+"download this video" or "rip audio from this URL" also trigger the skill.
+
+Downloads are saved under `<cwd>/.ai/yt-dlp` unless you specify another folder.
+
+**Migration:** `/yt-dlp transcript` is no longer supported. Install the separate
+[transcript plugin](../transcript/) and use `/transcript <url|path>` instead.
 
 ## Prerequisites
 
 - [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) on `PATH`
   (`brew install yt-dlp` on macOS, `pipx install yt-dlp` elsewhere)
-- [`ffmpeg`](https://ffmpeg.org/) for audio extraction or remuxing
+- [`ffmpeg`](https://ffmpeg.org/) for audio extraction or video merging
   (`brew install ffmpeg`)
-- `node` for the transcript-cleanup script
 
 ## What's included
 
-- **Skill** — guidance for picking format flags, language codes, and
-  fall-back rules between manual and auto-generated subtitles
-- **`scripts/strip-transcript.mjs`** — converts a `.vtt` or `.srt` subtitle file
-  into a clean plain-text transcript; removes cue indices, timestamps,
-  inline timing tags, and dedupes the rolling repetition pattern in
-  YouTube auto-captions
+- **`skills/yt-dlp/SKILL.md`** — URL video/audio download actions, format selection,
+  playlist options, and site access tips
