@@ -140,8 +140,9 @@ The implementation checklist. Organizes work into sequential, deliverable-focuse
 **Rules:**
 
 - Groups are processed sequentially during `apply` — never in parallel
-- Each group runs in a fresh agent context for clean, focused implementation
-- Task IDs (e.g., `1.1`) are extracted and tracked for progress reporting
+- Each group runs in a fresh agent context when isolation is available; otherwise, the parent agent processes it inline
+- The stock instructions require consecutive `N.` / `N.M` numbering and checklist-only content; keep group context in preceding planning artifacts
+- The CLI tracks task IDs but does not enforce these formatting rules
 - Checkboxes (`- [ ]` / `- [x]`) are the source of truth for completion status
 - Use concise group titles that describe the deliverable; avoid generic suffixes like “Slice”, “Phase”, or “Workstream”
 - Tests belong in tasks only when tied to the relevant implementation slice

@@ -18,10 +18,7 @@
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<change-name>" --plan`.
 
 3. **Handle status:**
-   If any artifact has status `invalid`:
-   - Surface the errors: "tasks.md has issues: No checkbox tasks found (expected `- [ ]` format)"
-   - Offer to fix: read the artifact and repair the reported problems
-   - Fix before moving to new artifacts
+   If any artifact has status `invalid`, fetch its planning instructions with `node <skill-dir>/scripts/cli.mjs instructions "<change-name>" --plan --artifact <artifact>`, then read the artifact and its template and follow those instructions to fix the reported errors before moving to new artifacts. Ask the user only if a fix requires a decision. Rerun status after fixing and do not proceed until the artifact is `ready`. If a fix cannot be completed, report the remaining error and wait for guidance.
 
 4. **If all artifacts status is `ready`:** Report completion, suggest running `/esdd apply`
 
