@@ -150,7 +150,7 @@ new → [continue] → apply → [verify] → archive
              (if issues found)
 ```
 
-1. **Plan** (`new` / `continue`) — Generate artifacts sequentially, with review pauses
+1. **Plan** (`new` / `continue`) — Create or revise planning artifacts, with review pauses. `continue` also supports revisions after apply.
 2. **Apply** — Implement task groups one at a time
 3. **Verify** (optional but recommended) — Check implementation against intent
 4. **Archive** — Preserve the change and merge domain knowledge (spec-anchored only)
