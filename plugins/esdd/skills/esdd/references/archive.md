@@ -6,26 +6,15 @@
 
 ## Flow
 
-1. **Select the change:**
-   - If a change name was provided as argument, use it directly — skip list/disambiguation
-   - Otherwise, run the CLI script: `node <skill-dir>/scripts/cli.mjs list --archive`
-   - If no changes exist: report and stop
-   - If one change exists: use it
-   - If multiple changes: ask the user to select
+1. **Get status:**
+   Run `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.
 
-2. **Get detailed status:**
-   Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.
+2. **Check prerequisites:**
+   - If any `plan.artifacts` are not `ready`, report them, suggest `/esdd continue` and stop.
+   - If any `apply.artifacts` are not `done`, report them, suggest `/esdd apply` and stop.
 
-3. **Handle status:**
-   - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest running `/esdd continue`
-   - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
-
-4. **Verify the change:**
-   If `--skip-verify` flag is present, skip to step 5.
-
-   Follow the instructions in [verification.md](shared-verification.md), using the change's `path`.
-
-   Output the verification report. If discrepancies were found, append the following text to the report:
+3. **Verify:**
+   With `--skip-verify`, skip to step 4. Otherwise, follow [verification](shared-verification.md) using the change's `name` and `path` and output the report. Stop on failure or no usable report. If no discrepancies are found, continue to step 4. Otherwise, append:
 
    ```
    ## NEXT STEP
@@ -34,15 +23,16 @@
 
    - Update artifacts
    - Update implementation
+   - Update both
    - Proceed anyway
    ```
 
-   If verification fails or produces no usable report, stop and report it. If verification finds no discrepancies, continue to step 5. Otherwise, wait for the user's choice. Continue to step 5 if they choose **Proceed anyway**; after user-directed artifact or implementation updates, resume from step 2 to recheck status and verification.
+   Wait for the user's choice. For **Proceed anyway**, continue to step 4. Otherwise, make only the requested updates and return to step 1. Pause if blocked.
 
-5. **Process artifacts:**
-   If `archive.workflow` is empty, skip to step 6.
+4. **Process artifacts:**
+   If `archive.workflow` is empty, skip to step 5.
 
-   Loop through the `archive.workflow` array sequentially, tracking progress clearly as you go. For each artifact, start a fresh subagent if available and send it the prompt below, replacing the listed placeholders only. Do not summarize, change, or drop prompt lines; append any user direction or notes on remaining work after the prompt. Each subagent handles exactly one artifact. The parent agent owns the loop. If isolation is unavailable, follow the same steps inline after rereading the artifact instructions:
+   Loop through `archive.workflow` sequentially, tracking progress. For each artifact, start a fresh subagent if available and send it the prompt below, replacing placeholders only. Do not summarize, change, or drop prompt lines; append any user direction or notes on remaining work after the prompt. Each subagent handles one artifact; the parent owns the loop. If isolation is unavailable, follow the same steps inline after rereading the artifact instructions:
 
    ```text
    Get instructions by running the CLI script:
@@ -54,12 +44,7 @@
    Follow the instruction for this artifact only.
    ```
 
-   After each artifact, review what was completed, any reported blockers, and the changed files to confirm processing completed. If processing fails or remains incomplete, stop and report it; do not run step 6.
+   After each artifact, review the result, blockers and changed files. If processing failed or remains incomplete, report and stop; do not run step 5.
 
-6. **Run archive script:**
-   Run the CLI script: `node <skill-dir>/scripts/cli.mjs archive "<name>"`.
-
-   Check for errors.
-
-7. **Show status:**
-   - Change name and archive location
+5. **Archive:**
+   Run `node <skill-dir>/scripts/cli.mjs archive "<name>"`. On error, report and stop; on success, show the change name and archive location.

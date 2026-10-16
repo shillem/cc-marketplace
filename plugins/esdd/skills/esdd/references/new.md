@@ -1,26 +1,24 @@
 # New
 
+Create and plan a new change.
+
 ## Arguments
 
 - `$REST` may contain: `[--fast] [--workflow <workflow>] [<change-name>]`
 - `--fast`: Generate all artifacts in sequence without pausing between each
 - `--workflow <workflow>`: Use a specific workflow for this change
-- `<change-name>`: An optional short kebab-case identifier for the change (e.g., `add-oauth-support`). This is NOT a description of what to build — it is only used as a directory name.
 
 ## Flow
 
-1. **Establish what the user wants to build:**
-   If the user has not already described the work in this conversation, ask them to describe it. The change name argument (if provided) is just an identifier — do NOT treat it as a description of the work or infer scope from it.
+1. **Establish the work:**
+   If the user has not described the work, ask before exploring. The change name only identifies the directory.
 
-   **Important**: Do NOT explore the codebase or proceed to later steps until the user has explicitly described what they want to build.
-
-2. **Derive kebab-case change name:**
-   Use the change name from arguments if provided. Otherwise, derive one from the user's description (e.g., "Add OAuth support" -> `add-oauth-support`).
+2. **Name the change:**
+   Use the supplied name or derive a kebab-case name from the description.
 
 3. **Create the change directory:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs new "<change-name>"` (add `--workflow "<workflow>"` if specified)
    - If error says change already exists, ask if user wants to resume it or choose another name. If the answer is resume, redirect to `continue` action by reading [continue.md](continue.md)
-   - If error says not initialized, suggest running `/esdd init`
 
 4. **Generate artifacts:**
    Follow the instructions in [plan-loop.md](shared-plan-loop.md).

@@ -25,5 +25,7 @@ Show this when `/esdd` is invoked without a valid action.
 ## Notes
 
 - `change-name` is a short kebab-case identifier like `add-oauth-support`
-- `new` still asks the user what they want to build. The optional `change-name` only controls the directory name
+- For `new`, the optional `change-name` identifies the directory, not what to build
+- `continue` plans or revises an existing change, including after apply; it does not implement code
+- Post-apply corrections can be requested in conversation without a command. Artifact revisions describe the clean target, not a history of code repairs
 - For `document`, `--scan` is required and `:<description>` is optional

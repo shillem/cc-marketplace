@@ -10,6 +10,11 @@ and optional arguments.
 If you forget a command's shape in the middle of a session, run `/esdd` without
 an action to show a compact command summary with usage and key flags.
 
+ESDD selects the named change, the one established in conversation, or the only
+relevant open change; it asks when unclear. Post-apply corrections need no command.
+Artifacts describe the clean target, not a repair log. Review requests and phase
+completion do not authorize edits or the next phase.
+
 ## init
 
 Initialize ESDD for the current project.
@@ -123,18 +128,17 @@ input before moving on.
 
 ## continue
 
-Resume planning an incomplete change.
+Plan or revise an existing change, including after apply. This command edits
+artifacts only; it never starts implementation.
 
 ```
 /esdd continue [change-name] [--fast]
 ```
 
-Picks up where you left off. If the change name is omitted and multiple changes
-exist, you'll be shown a list to choose from.
-
-If all plan artifacts are already complete, suggests moving to `apply`.
-
-Fixes invalid artifacts before continuing, asking for user input only when a fix requires a decision.
+Resumes pending planning or revises existing artifacts as requested, even after
+apply. Fixes invalid artifacts before generating more, asking only for necessary
+decisions. When planning is complete, suggests `apply` for unchecked work or
+`verify` for completed implementation; it never runs either automatically.
 
 **Flags:**
 
@@ -182,8 +186,10 @@ The tasks artifact organizes work into numbered, deliverable-focused groups:
 
 Each group becomes a discrete implementation step. The agent receives the group
 title, the `tasks.md` path, and all non-task plan artifacts for context; it reads
-`tasks.md` to work through only the assigned group. Context artifacts are listed
-in planning order — on conflict, later artifacts supersede earlier ones.
+`tasks.md` to work through only the assigned group. Dependencies are listed
+in planning order, but contradictions require a decision, not precedence by
+order. Subagent notes must agree with the artifacts. After a revised plan, apply
+also handles authorized corrections that no remaining task group owns.
 
 ## verify
 
@@ -199,7 +205,11 @@ Runs after `apply` to check coherence and correctness:
   consistent with the project?
 - **Correctness** — Are requirements actually implemented? Is test coverage adequate?
 
-The command always outputs the verification report. Issues are grouped by priority: **CRITICAL**, **WARNING**, **SUGGESTION**, with actionable recommendations including file and line references. If discrepancies are found, ESDD asks how you want to proceed.
+Outputs issues by priority (**CRITICAL**, **WARNING**, **SUGGESTION**) with actionable
+file/line recommendations. ESDD waits for your choice to update artifacts,
+implementation or both, revising artifacts first when both need changing.
+Approved code corrections are tested in the session without another `apply`;
+status and verification are checked again afterward.
 
 ## archive
 
@@ -209,7 +219,8 @@ Archive a completed change and merge domain knowledge.
 /esdd archive [change-name] [--skip-verify]
 ```
 
-Runs verification (unless skipped). If discrepancies are found, ESDD outputs the report and asks how to proceed before archiving. Then it:
+Runs verification unless skipped. Discrepancies follow the same update choices
+and rechecks as `verify`, with an additional **Proceed anyway** option. Then it:
 
 1. Merges delta specs into accumulated domain specifications
 2. Moves the change from `changes/` to `archive/` with a date prefix

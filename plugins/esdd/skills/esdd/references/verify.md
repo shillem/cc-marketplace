@@ -6,24 +6,15 @@
 
 ## Flow
 
-1. **Select the change:**
-   - If a change name was provided as argument, use it directly — skip list/disambiguation
-   - Otherwise, run the CLI script: `node <skill-dir>/scripts/cli.mjs list`
-   - If no changes exist: report and stop
-   - If one change exists: use it
-   - If multiple changes: ask the user to select
+1. **Get status:**
+   Run `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.
 
-2. **Get detailed status:**
-   Run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<name>" --archive`.
+2. **Check prerequisites:**
+   - If any `plan.artifacts` are not `ready`, report them, suggest `/esdd continue` and stop.
+   - If any `apply.artifacts` are not `done`, report them, suggest `/esdd apply` and stop.
 
-3. **Handle status:**
-   - If any `plan.artifacts` do not have `ready` status: stop, report which ones and suggest running `/esdd continue`
-   - If any `apply.artifacts` do not have `done` status: stop, report which ones and suggest running `/esdd apply`
-
-4. **Verify the change:**
-   Follow the instructions in [verification.md](shared-verification.md), using the change's `path`.
-
-   Output the verification report. If discrepancies were found, append the following text to the report:
+3. **Verify:**
+   Follow [verification](shared-verification.md) using the change's `name` and `path` and output the report. Stop on failure or no usable report. If no discrepancies are found, report completion and stop. Otherwise, append:
 
    ```
    ## NEXT STEP
@@ -32,4 +23,7 @@
 
    - Update artifacts
    - Update implementation
+   - Update both
    ```
+
+   Wait for the user's choice, make only the requested updates, then return to step 1. Pause if blocked.

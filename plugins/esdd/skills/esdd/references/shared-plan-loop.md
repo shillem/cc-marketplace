@@ -12,7 +12,7 @@ a. **For each artifact with `pending` status**:
   - `instruction`: Specific guidance for the artifact
   - `outputPath`: Where to write the artifact
   - `templatePath`: Where to source the template for the artifact
-  - `dependencies`: Additional context for the artifact
+  - `dependencies`: Planning input files
 - Read all dependencies for context
 - Before writing content that depends on an unresolved choice that materially changes expected behavior or scope, ask the user. Under `--fast`, make a reasonable decision instead when safe. In either mode, stop and ask when critical uncertainty prevents a sound decision. Otherwise, prefer reasonable decisions to keep momentum. Follow the artifact instructions for recording resolved choices and their rationale.
 - Create the artifact using the `instruction` guidance and template provided
