@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.3] - 2026-10-16
+
+### Updated
+
+- **esdd** plugin bumped to 1.2.0 — remove the availability-based delegation nudge for code corrections while preserving subagent instructions for apply groups, verification, and archive
+
 ## [1.6.2] - 2026-10-16
 
 ### Updated
