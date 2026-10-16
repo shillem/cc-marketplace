@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2026-10-16)
+
+### Changed
+
+- Remove the availability-based delegation nudge for code corrections; keep subagent instructions for apply groups, verification, and archive unchanged
+
 ## 1.1.13 (2026-10-16)
 
 ### Changed

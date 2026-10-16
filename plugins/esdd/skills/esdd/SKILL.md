@@ -30,7 +30,7 @@ Actions may further restrict edits.
 
 - Discussion and review do not authorize edits; completion does not authorize the next phase.
 - Use [revision](references/shared-revision.md) for artifact corrections before changing code that depends on them.
-- Correct authorized code against the agreed target, directly or through a subagent if available. Remove abandoned code within scope and preserve unrelated work. Keep repair details in the conversation or subagent handoff, not artifacts. Code corrections need neither unchecked groups nor `/esdd apply`.
+- Correct authorized code against the agreed target. Remove abandoned code within scope and preserve unrelated work. Keep repair details in the conversation or subagent handoff, not artifacts. Code corrections need neither unchecked groups nor `/esdd apply`.
 - Check tasks only when implementation and relevant verification satisfy their outcomes; uncheck unmet ones. Run relevant tests and build/type checks after code corrections.
 
 ## Action References
