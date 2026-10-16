@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.1] - 2026-10-16
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.12 — preserve worker instructions, check completion before advancing or archiving, and tighten task formatting and plan repair safeguards
+
 ## [1.6.0] - 2026-10-10
 
 ### Added
