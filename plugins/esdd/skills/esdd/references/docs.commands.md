@@ -134,7 +134,7 @@ exist, you'll be shown a list to choose from.
 
 If all plan artifacts are already complete, suggests moving to `apply`.
 
-Handles invalid artifacts by surfacing validation errors and offering to fix them.
+Fixes invalid artifacts before continuing, asking for user input only when a fix requires a decision.
 
 **Flags:**
 
@@ -153,7 +153,7 @@ Implement the planned change by processing task groups.
 Requires all plan artifacts to be complete before starting.
 
 Task groups (defined in the tasks artifact) are processed **sequentially**, each
-in a fresh agent context to keep implementation focused. Between groups, ESDD pauses
+in a fresh agent context when isolation is available; otherwise, the parent agent processes it inline. Between groups, ESDD pauses
 for you to review what was implemented.
 
 **Flags:**

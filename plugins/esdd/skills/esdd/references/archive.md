@@ -37,15 +37,24 @@
    - Proceed anyway
    ```
 
+   If verification fails or produces no usable report, stop and report it. If verification finds no discrepancies, continue to step 5. Otherwise, wait for the user's choice. Continue to step 5 if they choose **Proceed anyway**; after user-directed artifact or implementation updates, resume from step 2 to recheck status and verification.
+
 5. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 6.
 
-   Loop through the `archive.workflow` array, tracking progress clearly as you go. For each artifact, use an isolated subagent or fresh agent context if available, with this prompt. If isolation is unavailable, perform the steps inline after rereading the artifact instructions:
+   Loop through the `archive.workflow` array sequentially, tracking progress clearly as you go. For each artifact, start a fresh subagent if available and send it the prompt below, replacing the listed placeholders only. Do not summarize, change, or drop prompt lines; append any user direction or notes on remaining work after the prompt. Each subagent handles exactly one artifact. The parent agent owns the loop. If isolation is unavailable, follow the same steps inline after rereading the artifact instructions:
 
-   > - Get instructions by running the CLI script: `node <skill-dir>/scripts/cli.mjs instructions "<name>" --archive --artifact <artifact-id>`
-   > - The JSON output includes:
-   >   - `instruction`: Specific guidance for the artifact
-   > - Follow the `instruction`
+   ```text
+   Get instructions by running the CLI script:
+   node <skill-dir>/scripts/cli.mjs instructions "<name>" --archive --artifact <artifact-id>
+
+   The JSON output includes:
+   - instruction: Specific guidance for the artifact
+
+   Follow the instruction for this artifact only.
+   ```
+
+   After each artifact, review what was completed, any reported blockers, and the changed files to confirm processing completed. If processing fails or remains incomplete, stop and report it; do not run step 6.
 
 6. **Run archive script:**
    Run the CLI script: `node <skill-dir>/scripts/cli.mjs archive "<name>"`.

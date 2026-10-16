@@ -22,7 +22,7 @@ a. **For each artifact with `pending` status**:
   3. **Revise**: if the user provides corrections, update the artifact accordingly
 - **If `review` is `true` AND `--fast` is present**, skip the review pause: resolve open questions with reasonable decisions when safe, recording each decision and its rationale as directed by the artifact instructions. Keep remaining questions in the artifact as described above, noting what work depends on them. Stop and ask when an unresolved question prevents a sound decision for the work being undertaken; unrelated work can continue.
 - After creating the artifact, run the CLI script: `node <skill-dir>/scripts/cli.mjs status "<change-name>" --plan`
-- If the artifact has status `invalid`, surface the errors and offer to fix before moving on
+- If the artifact has status `invalid`, fix the reported errors and rerun status before continuing. Ask the user only if a fix requires a decision. If the artifact remains invalid and no further fix can be made without user input, report the remaining errors and wait. Do not start the next artifact until this one is `ready`.
 
 b. **Continue with the next artifact, if any**
 

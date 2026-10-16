@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.12 (2026-10-16)
+
+### Changed
+
+- Preserve complete worker prompts for apply, archive, and verification, with each apply worker handling one task group and each archive worker handling one artifact
+- Require consecutive task numbering and checklist-only content, and limit implementation workers to changing checkbox states in the task list
+- Repair invalid planning artifacts using their instructions and templates, then recheck status before continuing
+- Require user approval for plan changes during implementation, preserve completed work, and recheck the revised plan before resuming
+
+### Fixed
+
+- Check task group status after each worker finishes and continue incomplete groups instead of advancing without a concrete blocker
+- Stop archiving when verification fails or produces no usable report, recheck after user-directed updates, and confirm each artifact was processed before running the archive script
+
 ## 1.1.11 (2026-10-07)
 
 ### Changed
