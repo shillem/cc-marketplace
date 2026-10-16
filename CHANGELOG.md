@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.2] - 2026-10-16
+
+### Updated
+
+- **esdd** plugin bumped to 1.1.13 — support clean artifact revisions, authorized post-apply corrections, and verification based on configured workflows
+
 ## [1.6.1] - 2026-10-16
 
 ### Updated

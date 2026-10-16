@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.13 (2026-10-16)
+
+### Changed
+
+- Allow authorized post-apply code corrections in conversation without reopening task groups or running apply again
+- Keep artifact revisions focused on the current target, not repair history; continue remains artifact-only, including after apply
+- Share change selection across actions and use configured artifact instructions during revision and verification instead of assuming built-in artifact names and formats
+- Let verification and archive update artifacts, implementation, or both, then recheck status and verification
+
+### Fixed
+
+- Complete authorized corrections outside surviving pending task groups before declaring apply complete
+- Stop on conflicting planning inputs instead of assuming later artifacts supersede earlier ones
+
 ## 1.1.12 (2026-10-16)
 
 ### Changed
