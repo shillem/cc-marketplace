@@ -4,7 +4,7 @@
 
 ## What Changes
 
-<!-- Describe what will change. Be specific about new domains, modifications, or removals. -->
+<!-- Capabilities added, changed or removed. Mark breaking changes with **BREAKING**. -->
 
 ## Domains
 
@@ -19,11 +19,11 @@
 ### Modified Domains
 
 <!--
-  Existing domains whose REQUIREMENTS are changing. Leave empty if no requirement changes.
+  Existing domains whose requirements change. Remove this subsection if none.
 
   - `<existing-name>`: <what requirement is changing>
 -->
 
 ## Impact
 
-<!-- Affected code, APIs, dependencies, systems -->
+<!-- Systems, external contracts and their consumers that this change affects -->

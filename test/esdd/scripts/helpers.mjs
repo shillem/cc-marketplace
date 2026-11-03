@@ -11,8 +11,18 @@ export function createTmpDir() {
   return dir;
 }
 
-export function initFixture(esddDir, { workflow = "spec-anchored", domains = [] } = {}) {
-  writeYamlFixture(esddDir, "config.yaml", { workflow, domains });
+// Custom workflows that differ from the built-in chain, for tests of per-change workflow handling.
+export const CUSTOM_WORKFLOWS = {
+  light: { plan: ["proposal", "tasks"], apply: ["tasks"] },
+  "light-specs": { plan: ["proposal", "specs", "tasks"], apply: ["tasks"], archive: ["specs"] }
+};
+
+export function initFixture(esddDir, { workflow = "spec-global", domains = [], workflows } = {}) {
+  writeYamlFixture(
+    esddDir,
+    "config.yaml",
+    workflows ? { workflow, domains, workflows } : { workflow, domains }
+  );
   mkdirSync(resolve(esddDir, "changes"), { recursive: true });
   mkdirSync(resolve(esddDir, "archive"), { recursive: true });
   mkdirSync(resolve(esddDir, "domains"), { recursive: true });

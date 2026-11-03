@@ -1,28 +1,4 @@
 artifacts:
-  brief:
-    description: Combined proposal and design brief for smaller changes
-    output: brief.md
-    plan:
-      template: brief.md
-      instruction: |
-        Create a brief document that captures WHY this change is needed and HOW you plan to approach it. Keep it concise.
-
-        Sections:
-        - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
-        - **What Changes**: Bullet list of concrete changes. Mark breaking changes with **BREAKING**
-        - **Domains**: Identify which domain specs will be created or modified:
-          - **New Domains**: Domains not yet defined. Use kebab-case names
-          - **Modified Domains**: Existing domains whose REQUIREMENTS are changing
-          - Remove either subsection if not applicable
-        - **Approach**: Key technical decisions with rationale (why X over Y?)
-        - **Risks**: Known risks or trade-offs (omit section if none)
-
-        Existing domains (for context):
-        {{DOMAINS}}
-
-        Before drafting, investigate the code areas this change touches so `What Changes` and `Approach` reference concrete files, modules, or APIs — not assumptions.
-
-        When the change involves persisted state, background or scheduled work, retries, time-dependent behavior, configuration consumed by external tooling, or other external systems, cover the applicable robustness concerns in Approach or Risks: partial failure and repeated execution, concurrent actors and stale state, behavior at and after time boundaries, and compatibility with pinned consumer versions. Omit concerns that do not apply.
   proposal:
     description: Initial proposal document outlining the change
     output: proposal.md
@@ -30,26 +6,20 @@ artifacts:
       template: proposal.md
       review: true
       instruction: |
-        Create the proposal document that establishes WHY this change is needed. Focus on the "why" not the "how". Keep it concise.
+        Create the proposal document that establishes why this change is needed and what it covers. Keep it concise.
 
         Existing domains (for context):
         {{DOMAINS}}
 
         Sections:
-        - **Why**: 1-2 sentences on the problem or opportunity. What problem does this solve?
-        - **What Changes**: Bullet list of changes. Be specific about new domains, modifications, or removals. Mark breaking changes with **BREAKING**
-        - **Domains**: Identify which domain specs will be created or modified:
+        - **Why**: 1-2 sentences on the problem or opportunity
+        - **What Changes**: Capabilities added, changed or removed. Mark breaking changes with **BREAKING**
+        - **Domains**: The domains whose requirements this change creates or modifies:
           - **New Domains**: Domains not yet defined that this change introduces. Use kebab-case names.
-          - **Modified Domains**: Existing domains whose REQUIREMENTS are changing. Only include if spec-level behavior changes (not just implementation details).
+          - **Modified Domains**: Existing domains whose requirements change. Implementation-only changes leave a domain unmodified.
           - Remove either subsection if not applicable
-        - **Impact**: Affected code, APIs, dependencies, or systems
+        - **Impact**: Systems, external contracts and their consumers that this change affects
         - **Open Questions**: Unresolved decisions that need user input during review (omit section if none)
-
-        Before drafting, investigate the code areas this change touches so What Changes and Impact reference concrete files, modules, or APIs — not assumptions.
-
-        **Important**:
-        - The Domains section is critical. It creates the contract between proposal and specs phases. Each domain defined in this document will need a corresponding spec file.
-        - When existing domain descriptions are too thin to judge which domains this change affects, use an isolated subagent or fresh agent context if available to read the domain spec files and report which of them the change touches. If isolation is unavailable, read the specs inline before deciding.
   specs:
     description: Detailed specifications for the change
     output: specs/{domain}.md
@@ -61,14 +31,10 @@ artifacts:
         Existing domains (for context):
         {{DOMAINS}}
 
-        Before drafting, trace the affected code and tests. Check claims of preserved behavior against the code and identify deliberate changes. Resolve choices that affect expected behavior before writing requirements that depend on them; do not treat them as technical details. Do not turn unresolved technical questions into requirements or prescribe mechanisms without evidence.
-
-        Scope:
-        - Specify required outcomes and boundary constraints, including security and resource release. Keep implementation mechanisms and test or release procedures out of specs.
-        - Do not turn unverified external facts or unstated preferences into requirements. State user-approved conditional behavior once in the requirement text; add detail when investigation confirms the condition applies.
+        Specify required outcomes and boundary constraints. Keep implementation mechanisms and test or release procedures out of specs.
 
         For each domain:
-        - **New Domains**: use the exact kebab-case name from the proposal or brief. In the frontmatter description field, write the initial description of the domain's responsibility.
+        - **New Domains**: use the exact kebab-case name from the proposal. In the frontmatter description field, write the initial description of the domain's responsibility.
         - **Modified Domains**: use the existing domain name when creating the delta domain spec. In the frontmatter description field, write the current domain's description, or update it if the domain's scope has changed. Include ONLY requirements that are actually changing — do not restate the full domain.
 
         Delta operations (use ## headers):
@@ -86,7 +52,7 @@ artifacts:
           - **THEN** the expected outcome
           - Use **AND** to chain multiple conditions within any step
           - Each scenario is a potential test case — make conditions concrete and verifiable
-        - Every requirement MUST have at least one concrete scenario. Add separate scenarios for distinct outcomes or contracts, such as success, distinct failure results, or edge conditions with different behavior, not merely different triggers. Group triggers that share the same required outcome unless their differences establish an important contract, such as different side effects or cleanup obligations. State shared constraints once in the requirement text. Scenarios are representative acceptance cases, not an exhaustive test inventory.
+        - Every requirement MUST have at least one concrete scenario. Add a scenario per distinct outcome, not per trigger; scenarios are representative acceptance cases, not a test inventory.
         - When renaming and modifying the same requirement, list the rename under RENAMED and use the new name for the full updated requirement under MODIFIED.
 
         MODIFIED requirements workflow:
@@ -94,13 +60,6 @@ artifacts:
         2. Copy the ENTIRE requirement block (from `### Requirement:` through all scenarios)
         3. Paste under `## MODIFIED Requirements` and edit to reflect new behavior
         4. Ensure header text matches exactly (whitespace-insensitive), using the new name when the delta also renames the requirement
-
-        Testability:
-        - Express established performance targets, security constraints, and compliance requirements with measurable GIVEN/WHEN/THEN scenarios. Do not invent numerical targets.
-        - When relevant to a requirement, include concrete scenarios for repeated or concurrent triggers, partial failure, state changing concurrently after it is read, behavior at and after time boundaries, and malformed input that can actually reach the boundary. Apply the scenario-selection rules above; do not add cases merely to satisfy categories.
-
-        **Important**:
-        - Before finishing, verify that every domain listed in the preceding artifact's `Domains` section has a corresponding spec file.
     archive:
       instruction: |
         Merge delta domain specs into the accumulated domain spec files.
@@ -125,7 +84,7 @@ artifacts:
       instruction: |
         Given the explored files, compile an accumulated domain spec based on the domain name and resolved description.
 
-        Specify supported outcomes and boundary constraints, including security and resource release, rather than implementation mechanisms or verification procedures. Do not turn unverified external facts into requirements.
+        Specify supported outcomes and boundary constraints rather than implementation mechanisms or verification procedures. Do not turn unverified external facts into requirements.
 
         Format requirements:
         - Each requirement: `### Requirement: <name>` followed by description
@@ -136,7 +95,7 @@ artifacts:
           - **THEN** the expected outcome
           - Use **AND** to chain multiple conditions within any step
           - Each scenario is a potential test case — make conditions concrete and verifiable
-        - Every requirement MUST have at least one concrete scenario. Add separate scenarios for distinct outcomes or contracts, such as success, distinct failure results, or edge conditions with different behavior, not merely different triggers. Group triggers that share the same required outcome unless their differences establish an important contract, such as different side effects or cleanup obligations. State shared constraints once in the requirement text. Scenarios are representative acceptance cases, not an exhaustive test inventory.
+        - Every requirement MUST have at least one concrete scenario. Add a scenario per distinct outcome, not per trigger; scenarios are representative acceptance cases, not a test inventory.
 
         If a spec file already exists at the output path, treat its requirements as the authoritative baseline. For each existing requirement:
           - If code within the scope supports it, keep and optionally refine wording
@@ -144,28 +103,22 @@ artifacts:
           - If the scope is silent on it, report to the user. Silence does not imply the requirement is invalid
           - Then add any new requirements for behaviors found within the scope that aren't covered by existing requirements
   design:
-    description: Technical design document with implementation details
+    description: Technical approach and decisions for the change
     output: design.md
     plan:
       template: design.md
       review: true
       instruction: |
-        Create the design document that explains HOW to implement the change. If the change is straightforward, keep design content minimal.
+        Create the design document that explains how to implement the change. If the change is straightforward, keep design content minimal.
 
         Sections:
-        - **Context**: Background, current state, constraints
+        - **Context**: Background, current state of the code the change touches, constraints
         - **Goals / Non-Goals**: What this design achieves and explicitly excludes
         - **Decisions**: Current technical choices with rationale (why X over Y?) and alternatives that explain them
         - **Risks / Trade-offs**: Known limitations, what could go wrong. Format: [Risk] → Mitigation
         - **Open Questions**: Unresolved decisions that need user input during review (omit section if none)
 
-        Before drafting, read the code the change touches so Context and Decisions reflect the actual current state — not assumptions.
-
-        Reference requirements from specs. Focus on architecture and the "why" behind decisions, not line-by-line implementation.
-
-        When investigation changes expected behavior or confirms a condition that needs additional scenarios, update the affected specs. State the resulting technical decision and its rationale in the owning Decision, without narrating prior attempts or treating changed requirements as implementation choices.
-
-        When the change involves persisted state, background or scheduled work, retries, time-dependent behavior, configuration consumed by external tooling, or other external systems, address the applicable robustness concerns in Decisions or Risks: partial failure and repeated execution, concurrent actors and stale state, behavior at and after time boundaries, and compatibility with pinned consumer versions. Omit concerns that do not apply.
+        Focus on architecture and the reasons behind decisions, not line-by-line implementation.
   tasks:
     description: Implementation checklist with trackable tasks
     output: tasks.md
@@ -176,19 +129,13 @@ artifacts:
 
         Guidelines:
         - Structure task groups as vertical slices, not horizontal layers (all database changes, then all services, then all controllers):
-          - Each group should produce an end-to-end, testable checkpoint
-          - Groups should build on each other
+          - Each group should produce an end-to-end checkpoint, tested within the group
           - Groups should be small enough to complete and validate in one focused session
-        - Use concise group titles that describe the deliverable; do not append generic words like "Slice", "Phase", or "Workstream".
-        - Include test-writing or focused test-running within the relevant implementation slice; do not create standalone testing, regression, verification, or cleanup groups.
-        - Tasks are an implementation checklist, not a verification or release checklist. Do not add tasks for artifact verification, readiness review, archiving, or summaries.
-        - Describe a first implementation, not repairs to an earlier attempt. Replacement, removal or migration tasks must concern pre-existing code, contracts or data.
-        - When a task implements a specific spec requirement, reference the requirement name in the task description for traceability.
 
         Use exactly this format:
-        - Include only `## N. Group title` headings, `- [ ] N.M Task description` lines, and blank lines. Do not add prose notes, progress reports, or verification results to this checklist.
-        - Number groups consecutively from 1. Within each group N, number tasks N.1, N.2, and so on. Do not use lettered labels.
-        - After inserting, removing, or reordering groups or tasks, renumber them and update any affected references.
+        - Include only `## N. Group title` headings, `- [ ] N.M Task description` lines, and blank lines
+        - Number groups consecutively from 1. Within each group N, number tasks N.1, N.2, and so on
+        - After inserting, removing, or reordering groups or tasks, renumber them and update any affected references
     apply:
       instruction: |
         Assigned Task Group:
@@ -198,30 +145,20 @@ artifacts:
 
         Keep implementation changes minimal and focused on the assigned tasks. Where existing code in this group's scope differs from the agreed target, bring it into line and remove code superseded by that target. Preserve unrelated work.
 
-        Investigate the relevant code before stopping. Stop if a requirement remains unclear, requirements conflict, a missing prerequisite blocks progress, or the plan needs to change. Do not guess required behavior.
+        Before stopping, check the code for the answer. Stop if a requirement remains unclear, requirements conflict, a missing prerequisite blocks progress, or the plan needs to change.
 
         End with a report: what you did, verification results, remaining tasks, and, if you stopped, the evidence and the decision, prerequisite, or plan change needed.
 
 workflows:
-  spec-anchored:
-    description: Pipeline with proposal, specs, design, and tasks. Specs accumulate over time as changes are archived into domain specs. Best for projects where you want to build up living documentation.
+  spec-global:
+    description: Proposal, specs, design and tasks. At archive, delta specs merge into the domain specs, which persist across changes.
     plan: [proposal, specs, design, tasks]
     apply: [tasks]
     archive: [specs]
     document: specs
-  spec-anchored-quick:
-    description: Lighter version of spec-anchored with a brief instead of separate proposal and design. Good for smaller changes that still need spec tracking.
-    plan: [brief, specs, tasks]
-    apply: [tasks]
-    archive: [specs]
-    document: specs
-  spec-first:
-    description: Pipeline with proposal, specs, design, and tasks. Specs organize the change but aren't archived. Best for projects where you want structured planning without long-term spec maintenance.
+  spec-local:
+    description: Proposal, specs, design and tasks. Specs serve the current change only and stay with it in the archive.
     plan: [proposal, specs, design, tasks]
-    apply: [tasks]
-  spec-first-quick:
-    description: Lighter version of spec-first with a brief instead of separate proposal and design. Specs organize the change but aren't archived.
-    plan: [brief, specs, tasks]
     apply: [tasks]
 
-workflow: spec-anchored
+workflow: spec-global

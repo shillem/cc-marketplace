@@ -12,8 +12,10 @@ an action to show a compact command summary with usage and key flags.
 
 ESDD selects the named change, the one established in conversation, or the only
 relevant open change; it asks when unclear. Post-apply corrections need no command.
-Artifacts describe the clean target, not a repair log. Review requests and phase
-completion do not authorize edits or the next phase.
+Artifacts describe the clean target, not a repair log. Edit when the user asks
+for changes, including during discussion or review; the request covers the routine
+fixes and checks needed to finish it. Finishing a phase does not start the next
+one unless the user asked for it.
 
 ## init
 
@@ -175,13 +177,13 @@ The tasks artifact organizes work into numbered, deliverable-focused groups:
 
 - [ ] 1.1 Create user storage needed for registration
 - [ ] 1.2 Implement the registration endpoint with validation
-- [ ] 1.3 Add focused tests for successful registration and duplicate email handling
+- [ ] 1.3 Add tests for registration
 
 ## 2. User Login
 
 - [ ] 2.1 Implement credential lookup and password verification
 - [ ] 2.2 Return JWT tokens on successful login
-- [ ] 2.3 Add focused tests for valid credentials, invalid credentials, and missing users
+- [ ] 2.3 Add tests for login
 ```
 
 Each group becomes a discrete implementation step. The agent receives the group
@@ -205,7 +207,7 @@ Runs after `apply` to check coherence and correctness:
   consistent with the project?
 - **Correctness** — Are requirements actually implemented? Is test coverage adequate?
 
-Outputs issues by priority (**CRITICAL**, **WARNING**, **SUGGESTION**) with actionable
+Outputs issues by priority (**CRITICAL**, **MAJOR**, **MINOR**) with actionable
 file/line recommendations. ESDD waits for your choice to update artifacts,
 implementation or both, revising artifacts first when both need changing.
 Approved code corrections are tested in the session without another `apply`;
@@ -233,8 +235,8 @@ and rechecks as `verify`, with an additional **Proceed anyway** option. Then it:
 | --------------- | ------------------------------------------- |
 | `--skip-verify` | Skip the verification step before archiving |
 
-**Note:** Only `spec-anchored` and `spec-anchored-quick` workflows have an archive
-phase. `spec-first` workflows skip domain spec accumulation.
+**Note:** Only the `spec-global` workflow merges delta specs into domain specs.
+`spec-local` changes are moved to the archive with their specs as they are.
 
 ## view
 

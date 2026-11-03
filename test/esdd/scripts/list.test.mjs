@@ -1,5 +1,12 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
+import {
+  CUSTOM_WORKFLOWS,
+  createTmpDir,
+  initFixture,
+  run,
+  writeFixture,
+  writeYamlFixture
+} from "./helpers.mjs";
 
 describe("list", () => {
   test("returns empty list when no changes exist", async () => {
@@ -66,11 +73,11 @@ describe("list", () => {
 
   test("handles changes with different workflows", async () => {
     const esddPath = createTmpDir();
-    initFixture(esddPath);
+    initFixture(esddPath, { workflows: CUSTOM_WORKFLOWS });
     writeFixture(esddPath, "changes/big-feature/.keep", "");
-    writeYamlFixture(esddPath, "changes/big-feature/change.yaml", { workflow: "spec-anchored" });
+    writeYamlFixture(esddPath, "changes/big-feature/change.yaml", { workflow: "spec-global" });
     writeFixture(esddPath, "changes/quick-fix/.keep", "");
-    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "light" });
 
     const { json, exitCode } = await run("list", ["--plan"], { esddPath });
 
@@ -78,7 +85,7 @@ describe("list", () => {
     const big = json.changes.find(c => c.name === "big-feature");
     const quick = json.changes.find(c => c.name === "quick-fix");
     expect(big.plan.workflow).toEqual(["proposal", "specs", "design", "tasks"]);
-    expect(quick.plan.workflow).toEqual(["brief", "specs", "tasks"]);
+    expect(quick.plan.workflow).toEqual(["proposal", "tasks"]);
   });
 
   test("fails if not initialized", async () => {

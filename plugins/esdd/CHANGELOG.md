@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.0 (2026-11-03)
+
+### Breaking
+
+- Rename the built-in workflows: `spec-anchored` is now `spec-global` and `spec-first` is now `spec-local`. Update `workflow` in `config.yaml` and in the `change.yaml` of in-flight changes
+- Remove the `brief` artifact and the `spec-anchored-quick` and `spec-first-quick` workflows. Finish in-flight brief changes before upgrading, or split each brief into a proposal and a design
+- Rename verification severities to CRITICAL / MAJOR / MINOR
+
+### Changed
+
+- Plan every built-in workflow through proposal → specs → design → tasks, so specs are written before an approach is chosen
+- Limit the proposal to why, scope, domains and external impact; design owns code-level investigation
+- State guidance shared by all planning artifacts once in the plan loop, and define each artifact by its own sections and inputs
+- Write and correct artifacts as first drafts, with no trace of earlier versions
+- Have tasks reference requirement names instead of restating scenarios or cases
+- Flag abandoned tests alongside abandoned mechanisms during verification
+- Remove the robustness checklists from planning and verification; projects that want that guidance can add it through `instruction_addendum`
+- Remove instruction lines that guarded against single past incidents
+
 ## 1.2.0 (2026-10-16)
 
 ### Changed

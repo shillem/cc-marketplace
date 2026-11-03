@@ -39,7 +39,7 @@ describe("document", () => {
 
     test("fails when workflow does not support document", async () => {
       const esddPath = createTmpDir();
-      initFixture(esddPath, { workflow: "spec-first" });
+      initFixture(esddPath, { workflow: "spec-local" });
 
       const { json, exitCode } = await run("document", ["--instruction"], { esddPath });
 
