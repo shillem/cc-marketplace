@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.4] - 2026-11-03
+
+### Updated
+
+- **esdd** plugin bumped to 1.3.0 — rename workflows to `spec-global` and `spec-local`, remove brief artifacts and quick workflows, plan specs before design, and simplify planning and verification guidance
+
 ## [1.6.3] - 2026-10-16
 
 ### Updated

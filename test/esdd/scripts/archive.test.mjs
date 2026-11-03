@@ -2,7 +2,14 @@ import { describe, test, expect } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { resolve } from "path";
 import yaml from "../../../plugins/esdd/skills/esdd/scripts/vendor/js-yaml.mjs";
-import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
+import {
+  CUSTOM_WORKFLOWS,
+  createTmpDir,
+  initFixture,
+  run,
+  writeFixture,
+  writeYamlFixture
+} from "./helpers.mjs";
 
 describe("archive", () => {
   test("fails without a change name", async () => {
@@ -108,9 +115,9 @@ describe("archive", () => {
 
   test("archives change with per-change workflow", async () => {
     const esddPath = createTmpDir();
-    initFixture(esddPath);
-    writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
-    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+    initFixture(esddPath, { workflows: CUSTOM_WORKFLOWS });
+    writeFixture(esddPath, "changes/quick-fix/proposal.md", "# Proposal");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "light" });
 
     const { json, exitCode } = await run("archive", ["quick-fix"], { esddPath });
 
@@ -119,16 +126,16 @@ describe("archive", () => {
     expect(json.domains).toBeUndefined();
   });
 
-  test("archives spec-anchored-quick change with domain extraction", async () => {
+  test("archives custom workflow change with domain extraction", async () => {
     const esddPath = createTmpDir();
-    initFixture(esddPath);
+    initFixture(esddPath, { workflows: CUSTOM_WORKFLOWS });
     writeFixture(
       esddPath,
       "changes/med-change/specs/auth.md",
       "---\ndescription: Auth module\n---\n# Auth delta"
     );
     writeYamlFixture(esddPath, "changes/med-change/change.yaml", {
-      workflow: "spec-anchored-quick"
+      workflow: "light-specs"
     });
 
     const { json, exitCode } = await run("archive", ["med-change"], { esddPath });

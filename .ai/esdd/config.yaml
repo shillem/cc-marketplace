@@ -1,4 +1,4 @@
-workflow: spec-anchored-quick
+workflow: spec-global
 domains:
   - name: marketplace
     description: Management of the marketplace.json file

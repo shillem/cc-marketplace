@@ -24,7 +24,7 @@ root. Set `ESDD_PATH` to change this.
 Created during `init` at `.ai/esdd/config.yaml`:
 
 ```yaml
-workflow: spec-anchored
+workflow: spec-global
 domains:
   - name: auth
     description: Authentication and session management
@@ -46,7 +46,7 @@ Each change can override the project workflow. When you use `--workflow` with
 
 ```yaml
 # .ai/esdd/changes/add-auth/change.yaml
-workflow: spec-anchored-quick
+workflow: spec-local
 ```
 
 ## Domains
@@ -176,27 +176,35 @@ conventions.
 
 ## Custom Workflows
 
-Beyond the four built-in workflows, you can define your own in `config.yaml`:
+Beyond the two built-in workflows, you can define your own in `config.yaml`:
 
 ```yaml
 workflow: my-default
 workflows:
   my-default:
     plan:
-      - brief
+      - proposal
       - tasks
     apply:
       - tasks
 ```
 
-Built-in artifact types for custom workflows: `brief`, `proposal`, `specs`,
-`design`, `tasks`. You can also define new artifact types in `artifacts`. The order
+Built-in artifact types for custom workflows: `proposal`, `specs`, `design`,
+`tasks`. You can also define new artifact types in `artifacts`. The order
 in the `plan` array determines the generation sequence and dependency chain.
 
 Each planning artifact receives the existing files from all preceding artifacts.
-Changing a workflow does not adapt the inherited instructions, and overriding a
-template does not replace its instructions. If you remove or replace a step, change
-its order, or change the sections in a template, check whether the affected
-instructions still match the files and content they receive. Override instructions
-where those contracts have changed. The CLI validates configuration structure,
-not compatibility between artifact contents.
+Built-in artifacts describe only their own sections and inputs, so most
+recombinations work unchanged. Three contracts connect them:
+
+- **Domains** — specs create one file per domain listed in the preceding
+  artifact's `Domains` section, so a workflow with specs needs an artifact before
+  them that provides it
+- **Spec format** — file names, frontmatter `description`, delta headers and
+  `Requirement`/`Scenario` headings, which archive reads
+- **Task format** — `## N.` groups and `- [ ] N.M` tasks, which the CLI and apply
+  read
+
+Custom artifacts, templates and instruction overrides must keep the contracts they
+take part in. The CLI validates configuration structure, not compatibility between
+artifact contents.

@@ -59,12 +59,12 @@ ESDD keeps the leverage while cutting the ceremony:
 - **Control flow over prompts** — instead of one mega-prompt hoping the agent
   follows every step, ESDD uses actual control flow to route agents through
   focused phases with smaller instruction sets
-- **Lean review surfaces** — a proposal or brief is ~200 lines, not 1,000
+- **Lean review surfaces** — a proposal is ~200 lines, not 1,000
   Design decisions surface before code generation, so code review is lighter
   because architectural choices are already approved
-- **Flexible workflows** — four built-in workflows scale from a quick brief to a
-  full proposal-specs-design-tasks pipeline. Choose the rigor that fits the
-  change.
+- **Configurable workflows** — one planning chain, proposal → specs → design →
+  tasks, with artifacts, instructions and templates you can adjust per project.
+  Small changes keep each artifact short.
 
 ## Quick Start
 
@@ -115,7 +115,7 @@ Specifications are scoped by **domain** — named areas of functionality in your
 system (e.g., `auth`, `billing`, `notifications`). A single change might touch
 multiple domains, and each domain's spec grows independently.
 
-In spec-anchored workflows, domain specs are merged into accumulated knowledge
+In the `spec-global` workflow, domain specs are merged into accumulated knowledge
 at `.ai/esdd/domains/` after archiving. Over time, agents gain persistent
 understanding of your system's requirements, not just its current code. This is
 the difference between an agent that reads your codebase and one that understands
@@ -123,22 +123,16 @@ your system.
 
 ## Workflows
 
-Not every change needs the same rigor. A quick fix and a new billing module
-shouldn't go through the same process. ESDD ships with four built-in workflows
-that scale from lightweight to rigorous:
+ESDD ships with two built-in workflows. Both plan through the same chain and
+differ only in what happens to specs when a change is archived:
 
-| Workflow              | Plan                              | Apply | Archive | Best For                                               |
-| --------------------- | --------------------------------- | ----- | ------- | ------------------------------------------------------ |
-| `spec-anchored`       | proposal → specs → design → tasks | tasks | specs   | Features that benefit from living documentation        |
-| `spec-anchored-quick` | brief → specs → tasks             | tasks | specs   | Smaller changes with accumulated specs                 |
-| `spec-first`          | proposal → specs → design → tasks | tasks | —       | Structured planning without long-term spec maintenance |
-| `spec-first-quick`    | brief → specs → tasks             | tasks | —       | Quick, lightweight changes                             |
+| Workflow      | Plan                              | Apply | Archive | Specs                                                    |
+| ------------- | --------------------------------- | ----- | ------- | -------------------------------------------------------- |
+| `spec-global` | proposal → specs → design → tasks | tasks | specs   | Merge into domain specs that persist across changes      |
+| `spec-local`  | proposal → specs → design → tasks | tasks | —       | Serve the current change and stay with it in the archive |
 
-The key choice is between **spec-anchored** (specs persist as living
-documentation that grows with each change) and **spec-first** (specs guide
-planning but aren't maintained long-term). Spec-anchored workflows create a
-compounding knowledge base; spec-first workflows trade that persistence for
-speed.
+`spec-global` builds a knowledge base that grows with each change; `spec-local`
+keeps planning structured without maintaining specs over time.
 
 See [Workflows](docs/workflows.md) for when and why to use each.
 

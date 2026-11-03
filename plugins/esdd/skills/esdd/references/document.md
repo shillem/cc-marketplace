@@ -22,7 +22,7 @@
    If an `error` field is present, report it and stop.
 
 3. **Per-domain loop:**
-   Loop through each domain, tracking progress clearly as you go. For each domain, do the following:
+   Loop through each domain. For each domain, do the following:
 
    a. **Produce the domain spec:**
    - Read the template at `templatePath` for shape reference

@@ -32,7 +32,7 @@
 4. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 5.
 
-   Loop through `archive.workflow` sequentially, tracking progress. For each artifact, start a fresh subagent if available and send it the prompt below, replacing placeholders only. Do not summarize, change, or drop prompt lines; append any user direction or notes on remaining work after the prompt. Each subagent handles one artifact; the parent owns the loop. If isolation is unavailable, follow the same steps inline after rereading the artifact instructions:
+   Loop through `archive.workflow` sequentially. For each artifact, start a fresh subagent if available and send it the prompt below, replacing placeholders only. Do not summarize, change, or drop prompt lines; append any user direction or notes on remaining work after the prompt. Each subagent handles one artifact; the parent owns the loop. If isolation is unavailable, follow the same steps inline after rereading the artifact instructions:
 
    ```text
    Get instructions by running the CLI script:

@@ -16,7 +16,7 @@
    - Otherwise, process the groups below.
 
 3. **Process artifacts:**
-   Loop through the `apply.workflow` array in order. For each artifact, process its groups one at a time, in order, tracking progress clearly as you go:
+   Loop through the `apply.workflow` array in order. For each artifact, process its groups one at a time, in order:
 
    a. **Skip completed groups** (status: `"done"`)
 

@@ -14,7 +14,7 @@ describe("init", () => {
 
   test("--status returns initialized when config exists", async () => {
     const esddPath = createTmpDir();
-    writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-anchored", domains: [] });
+    writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-global", domains: [] });
 
     const { json, exitCode } = await run("init", ["--status"], { esddPath });
 
@@ -29,18 +29,18 @@ describe("init", () => {
     expect(exitCode).toBe(0);
     expect(json.workflows).toBeArray();
     const names = json.workflows.map(w => w.name);
-    expect(names).toContain("spec-anchored");
-    expect(names).toContain("spec-first");
+    expect(names).toContain("spec-global");
+    expect(names).toContain("spec-local");
   });
 
   test("--create initializes esdd with default workflow", async () => {
     const esddPath = createTmpDir();
-    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-anchored"], {
+    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-global"], {
       esddPath
     });
 
     expect(exitCode).toBe(0);
-    expect(json.workflow).toBe("spec-anchored");
+    expect(json.workflow).toBe("spec-global");
     expect(existsSync(resolve(esddPath, "config.yaml"))).toBe(true);
     expect(existsSync(resolve(esddPath, "changes"))).toBe(true);
     expect(existsSync(resolve(esddPath, "archive"))).toBe(true);
@@ -54,7 +54,7 @@ describe("init", () => {
       [
         "--create",
         "--workflow",
-        "spec-anchored",
+        "spec-global",
         "--domain",
         "auth:Authentication",
         "--domain",
@@ -70,9 +70,9 @@ describe("init", () => {
 
   test("--create fails when already initialized", async () => {
     const esddPath = createTmpDir();
-    writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-anchored", domains: [] });
+    writeYamlFixture(esddPath, "config.yaml", { workflow: "spec-global", domains: [] });
 
-    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-anchored"], {
+    const { json, exitCode } = await run("init", ["--create", "--workflow", "spec-global"], {
       esddPath
     });
 

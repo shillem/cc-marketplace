@@ -32,8 +32,8 @@
      ```
      | Change | Workflow | Plan | Last Modified | Apply | Last Modified |
      |--------|----------|------|---------------|-------|----------------|
-     | add-oauth | spec-anchored | 2/4 | 2h ago | 0/3 | — |
-     | fix-billing | spec-first-quick | 4/4 | 1d ago | 2/2 | 3h ago |
+     | add-oauth | spec-global | 2/4 | 2h ago | 0/3 | — |
+     | fix-billing | spec-local | 4/4 | 1d ago | 2/2 | 3h ago |
      ```
 
      - **Workflow** = `activeChanges.workflow`

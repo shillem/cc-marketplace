@@ -1,5 +1,12 @@
 import { describe, test, expect } from "bun:test";
-import { createTmpDir, initFixture, run, writeFixture, writeYamlFixture } from "./helpers.mjs";
+import {
+  CUSTOM_WORKFLOWS,
+  createTmpDir,
+  initFixture,
+  run,
+  writeFixture,
+  writeYamlFixture
+} from "./helpers.mjs";
 
 describe("view", () => {
   test("returns project overview with no changes", async () => {
@@ -10,8 +17,8 @@ describe("view", () => {
 
     expect(exitCode).toBe(0);
     expect(json.path).toBeDefined();
-    expect(json.workflows).toContain("spec-anchored");
-    expect(json.defaultWorkflow).toContain("spec-anchored");
+    expect(json.workflows).toContain("spec-global");
+    expect(json.defaultWorkflow).toContain("spec-global");
     expect(json.activeChanges).toEqual([]);
     expect(json.archivedChangesCount).toBe(0);
   });
@@ -55,15 +62,16 @@ describe("view", () => {
 
   test("includes per-change workflow in active changes", async () => {
     const esddPath = createTmpDir();
-    initFixture(esddPath);
-    writeFixture(esddPath, "changes/quick-fix/brief.md", "# Brief");
-    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "spec-first-quick" });
+    initFixture(esddPath, { workflows: CUSTOM_WORKFLOWS });
+    writeFixture(esddPath, "changes/quick-fix/proposal.md", "# Proposal");
+    writeYamlFixture(esddPath, "changes/quick-fix/change.yaml", { workflow: "light" });
 
     const { json } = await run("view", [], { esddPath });
 
     const change = json.activeChanges.find(c => c.name === "quick-fix");
-    expect(change.workflow).toBe("spec-first-quick");
-    expect(change.plan.artifacts.brief).toBe("ready");
+    expect(change.workflow).toBe("light");
+    expect(change.plan.artifacts.proposal).toBe("ready");
+    expect(change.plan.artifacts.design).toBeUndefined();
   });
 
   test("fails if not initialized", async () => {

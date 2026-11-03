@@ -5,42 +5,28 @@ has a specific purpose and builds on the ones before it.
 
 ## Overview
 
-| Artifact | Purpose                                                                   | Review | Used In         |
-| -------- | ------------------------------------------------------------------------- | :----: | --------------- |
-| Brief    | Combined proposal + design for smaller changes                            |   No   | quick workflows |
-| Proposal | Why this change matters and what it changes                               |  Yes   | full workflows  |
-| Specs    | Domain-scoped requirements with scenarios                                 |   No   | all workflows   |
-| Design   | Technical approach, decisions, trade-offs                                 |  Yes   | full workflows  |
-| Tasks    | Implementation checklist grouped into deliverable-focused vertical slices |   No   | all workflows   |
+| Artifact | Purpose                                                                   | Review |
+| -------- | ------------------------------------------------------------------------- | :----: |
+| Proposal | Why this change matters and what it changes                               |  Yes   |
+| Specs    | Domain-scoped requirements with scenarios                                 |   No   |
+| Design   | Technical approach, decisions, trade-offs                                 |  Yes   |
+| Tasks    | Implementation checklist grouped into deliverable-focused vertical slices |   No   |
 
 **Review artifacts** trigger an interactive review during planning (unless
 `--fast` is used). ESDD surfaces key decisions, assumptions, and scope questions
 for you to validate before moving on.
 
-## Brief
-
-A combined document that replaces the separate proposal and design in quick
-workflows. Covers the essentials in one artifact.
-
-**Sections:**
-
-- **Why** — 1-2 sentences on the problem or opportunity
-- **What Changes** — Bullet list of concrete changes
-- **Domains** — New or modified domains
-- **Approach** — Key technical decisions with rationale
-- **Risks** (optional)
-
 ## Proposal
 
-The _why_ and _what_ document. Establishes motivation and scope before any
-technical decisions are made.
+The _why_ and _what_ document. Establishes motivation and scope before specs and
+design, so it stays at the level of systems and contracts rather than code.
 
 **Sections:**
 
 - **Why** — Motivation for the change
 - **What Changes** — Specific changes by domain
 - **Domains** — New domains to create, existing domains being modified
-- **Impact** — Affected code, APIs, dependencies, systems
+- **Impact** — Systems, external contracts and their consumers that the change affects
 
 The domains section is critical — it determines the structure of the specs
 artifact that follows.
@@ -48,7 +34,7 @@ artifact that follows.
 ## Specs
 
 Domain-scoped requirements with testable scenarios. This is the most structured
-artifact and the one that persists longest in spec-anchored workflows.
+artifact and the one that persists longest in the `spec-global` workflow.
 
 **Structure:**
 
@@ -82,40 +68,31 @@ Generate a secure session token upon successful login.
 - **REMOVED** — With reason and migration guidance
 - **RENAMED** — FROM:/TO: format for traceability
 
-Requirements describe outcomes and boundary constraints, including security and
-resource release, rather than implementation mechanisms or verification procedures.
-Check preservation claims against the affected code and tests. Resolve behavior
-choices before writing requirements that depend on them. Do not turn unresolved
-technical questions, unverified external facts, or unstated preferences into
-requirements. State approved conditional behavior once; add detail when
-investigation confirms it applies.
+Requirements describe outcomes and boundary constraints rather than implementation
+mechanisms or test procedures.
 
-Every requirement must have at least one concrete scenario. Add separate scenarios
-for distinct outcomes or contracts, such as success, distinct failure results, or
-edge conditions with different behavior, not merely different triggers. Group triggers
-with the same required outcome unless their differences establish an important
-contract, such as different side effects or cleanup obligations. State shared
-constraints once in the requirement text. Scenarios are representative acceptance
-cases, not an exhaustive test inventory, and use exactly four hashtags (`####`).
+Every requirement must have at least one concrete scenario. Add a scenario per
+distinct outcome, not per trigger; scenarios are representative acceptance cases,
+not a test inventory, and use exactly four hashtags (`####`).
 
 When renaming and modifying the same requirement, list the rename under RENAMED
 and the full updated requirement under MODIFIED using the new name. During the
-archive phase of spec-anchored workflows, renames are applied before modifications
+archive phase of the `spec-global` workflow, renames are applied before modifications
 and delta specs are merged into `.ai/esdd/domains/<domain>.md`.
 
 ## Design
 
 The _how_ document. Captures technical approach, trade-offs, and decisions.
-Investigation can resolve technical unknowns or confirm conditional scope. Update
-affected specs when those findings change expected behavior or require additional
-scenarios. Record material behavior changes and their rationale in Decisions.
+Design owns code-level investigation. When it changes expected behavior, the
+affected specs are rewritten to match.
 
 **Sections:**
 
-- **Context** — Background, current state, constraints
+- **Context** — Background, current state of the code the change touches, constraints
 - **Goals / Non-Goals** — What's in and out of scope
 - **Decisions** — Technical choices with rationale and alternatives considered
 - **Risks / Trade-offs** — Known concerns and mitigations
+- **Open Questions** — Decisions that need input during review (optional)
 
 ## Tasks
 
@@ -128,13 +105,13 @@ The implementation checklist. Organizes work into sequential, deliverable-focuse
 
 - [ ] 1.1 Create user storage needed for registration
 - [ ] 1.2 Implement the registration endpoint with validation
-- [ ] 1.3 Add focused tests for successful registration and duplicate email handling
+- [ ] 1.3 Add tests for registration
 
 ## 2. User Login
 
 - [ ] 2.1 Implement credential lookup and password verification
 - [ ] 2.2 Return JWT tokens on successful login
-- [ ] 2.3 Add focused tests for valid credentials, invalid credentials, and missing users
+- [ ] 2.3 Add tests for login
 ```
 
 **Rules:**
@@ -144,9 +121,6 @@ The implementation checklist. Organizes work into sequential, deliverable-focuse
 - The stock instructions require consecutive `N.` / `N.M` numbering and checklist-only content; keep group context in preceding planning artifacts
 - The CLI tracks task IDs but does not enforce these formatting rules
 - Checkboxes (`- [ ]` / `- [x]`) are the source of truth for completion status
-- Use concise group titles that describe the deliverable; avoid generic suffixes like “Slice”, “Phase”, or “Workstream”
-- Tests belong in tasks only when tied to the relevant implementation slice
-- Do not add standalone testing, regression, verification, readiness review, cleanup, archiving, or summary tasks
 
 ## Artifact Dependencies
 
@@ -154,10 +128,7 @@ Artifacts are generated in workflow order, and each depends on the ones before i
 An artifact is **blocked** until all its dependencies are **ready**.
 
 ```
-spec-anchored:       proposal → specs → design → tasks
-spec-anchored-quick: brief → specs → tasks
-spec-first:          proposal → specs → design → tasks
-spec-first-quick:    brief → specs → tasks
+proposal → specs → design → tasks
 ```
 
 During `apply`, the agent receives all plan artifacts as context alongside the
