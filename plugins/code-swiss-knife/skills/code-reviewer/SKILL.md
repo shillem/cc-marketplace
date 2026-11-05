@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Review pull requests, diffs, and code changes for concrete behavior, contract, security, test, maintainability, and documentation defects. Use when the user asks for review of a PR, patch, diff, commit, or code change.
+description: Review code changes for concrete behavior, contract, security, test, maintainability, and documentation defects. Use when the user exactly asks you for a "code review" or to "review" code.
 compatibility: Requires GitHub CLI for PR reviews
 ---
 
@@ -66,7 +66,7 @@ Use **Request Changes** for Critical findings and normally for Important finding
 
 A valid concern does not automatically justify a fix or block approval. Assess its significance using evidence of when it can happen, who it affects, the harm it causes, and whether recovery is practical. Do not assume heavy or negligible use without evidence. Weigh mitigation against the code, maintenance, operational burden, and new failure modes it adds. Assign severity based on this context, not the kind of failure alone; rarity alone does not dismiss severe security risks or irreversible harm, and mitigation costs do not waive explicit contract or compliance requirements. Omit negligible concerns. For a meaningful risk whose mitigation costs outweigh the benefit, report it as non-blocking and recommend accepting the risk or a simpler safeguard. The reviewer recommends; the change owner decides whether to accept a risk. If missing usage facts would change the recommendation, state what is unknown and what would change it.
 
-Report only findings with a concrete failure mode, missing control, regression gap, release risk, or maintenance trap. Each finding must identify the condition, concrete outcome or risk, affected party, supporting evidence, and proportionate recommendation. When a fix is justified, recommend the smallest sufficient correction. Ask a question only after repository inspection cannot resolve a material uncertainty. Omit optional style preferences and speculative improvements unless requested; put them in a separate `Suggestions` section without affecting the assessment.
+Report only findings with a concrete failure mode, missing control, regression gap, release risk, or maintenance trap. Each finding must identify the condition, concrete outcome or risk, affected party, supporting evidence, and proportionate recommendation. When a fix is justified, recommend a correction that addresses the underlying cause where responsibility belongs. Keep its scope proportionate to the problem; do not favor a local workaround over a necessary structural change. Ask a question only after repository inspection cannot resolve a material uncertainty. Omit optional style preferences and speculative improvements unless requested; put them in a separate `Suggestions` section without affecting the assessment.
 
 ## Output
 
@@ -88,7 +88,7 @@ Lead with actionable information. Omit empty optional sections.
 
 - **Scenario:** [condition] creates [wrong result or concrete risk] for [affected party].
 - **Evidence:** [code path, caller, test, or verification result].
-- **Recommendation:** [smallest sufficient correction, or why accepting the risk is reasonable and what would change that].
+- **Recommendation:** [correction that addresses the underlying cause, or why accepting the risk is reasonable and what would change that].
 
 ## Unresolved Risks
 

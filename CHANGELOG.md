@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.5] - 2026-11-05
+
+### Updated
+
+- **code-swiss-knife** plugin bumped to 1.4.2 — recommend proportionate fixes that address underlying causes rather than the smallest patch, and narrow the review skill's activation wording to explicit code review requests
+
 ## [1.6.4] - 2026-11-03
 
 ### Updated

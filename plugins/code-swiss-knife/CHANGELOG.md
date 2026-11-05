@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.2 (2026-11-05)
+
+### Changed
+
+- Recommend fixes that address the underlying cause where responsibility belongs, with proportionate scope rather than local workarounds that avoid necessary structural changes
+- Align the review recommendation template and structure cues with fixing underlying causes while preserving unrelated behavior
+- Narrow the review skill's activation wording to explicit requests for a code review or to review code
+
 ## 1.4.1 (2026-10-10)
 
 ### Changed
