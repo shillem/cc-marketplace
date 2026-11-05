@@ -42,7 +42,7 @@ Use these cues after building the change map. They are prompts for investigating
 - Challenge new flags, nullable states, modes, wrappers, registries, factories, adapters, and compatibility branches that serve only one current case.
 - Check whether removed or replaced behavior left dead branches, old names, stale flags, or transitional code.
 - Report complexity only when it creates a concrete risk: future changes will likely happen in the wrong place, duplicated behavior can diverge, or control flow and side effects become materially difficult to trace.
-- Prefer the smallest behavior-preserving fix: remove a branch, reuse an existing owner, strengthen a boundary, or extract actual repeated logic.
+- Prefer fixes that address the underlying cause and preserve unrelated behavior. Remove unnecessary logic, reuse the appropriate owner, strengthen the relevant boundary, or consolidate actual duplication when that resolves the problem.
 
 ## Documentation and Release Surfaces
 
