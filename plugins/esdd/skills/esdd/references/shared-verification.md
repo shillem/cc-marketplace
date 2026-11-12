@@ -6,19 +6,19 @@ Use an isolated subagent or fresh agent context if available. Send it the prompt
 - Run `node <skill-dir>/scripts/cli.mjs status "<name>" --plan` to get `plan.workflow`.
 - For each artifact ID, run `node <skill-dir>/scripts/cli.mjs instructions "<name>" --plan --artifact <artifact>`.
 - Read the artifacts in `<change-path>`, the returned instructions, templates if any, and dependencies. If instructions cannot be loaded, report failure rather than guessing.
-- Review only; do not edit files or execute the artifact authoring instructions.
-- Verify **Coherence:**
-  - Check that artifacts agree within their configured responsibilities. Flag contradictions and superseded instructions, not legitimate compatibility or deployed-data migration steps.
-  - Flag abandoned mechanisms or tests in the change's scope that the current target no longer calls for.
-  - Assess whether the implementation is consistent with the intent expressed across all the artifact files
-  - Review new code for consistency with project patterns (file naming, directory structure, coding style)
-  - Issues: MAJOR for target mismatches, MINOR for pattern deviations
+- Review only. Use the instructions as review criteria, not to author or edit artifacts.
+- Verify **Coherence** of the artifacts:
+  - Flag contradictions and superseded statements between artifacts, judged by their configured responsibilities. Do not flag legitimate compatibility or deployed-data migration steps. MAJOR.
+  - Flag artifact content that its instructions exclude. Recommend removing it, or moving it where the instructions place it, rather than aligning code to it. MINOR.
+- Verify **Coherence** of the implementation:
+  - Flag code or tests in the change's scope that the current target no longer calls for. MAJOR.
+  - Flag new code that deviates from project patterns (file naming, directory structure, coding style). MINOR.
 - Verify **Correctness:**
-  - For each required outcome in the artifacts, search the codebase for implementation evidence
+  - For each required outcome in the artifacts, search the codebase for implementation evidence.
     - Unimplemented: CRITICAL
     - Divergent from intent: MAJOR
-  - For each stated acceptance case, check coverage in code/tests
+  - For each stated acceptance case, check coverage in code or tests.
     - Uncovered: MAJOR
-- Each issue must have a specific, actionable recommendation with file/line references. State whether to update artifacts, implementation or both. Recommend revisions to the owning artifacts; code does not automatically establish intended behavior.
-- Output report listing issues by priority (CRITICAL / MAJOR / MINOR)
+- End each issue with a `- Recommendation:` entry that states whether to update artifacts, implementation or both and gives the specific change with file/line references. When another fix is plausible, explain why the recommended one is preferable; when the evidence favors neither, say so and name the decision the user must make. Recommend revisions to the owning artifacts; code does not automatically establish intended behavior.
+- Output the report listing issues by priority (CRITICAL / MAJOR / MINOR), or state that no issues were found.
 ```

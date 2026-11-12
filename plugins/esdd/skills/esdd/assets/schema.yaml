@@ -31,7 +31,7 @@ artifacts:
         Existing domains (for context):
         {{DOMAINS}}
 
-        Specify required outcomes and boundary constraints. Keep implementation mechanisms and test or release procedures out of specs.
+        Specify required outcomes and boundary constraints. Include a statement only if changing it would change what actors (people or external systems) can rely on: external contracts such as endpoints, payload fields and error codes belong here. Keep presentation details (exact labels, layout order, help-text wording), implementation mechanisms (internal helpers, query strategy, class structure) and test or release procedures out of specs; record any that matter in design.
 
         For each domain:
         - **New Domains**: use the exact kebab-case name from the proposal. In the frontmatter description field, write the initial description of the domain's responsibility.
@@ -84,7 +84,7 @@ artifacts:
       instruction: |
         Given the explored files, compile an accumulated domain spec based on the domain name and resolved description.
 
-        Specify supported outcomes and boundary constraints rather than implementation mechanisms or verification procedures. Do not turn unverified external facts into requirements.
+        Specify supported outcomes and boundary constraints. Include a statement only if changing it would change what actors (people or external systems) can rely on: external contracts such as endpoints, payload fields and error codes belong here. Keep presentation details (exact labels, layout order, help-text wording), implementation mechanisms (internal helpers, query strategy, class structure) and verification procedures out of specs. Do not turn unverified external facts into requirements.
 
         Format requirements:
         - Each requirement: `### Requirement: <name>` followed by description

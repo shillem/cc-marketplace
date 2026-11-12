@@ -29,7 +29,7 @@ Run `node <skill-dir>/scripts/cli.mjs init --status`:
 Actions may further restrict edits.
 
 - Edit when the user asks for changes, including during discussion or review; the request covers the routine fixes and checks needed to finish it. Finishing a phase does not start the next one unless the user asked for it.
-- Use [revision](references/shared-revision.md) for artifact corrections before changing code that depends on them.
+- Use [revision](references/shared-revision.md) for every artifact correction, including before changing code that depends on it.
 - Write artifacts as first drafts. When correcting one, rewrite each affected section as it would read if the current target had been known from the start; a reader who never saw the earlier version finds no trace of it. State the target positively and keep a negative only where it marks a real boundary, such as a non-goal. Repair details stay in the conversation or subagent handoff.
 - Correct authorized code against the agreed target. Remove abandoned code within scope and preserve unrelated work. Code corrections need neither unchecked groups nor `/esdd apply`.
 - Check tasks only when implementation and relevant verification satisfy their outcomes; uncheck unmet ones. Run relevant tests and build/type checks after code corrections.

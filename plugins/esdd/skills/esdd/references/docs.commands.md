@@ -203,13 +203,17 @@ Verify that the implementation matches the planned intent.
 
 Runs after `apply` to check coherence and correctness:
 
-- **Coherence** — Does the implementation match what was specified? Are patterns
-  consistent with the project?
+- **Coherence** — Do the artifacts agree with each other and stay within what
+  their instructions allow? Is leftover code or tests removed, and does new code
+  follow project patterns?
 - **Correctness** — Are requirements actually implemented? Is test coverage adequate?
 
-Outputs issues by priority (**CRITICAL**, **MAJOR**, **MINOR**) with actionable
-file/line recommendations. ESDD waits for your choice to update artifacts,
-implementation or both, revising artifacts first when both need changing.
+Outputs issues by priority (**CRITICAL**, **MAJOR**, **MINOR**), or states that
+none were found. Each issue ends with a recommendation stating whether to update
+artifacts, implementation or both, with file/line references and, when another
+fix is plausible, why the recommended one is preferable. ESDD waits for you to
+accept the recommendations or name the issues to handle differently, revising
+artifacts first when both need changing.
 Approved code corrections are tested in the session without another `apply`;
 status and verification are checked again afterward.
 
@@ -221,8 +225,8 @@ Archive a completed change and merge domain knowledge.
 /esdd archive [change-name] [--skip-verify]
 ```
 
-Runs verification unless skipped. Discrepancies follow the same update choices
-and rechecks as `verify`, with an additional **Proceed anyway** option. Then it:
+Runs verification unless skipped. Discrepancies follow the same recommendations
+and rechecks as `verify`, with the additional option to archive anyway. Then it:
 
 1. Merges delta specs into accumulated domain specifications
 2. Moves the change from `changes/` to `archive/` with a date prefix

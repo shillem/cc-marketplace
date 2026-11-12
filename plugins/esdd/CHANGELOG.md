@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.1 (2026-11-12)
+
+### Changed
+
+- End each verification issue with a recommendation to update artifacts, implementation or both, with the reason; verify and archive ask to accept the recommendations or name exceptions instead of offering one update choice for the whole report
+- Limit specs to what actors can rely on; keep exact labels, layout, help-text wording and implementation mechanisms out of specs
+- Flag artifact content that its instructions exclude during verification
+- Route every artifact correction through revision, so edits load the current artifact instructions
+
 ## 1.3.0 (2026-11-03)
 
 ### Breaking
