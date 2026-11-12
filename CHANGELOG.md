@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.6] - 2026-11-12
+
+### Updated
+
+- **esdd** plugin bumped to 1.3.1 — end each verification issue with a recommendation to update artifacts, implementation or both, keep presentation and implementation details out of specs, flag artifact content its instructions exclude, and route every artifact correction through revision
+
 ## [1.6.5] - 2026-11-05
 
 ### Updated

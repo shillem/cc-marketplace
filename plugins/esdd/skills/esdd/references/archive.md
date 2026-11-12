@@ -19,15 +19,10 @@
    ```
    ## NEXT STEP
 
-   How would you like to proceed?
-
-   - Update artifacts
-   - Update implementation
-   - Update both
-   - Proceed anyway
+   Apply all recommendations, name the issues to handle differently, or archive anyway.
    ```
 
-   Wait for the user's choice. For **Proceed anyway**, continue to step 4. Otherwise, make only the requested updates and return to step 1. Pause if blocked.
+   Wait for the user's reply. To archive anyway, continue to step 4. Otherwise, apply the accepted recommendations and the user's alternatives, revising artifacts before the code that depends on them; leave issues the user declines. Then return to step 1. Pause if blocked.
 
 4. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 5.

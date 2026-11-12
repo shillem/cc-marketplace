@@ -19,11 +19,7 @@
    ```
    ## NEXT STEP
 
-   How would you like to proceed?
-
-   - Update artifacts
-   - Update implementation
-   - Update both
+   Apply all recommendations, or name the issues to handle differently.
    ```
 
-   Wait for the user's choice, make only the requested updates, then return to step 1. Pause if blocked.
+   Wait for the user's reply. Apply the accepted recommendations and the user's alternatives, revising artifacts before the code that depends on them; leave issues the user declines. Then return to step 1. Pause if blocked.
