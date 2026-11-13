@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.7] - 2026-11-13
+
+### Updated
+
+- **esdd** plugin bumped to 1.3.2 — after applying verification fixes, report the changes and ask whether to re-verify instead of re-verifying automatically, and stop when an accepted fix cannot be applied
+
 ## [1.6.6] - 2026-11-12
 
 ### Updated

@@ -14,15 +14,11 @@
    - If any `apply.artifacts` are not `done`, report them, suggest `/esdd apply` and stop.
 
 3. **Verify:**
-   With `--skip-verify`, skip to step 4. Otherwise, follow [verification](shared-verification.md) using the change's `name` and `path` and output the report. Stop on failure or no usable report. If no discrepancies are found, continue to step 4. Otherwise, append:
-
-   ```
-   ## NEXT STEP
-
-   Apply all recommendations, name the issues to handle differently, or archive anyway.
-   ```
-
-   Wait for the user's reply. To archive anyway, continue to step 4. Otherwise, apply the accepted recommendations and the user's alternatives, revising artifacts before the code that depends on them; leave issues the user declines. Then return to step 1. Pause if blocked.
+   With `--skip-verify`, skip to step 4. Otherwise:
+   - Follow [verification](shared-verification.md) using the change's `name` and `path` and output the report. Stop on failure or no usable report. If no discrepancies are found, continue to step 4.
+   - Ask whether to apply all recommendations, handle some issues differently, or archive anyway without fixing them, and wait for the user's reply. To archive anyway, continue to step 4.
+   - Apply the accepted recommendations and the user's alternatives, revising artifacts before the code that depends on them; leave issues the user declines. If any accepted change cannot be applied, report it and stop.
+   - Report the changes, ask whether to re-verify or archive without re-verifying, and wait for the user's reply. To re-verify, repeat these sub-steps from the first. To archive, continue to step 4.
 
 4. **Process artifacts:**
    If `archive.workflow` is empty, skip to step 5.
