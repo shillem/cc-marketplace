@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.2 (2026-11-13)
+
+### Changed
+
+- After applying verification fixes, verify and archive report the changes and ask whether to re-verify instead of re-verifying automatically; archive can also proceed without re-verifying
+- Stop and report when an accepted verification fix cannot be applied
+- Ask for the user's decision on verification issues in plain prose instead of appending a fixed `NEXT STEP` block
+
 ## 1.3.1 (2026-11-12)
 
 ### Changed
